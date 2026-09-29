@@ -1,0 +1,4 @@
+# Keep the graph focused on the portfolio's own code and docs
+.claude/
+graphify-out/
+skills-lock.json

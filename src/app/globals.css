@@ -1,0 +1,163 @@
+/* Only scan the app source (the repo also holds skill docs full of class names). */
+@import "tailwindcss" source("..");
+
+/* ------------------------------------------------------------------
+   Tone system. Every section declares data-tone="paper" | "ink" and the
+   tokens below are scoped to it, so colours are static per section (no
+   runtime colour animation). Sections meet through the Curtain stack.
+------------------------------------------------------------------- */
+:root {
+  --radius-curtain: clamp(20px, 3.2vw, 48px);
+}
+
+:root,
+[data-tone="paper"] {
+  --bg: #f2f2ef;
+  --fg: #0e0f12;
+  --fg-2: #4a4b50;
+  --fg-3: #6a6b70;
+  --line: #d9d9d4;
+  --surface: #e8e8e4;
+  --accent: #2f5bff;
+  --accent-solid: #2f5bff;
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
+
+[data-tone="ink"] {
+  --bg: #0e0f12;
+  --fg: #f2f2ef;
+  --fg-2: #a9aab0;
+  --fg-3: #8b8c92;
+  --line: #25262b;
+  --surface: #17181c;
+  --accent: #7b96ff;
+  --accent-solid: #2f5bff;
+  --on-accent: #ffffff;
+  color-scheme: dark;
+}
+
+/* Sections paint their own tone. */
+section[data-tone],
+footer[data-tone],
+main[data-tone],
+[data-curtain][data-tone] {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
+  --color-on-accent: var(--on-accent);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-card: 14px;
+  --radius-tile: 10px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The "stage" behind the curtain: visible only at the edges of a receding panel. */
+html {
+  background: #08090b;
+  color: var(--fg);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--line);
+  }
+}
+
+::selection {
+  background: var(--accent-solid);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Repeat visits: the head script marks <html data-preloaded> before paint. */
+html[data-preloaded] [data-preloader] {
+  display: none;
+}
+
+/* Case-study lineage: data flowing along the connectors. */
+.lineage-flow {
+  stroke-width: 1.25;
+  stroke-dasharray: 3 5;
+  animation: lineage-flow 1.6s linear infinite;
+}
+@keyframes lineage-flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+@utility display {
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 48px);
+}
+
+/* Skill logos: monochrome masks that take the current text colour. */
+@utility logo-mask {
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
