@@ -355,14 +355,14 @@ export const projects: Project[] = [
     problem:
       "The mobile app needed user accounts, searchable destination data and island-level listings, backed by a database that could be seeded from raw JSON.",
     approach: [
-      "Modelled users and destinations in Firestore and wrote an idempotent Python loader that seeds raw JSON data, skipping records that already exist.",
-      "Built an Express + TypeScript API with endpoints for register, login, profile update, search, destination overview, island listings and popular attractions.",
+      "Modelled users, search history, islands and a labelled review dataset in Firestore, and wrote a Python loader that seeded 2,867 review texts from raw JSON.",
+      "Built an Express + TypeScript API with endpoints for register, login, profile update, search history, destination search, island listings and popular attractions, backed by the Google Places API.",
       "Secured user flows with JWT and connected the service to Firebase through the Admin SDK.",
       "Containerized the API with Docker for deployment on Google Cloud.",
     ],
     result:
       "A working backend with 10 endpoints serving the FIT mobile app, delivering 90% of the target features.",
-    tools: ["Firestore", "Firebase Admin", "Express", "TypeScript", "JWT", "Python", "Docker", "GCP"],
+    tools: ["Firestore", "Firebase Admin", "Express", "TypeScript", "JWT", "Google Places API", "Python", "Docker", "GCP"],
     links: [
       { label: "View on GitHub", href: "https://github.com/BangkitCapstoneFIT/AllBackend" },
       { label: "Capstone organization", href: "https://github.com/BangkitCapstoneFIT" },
