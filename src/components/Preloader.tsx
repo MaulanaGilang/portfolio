@@ -7,9 +7,9 @@ import { finishIntro } from "@/lib/intro";
 const KEY = "gm-preloaded";
 
 /**
- * First visit per session: an ink curtain counts 0 to 100 while the name
- * assembles, then lifts off the hero. Repeat visits skip it entirely (an
- * inline script in <head> marks <html data-preloaded> before paint).
+ * First visit per session: a black loader with a large "Ingesting" and a
+ * counter, then it lifts off the page (Lusion-style curtain). Repeat
+ * visits skip it (an inline script in <head> marks <html data-preloaded>).
  */
 export function Preloader() {
   const reduce = useReducedMotion();
@@ -26,7 +26,7 @@ export function Preloader() {
     }
     root.style.overflow = "hidden";
     const controls = animate(0, 100, {
-      duration: 1.5,
+      duration: 1.6,
       ease: [0.65, 0, 0.35, 1],
       onUpdate: (v) => {
         if (count.current) count.current.textContent = String(Math.round(v)).padStart(3, "0");
@@ -52,28 +52,28 @@ export function Preloader() {
     <motion.div
       data-preloader
       aria-hidden
-      className="fixed inset-0 z-[100] flex flex-col justify-between bg-[#f0f1fa] p-[clamp(16px,3.4vw,48px)] text-black"
+      className="fixed inset-0 z-[100] bg-black p-[clamp(16px,5vw,96px)] text-white"
       initial={false}
       animate={phase === "exit" ? { y: "-100%" } : { y: "0%" }}
       transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
       onAnimationComplete={() => phase === "exit" && setPhase("gone")}
     >
-      <div className="label flex justify-between text-[#2b2e3a]">
-        <span>+ Gilang Maulana</span>
-        <span>Raw → Refined +</span>
-      </div>
-      <div className="flex items-end justify-between gap-6">
-        <div className="-mb-[0.22em] overflow-hidden pb-[0.22em]">
+      <p className="label text-white/60">Gilang Maulana</p>
+
+      {/* Baseline-aligned, and the mask's bottom padding stays inside the screen so the "g" descenders are never clipped. */}
+      <div className="absolute inset-x-[clamp(16px,5vw,96px)] bottom-[clamp(16px,3vw,40px)] flex items-baseline justify-between gap-6">
+        {/* Font size lives on the mask so its em padding matches the headline. */}
+        <div className="overflow-hidden pb-[0.2em] text-[clamp(3.5rem,11vw,10rem)]">
           <motion.p
-            className="display text-[clamp(2.5rem,8vw,7rem)] leading-[1.05]"
+            className="display leading-[1.05]"
             initial={{ y: "100%" }}
             animate={{ y: "0%" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           >
             Ingesting
           </motion.p>
         </div>
-        <span ref={count} className="text-[clamp(1.5rem,4vw,3rem)] tabular-nums text-[#1a2ffb]">
+        <span ref={count} className="display text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.05] text-[#8b97ff] tabular-nums">
           000
         </span>
       </div>

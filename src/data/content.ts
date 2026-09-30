@@ -11,7 +11,7 @@ export const profile = {
   email: "maulana.gilang305@gmail.com",
   github: "https://github.com/MaulanaGilang",
   linkedin: "https://www.linkedin.com/in/gilang-maulanatbn",
-  resume: "https://drive.google.com/file/d/1druCqTctk0N-6ulbudxgeAWHbKpKBjvX/view?usp=sharing",
+  resume: "https://drive.google.com/file/d/1ZFC5LHz7g-cqFpqVPUEH24qFVV7MBsY8/view?usp=sharing",
 };
 
 export const nav = [
@@ -23,9 +23,11 @@ export const nav = [
 ];
 
 export const about = {
-  // Rendered as a scroll-lit statement. *word* renders in indigo, ^word^ gets a gold wash.
+  // Display headline; the first line is indented like Lusion's "Bold Ideas, / Brought to Life".
+  headline: ["Raw data in,", "trusted data out."],
+  // Lead paragraph. Words wrapped in * * render in indigo.
   statement:
-    "I started by fixing how a company tracked ^3,000 tickets^ and ^1,000 assets.^ Now I build the *pipelines* underneath the dashboards.",
+    "I started by fixing how a company tracked *3,000 tickets* and *1,000 assets*. Now I build the *pipelines* underneath the dashboards.",
   paragraphs: [
     "At Rata.id I grew from General Services Analyst to IT & Maintenance Analyst, replacing ad hoc operations with automated, data-driven workflows. Ticket triage went from manual review to five minutes a day, and legacy processes went from minutes to seconds.",
     "I studied Computer Engineering at ITS, trained as a Cloud Engineer at Bangkit Academy and finished RevoU's Full-Stack Data Analytics program. Since then I've studied data engineering through DataCamp's Data Engineer path, from SQL and Python pipelines to PySpark, Databricks, Docker and Kubernetes. Today I'm focused on data engineering: modelling warehouses, writing reliable ETL and making clean data easy to use.",
@@ -241,7 +243,7 @@ export const projects: Project[] = [
     title: "SQL Data Warehouse",
     context: "Personal project",
     year: "2025",
-    cover: "/projects/sql-data-warehouse.webp",
+    cover: "/projects/sql-data-warehouse-photo.webp",
     short: "A Medallion-architecture warehouse in SQL Server that merges ERP and CRM sales data into a star schema.",
     overview:
       "A modern data warehouse that consolidates sales data from two source systems (ERP and CRM) into one analytics-ready model, built end to end in SQL Server with T-SQL.",
@@ -274,7 +276,7 @@ export const projects: Project[] = [
     title: "Fraud Applicant Analysis",
     context: "RevoU case study · Reserve Bank of India data",
     year: "2025",
-    cover: "/projects/fraud-applicant-analysis.webp",
+    cover: "/projects/fraud-applicant-analysis-photo.webp",
     short: "Clustering and an ML model on 300K credit card applicants to reduce fraud risk.",
     overview:
       "Credit card fraud cases in India are rising every year. The goal was to help cut fraud cases for the next fiscal year by 40%.",
@@ -299,7 +301,7 @@ export const projects: Project[] = [
     title: "Employee & Specialist Monitoring",
     context: "Virtual internship · Hasna Medika Group",
     year: "2025",
-    cover: "/projects/hr-specialist-monitoring.webp",
+    cover: "/projects/hr-specialist-monitoring-photo.webp",
     short: "Power BI dashboards that show HR productivity across a cardiac hospital group.",
     overview:
       "Hasna Medika Group, a network of heart hospitals, struggled to monitor HR productivity and wanted to make faster, better decisions about its workforce.",
@@ -324,7 +326,7 @@ export const projects: Project[] = [
     title: "Cohort Analysis",
     context: "RevoU case study · RevoFin lending app",
     year: "2025",
-    cover: "/projects/cohort-analysis-revofin.webp",
+    cover: "/projects/cohort-analysis-revofin-photo.webp",
     short: "Borrower cohorts in SQL and Tableau to lift the TKB30 repayment rate toward 100%.",
     overview:
       "RevoFin wanted to grow its lending business by understanding the financial health of its borrowers, raising TKB30 (loans repaid within 30 days of due date) from 99% to 100%.",
@@ -348,7 +350,7 @@ export const projects: Project[] = [
     title: "FIT Tourism Backend",
     context: "Bangkit Academy capstone · Cloud Engineer",
     year: "2023",
-    cover: "/projects/fit-tourism-backend.webp",
+    cover: "/projects/fit-tourism-backend-photo.webp",
     short: "Firestore database, REST API endpoints and a Docker image for a tourism discovery app.",
     overview:
       "FIT (Find Indonesian Tourism) helps travellers discover destinations across Indonesia's islands. As the team's Cloud Engineer I owned the database and the backend.",

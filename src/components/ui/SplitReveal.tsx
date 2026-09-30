@@ -16,7 +16,6 @@ export function SplitReveal({
   delay = 0,
   stagger = 0.045,
   once = true,
-  accentClassName = "text-accent",
 }: {
   text: string;
   as?: Tag;
@@ -24,8 +23,6 @@ export function SplitReveal({
   delay?: number;
   stagger?: number;
   once?: boolean;
-  /** Class for *emphasised* words (default: the indigo accent). */
-  accentClassName?: string;
 }) {
   const Tag = motion[as];
   const words = parse(text);
@@ -40,9 +37,11 @@ export function SplitReveal({
     >
       <span className="sr-only">{text.replace(/\*/g, "")}</span>
       {words.map((w, i) => (
-        <span key={i} aria-hidden className="inline-block overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom">
+        // Display type is set at 0.9 leading, so descenders (g, y, p) hang ~0.2em below the
+        // line box; the mask reserves that room and gives it back with a negative margin.
+        <span key={i} aria-hidden className="-mb-[0.22em] inline-block overflow-hidden pb-[0.22em] align-bottom">
           <motion.span
-            className={cn("inline-block", w.accent && accentClassName)}
+            className={cn("inline-block", w.accent && "text-accent")}
             variants={{
               hidden: { y: "105%" },
               shown: { y: "0%", transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },

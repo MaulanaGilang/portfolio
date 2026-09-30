@@ -32,13 +32,10 @@ export function ExpandAll({ className }: { className?: string }) {
         group.set(!allOpen);
       }}
       className={cn(
-        "label inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-fg/15 px-4 text-fg-2 transition-colors hover:border-fg/40 hover:text-fg",
+        "inline-flex h-10 items-center gap-2 rounded-full bg-surface px-5 label text-fg shadow-[var(--shadow-whisper)] transition-transform active:scale-[0.97]",
         className,
       )}
     >
-      <span aria-hidden className={cn("text-[14px] transition-transform duration-500", allOpen && "rotate-45")}>
-        +
-      </span>
       {allOpen ? "Collapse all" : "Expand all"}
     </button>
   );
@@ -78,8 +75,9 @@ export function Disclosure({
         <span
           aria-hidden
           className={cn(
-            "mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-fg/15 text-fg-2 transition-[transform,background-color,color,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/d:border-fg/50 group-hover/d:text-fg",
-            open && "rotate-45 border-btn bg-btn text-btn-fg group-hover/d:border-btn group-hover/d:text-btn-fg",
+            // Centred on the title's first line (17px, snug leading), not the row's top edge.
+            "-my-1.5 grid size-9 shrink-0 place-items-center rounded-full bg-haze text-fg transition-[transform,background-color,color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/d:scale-110",
+            open && "rotate-45 bg-accent-solid text-on-accent",
           )}
         >
           <Plus size={14} weight="bold" />

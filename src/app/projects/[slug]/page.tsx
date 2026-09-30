@@ -1,13 +1,14 @@
+import { ViewTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { projects } from "@/data/content";
 import { Lineage } from "@/components/case/Lineage";
-import { Curtain } from "@/components/Curtain";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitReveal } from "@/components/ui/SplitReveal";
-import { PillButton, Tag, Tick } from "@/components/ui/primitives";
+import { PillButton } from "@/components/ui/primitives";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -26,6 +27,8 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
   };
 }
 
+const directional = { "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" };
+
 export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   const { slug } = await params;
   const i = projects.findIndex((x) => x.slug === slug);
@@ -34,158 +37,130 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   const next = projects[(i + 1) % projects.length];
 
   return (
-    <>
-      <Curtain index={0} tone="paper">
-        <main id="main" data-tone="paper" className="pt-28 pb-32 md:pt-36 md:pb-44">
-          <article className="container-site">
-            <header className="flex flex-col items-center text-center">
-              <Link href="/#projects" className="label flex items-center gap-3 text-fg-2 transition-opacity hover:opacity-60">
-                <Tick />
-                All projects <span className="text-fg-3">/</span> <span className="text-accent">{p.category}</span>
-                <Tick />
-              </Link>
-              <SplitReveal as="h1" text={p.title} className="display mt-8 max-w-[14ch] text-[clamp(2.75rem,8vw,7.5rem)]" />
-              <p className="mt-8 max-w-[52ch] text-[18px] leading-relaxed text-fg-2">{p.short}</p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                {p.links.map((l, n) => (
-                  <PillButton key={l.href} href={l.href} external variant={n === 0 ? "solid" : "outline"}>
-                    {l.label}
-                  </PillButton>
-                ))}
+    <ViewTransition enter={directional} exit={directional} default="none">
+      <main id="main" className="relative pt-[clamp(84px,10vh,104px)]">
+        {/* First screen, Lusion project-page format: story on the left, the cover on the right. */}
+        <section className="container-site grid min-h-[calc(100dvh-clamp(84px,10vh,104px))] items-center gap-10 pb-10 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-5">
+            <Link
+              href="/#projects"
+              transitionTypes={["nav-back"]}
+              data-sound="click"
+              className="inline-flex h-11 items-center gap-2.5 rounded-full bg-surface px-5 text-sm font-medium tracking-normal uppercase shadow-[var(--shadow-whisper)]"
+            >
+              <ArrowLeft size={16} weight="bold" /> Back
+            </Link>
+
+            <p className="mt-8 label text-accent">
+              {p.category} <span className="mx-1.5 text-fg">•</span>
+              <span className="text-fg">{p.year}</span>
+            </p>
+            <SplitReveal as="h1" text={p.title} className="mt-3 display text-[clamp(2.6rem,4.6vw,5.5rem)]" />
+            <p className="mt-6 max-w-[52ch] text-[16px] leading-relaxed text-fg-2">{p.overview}</p>
+
+            <div className="mt-8 grid grid-cols-2 gap-6">
+              <div>
+                <h2 className="label text-accent">Tools</h2>
+                <ul className="mt-2 space-y-1 text-[15px]">
+                  {p.tools.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
               </div>
-            </header>
-
-            <Reveal className="relative mt-14 aspect-[4/3] overflow-hidden rounded-[var(--radius-stage)] bg-[#0b0c11] md:mt-20 md:aspect-[21/9]">
-              <Image src={p.cover} alt="" fill priority sizes="100vw" className="object-cover" />
-            </Reveal>
-
-            <dl className="mx-auto mt-4 grid max-w-[1400px] grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-              {[
-                { k: "Context", v: p.context },
-                { k: "Year", v: p.year },
-                { k: "Category", v: p.category },
-                { k: "Tools", v: `${p.tools.length} technologies` },
-              ].map((f) => (
-                <div key={f.k} className="rounded-card bg-surface p-5">
-                  <dt className="label text-fg-3">{f.k}</dt>
-                  <dd className="mt-6 text-[16px] font-medium">{f.v}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-20 grid gap-4 md:mt-28 md:grid-cols-12">
-              <div className="space-y-4 md:col-span-8">
-                <Block title="Overview">{p.overview}</Block>
-                <Block title="The problem">{p.problem}</Block>
-                <Reveal className="rounded-card bg-surface p-6 md:p-10">
-                  <h2 className="label flex items-center gap-2 text-fg-2">
-                    <Tick className="text-accent" />
-                    Approach
-                  </h2>
-                  <ol className="mt-6 space-y-5">
-                    {p.approach.map((step, n) => (
-                      <li key={step.slice(0, 30)} className="grid grid-cols-[2.5rem_1fr] gap-2 border-t border-line pt-5">
-                        <span className="label pt-1 text-accent">{String(n + 1).padStart(2, "0")}</span>
-                        <span className="text-[17px] leading-relaxed text-fg-2">{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </Reveal>
+              <div>
+                <h2 className="label text-accent">Context</h2>
+                <p className="mt-2 text-[15px]">{p.context}</p>
               </div>
-
-              <aside className="md:col-span-4">
-                <div className="space-y-4 md:sticky md:top-28">
-                  <Reveal className="rounded-card bg-btn p-6 text-btn-fg md:p-8">
-                    <h2 className="label flex items-center gap-2 opacity-70">
-                      <Tick className="text-gold" />
-                      Result
-                    </h2>
-                    <p className="heading mt-5 text-[21px] leading-snug">{p.result}</p>
-                  </Reveal>
-                  <div className="rounded-card bg-surface p-6 md:p-8">
-                    <h2 className="label flex items-center gap-2 text-fg-2">
-                      <Tick className="text-accent" />
-                      Tools
-                    </h2>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {p.tools.map((t) => (
-                        <Tag key={t}>{t}</Tag>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </aside>
             </div>
 
-            {p.lineage && (
-              <Reveal className="mt-24 md:mt-32">
-                <div className="flex flex-col items-center text-center">
-                  <p className="label flex items-center gap-3 text-fg-2">
-                    <Tick />
-                    Data lineage
-                    <Tick />
-                  </p>
-                  <h2 className="heading mt-5 text-[clamp(1.9rem,3.6vw,3.1rem)]">
-                    Bronze <span className="text-fg-3">→</span> Silver <span className="text-fg-3">→</span>{" "}
-                    <span className="mark-gold">Gold</span>
-                  </h2>
-                  <p className="mt-4 max-w-[60ch] text-fg-2">
-                    Six source tables from CRM and ERP are loaded as-is into Bronze, cleaned one-to-one in Silver, then
-                    integrated into a star schema in Gold.
-                  </p>
-                </div>
-                <Lineage />
-              </Reveal>
-            )}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {p.links.map((l, n) => (
+                <PillButton key={l.href} href={l.href} external variant={n === 0 ? "dark" : "light"}>
+                  {l.label}
+                </PillButton>
+              ))}
+            </div>
+          </div>
 
-            {p.figures?.map((f) => (
-              <Reveal key={f.src} className="mt-24 md:mt-32">
-                <figure>
-                  <div className="overflow-hidden rounded-[clamp(20px,3vw,40px)] bg-[#121212]">
-                    <Image src={f.src} alt={f.alt} width={f.width} height={f.height} sizes="100vw" className="h-auto w-full" />
-                  </div>
-                  <figcaption className="label mt-4 text-center text-fg-3">{f.caption}</figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </article>
-        </main>
-      </Curtain>
+          <div className="md:col-span-7">
+            <ViewTransition name={`cover-${p.slug}`} share="morph" default="none">
+              <div className="relative aspect-[4/3] max-h-[74dvh] w-full overflow-hidden rounded-frame bg-haze">
+                <Image src={p.cover} alt="" fill priority sizes="(min-width: 768px) 58vw, 100vw" className="object-cover" />
+              </div>
+            </ViewTransition>
+          </div>
+        </section>
 
-      <Curtain index={1} tone="ink" last>
-        <section data-tone="ink">
+        {/* Details: compact, two columns. */}
+        <section className="container-site grid gap-10 py-[clamp(56px,6vw,96px)] md:grid-cols-12 md:gap-12">
+          <div className="space-y-10 md:col-span-7">
+            <Reveal>
+              <h2 className="label text-accent">The problem</h2>
+              <p className="mt-3 max-w-[62ch] text-[clamp(1.1rem,1.4vw,1.35rem)] leading-snug">{p.problem}</p>
+            </Reveal>
+            <Reveal>
+              <h2 className="label text-accent">Approach</h2>
+              <ol className="mt-4 divide-y divide-line border-y border-line">
+                {p.approach.map((step, n) => (
+                  <li key={step.slice(0, 30)} className="grid grid-cols-[2.5rem_1fr] gap-2 py-4">
+                    <span className="label pt-1 text-fg-3 tabular-nums">{String(n + 1).padStart(2, "0")}</span>
+                    <span className="text-[16px] leading-relaxed text-fg-2">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+          </div>
+          <aside className="md:col-span-5">
+            <Reveal className="rounded-card bg-surface p-6 shadow-[var(--shadow-whisper)] md:sticky md:top-28 md:p-7">
+              <h2 className="label text-accent">Result</h2>
+              <p className="mt-3 text-[clamp(1.15rem,1.5vw,1.4rem)] leading-snug">{p.result}</p>
+            </Reveal>
+          </aside>
+        </section>
+
+        {p.lineage && (
+          <Reveal className="container-site pb-[clamp(56px,6vw,96px)]">
+            <h2 className="label text-accent">Data lineage</h2>
+            <p className="mt-3 max-w-[60ch] text-fg-2">
+              Six source tables from CRM and ERP are loaded as-is into Bronze, cleaned one-to-one in Silver, then
+              integrated into a star schema in Gold.
+            </p>
+            <Lineage />
+          </Reveal>
+        )}
+
+        {p.figures?.map((f) => (
+          <Reveal key={f.src} className="container-site pb-[clamp(56px,6vw,96px)]">
+            <figure>
+              <div className="overflow-hidden rounded-card bg-[#121212]">
+                <Image src={f.src} alt={f.alt} width={f.width} height={f.height} sizes="100vw" className="h-auto w-full" />
+              </div>
+              <figcaption className="mt-3 label text-fg-3">{f.caption}</figcaption>
+            </figure>
+          </Reveal>
+        ))}
+
+        {/* Next project: a dark rounded card, like the home page's closing card. */}
+        <section data-tone="ink" className="mt-[clamp(24px,4vw,64px)]">
           <Link
             href={`/projects/${next.slug}`}
+            transitionTypes={["nav-forward"]}
             data-sound="click"
-            className="group/next container-site flex min-h-[70dvh] flex-col items-center justify-center py-24 text-center"
+            className="group/next container-site flex min-h-[46dvh] flex-col justify-center py-20"
           >
-            <span className="label flex items-center gap-3 text-fg-2">
-              <Tick />
-              Next project
-              <Tick />
-            </span>
-            <span className="display mt-8 max-w-[14ch] text-[clamp(2.75rem,9vw,8.5rem)] transition-colors duration-500 group-hover/next:text-gold">
-              {next.title}
-            </span>
-            <span className="label mt-10 inline-flex h-12 items-center gap-2.5 rounded-full bg-btn px-6 text-[13px] text-btn-fg">
-              <Tick className="text-[15px] leading-none transition-transform duration-500 group-hover/next:rotate-90" />
-              View case study
+            <span className="label text-fg-3">Next project</span>
+            <span className="mt-4 flex items-end justify-between gap-6">
+              <span className="display text-[clamp(2.6rem,6.5vw,7rem)] transition-colors duration-500 group-hover/next:text-accent">
+                {next.title}
+              </span>
+              <ArrowRight
+                size={64}
+                className="mb-[0.15em] size-[clamp(2rem,5vw,4rem)] shrink-0 transition-transform duration-500 group-hover/next:translate-x-3"
+              />
             </span>
           </Link>
         </section>
-      </Curtain>
-    </>
-  );
-}
-
-function Block({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <Reveal className="rounded-card bg-surface p-6 md:p-10">
-      <h2 className="label flex items-center gap-2 text-fg-2">
-        <Tick className="text-accent" />
-        {title}
-      </h2>
-      <p className="mt-5 max-w-[62ch] text-[18px] leading-relaxed text-fg">{children}</p>
-    </Reveal>
+      </main>
+    </ViewTransition>
   );
 }

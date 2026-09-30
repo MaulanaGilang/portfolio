@@ -23,7 +23,7 @@ export function Lineage() {
   return (
     <div className="mt-10">
       {/* Desktop: full diagram */}
-      <div className="hidden overflow-hidden rounded-card bg-surface p-8 md:block">
+      <div className="hidden overflow-hidden rounded-card border border-line p-6 md:block">
         <svg viewBox={`0 0 ${W} 420`} className="h-auto w-full" role="img" aria-labelledby="lineage-title">
           <title id="lineage-title">
             Data lineage: six CRM and ERP tables load into Bronze, are cleaned in Silver, and are integrated into
@@ -100,9 +100,9 @@ export function Lineage() {
       {/* Mobile: the same lineage as a readable list */}
       <ol className="space-y-4 md:hidden">
         {gold.map((g) => (
-          <li key={g.name} className="rounded-card bg-surface p-5">
-            <p className="inline-flex rounded-full bg-gold px-3 py-1 font-mono text-xs text-black">{g.name}</p>
-            <p className="label mt-4 text-fg-3">Built from</p>
+          <li key={g.name} className="rounded-card border border-line p-5">
+            <p className="inline-flex rounded-full bg-accent-solid px-3 py-1 font-mono text-xs text-on-accent">{g.name}</p>
+            <p className="mt-3 font-mono text-xs text-fg-3">built from</p>
             <ul className="mt-2 space-y-1 font-mono text-sm">
               {g.from.map((f) => (
                 <li key={f}>
@@ -118,9 +118,8 @@ export function Lineage() {
 }
 
 function Box({ x, y, label, tier }: { x: number; y: number; label: string; tier: "bronze" | "silver" | "gold" }) {
-  // The Gold layer is literally gold: the site's second accent was chosen for it.
-  const fill = tier === "gold" ? "fill-gold stroke-gold" : tier === "silver" ? "fill-surface stroke-fg-3" : "fill-surface-2 stroke-line";
-  const text = tier === "gold" ? "fill-black" : "fill-fg";
+  const fill = tier === "gold" ? "fill-accent-solid stroke-accent-solid" : tier === "silver" ? "fill-bg stroke-fg-3" : "fill-surface stroke-line";
+  const text = tier === "gold" ? "fill-on-accent" : "fill-fg";
   return (
     <g>
       <rect x={x} y={y} width={BOX_W} height={BOX_H} rx={9} className={fill} />

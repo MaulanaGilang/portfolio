@@ -2,60 +2,42 @@
 @import "tailwindcss" source("..");
 
 /* ------------------------------------------------------------------
-   "Gallery floor" system, adapted from Lusion (see DESIGN.md).
-   A cool lavender canvas and pure black type; the dark 3D content
-   (hero stage, project covers, final card) carries the drama.
-   Two tones, scoped per element with data-tone:
-     paper = lavender canvas (default)   ink = night stage
-   Accents: electric indigo (signal) + gold (the "Gold layer").
+   v6: Lusion-style gallery. One lavender canvas for the whole page; the
+   only dark area is the Let's Connect footer, reached through a long
+   gradient. Tokens are scoped to [data-tone] so the footer (and the nav
+   while it floats over the footer) can flip to "ink".
 ------------------------------------------------------------------- */
-:root {
-  --radius-curtain: clamp(24px, 3.4vw, 48px);
-  --radius-stage: clamp(28px, 6.5vw, 100px);
-  --gold: #ffb81c;
-  --indigo: #1a2ffb;
-}
-
 :root,
 [data-tone="paper"] {
-  --bg: #f0f1fa; /* lavender mist */
+  --bg: #f0f1fa; /* lavender mist canvas */
   --fg: #000000; /* ink */
-  --fg-2: #2b2e3a; /* graphite */
-  --fg-3: #5b5f6e; /* meta text, AA on the canvas */
-  --line: #dcdee9; /* hairline, a step darker than haze so it reads */
-  --surface: #ffffff; /* paper cards */
-  --surface-2: #e4e6ef; /* haze */
-  --accent: #1a2ffb;
+  --fg-2: #3a3d4a; /* secondary copy */
+  --fg-3: #5d6070; /* meta, AA on canvas and white */
+  --line: #d8dae6; /* hairlines */
+  --surface: #ffffff; /* cards */
+  --haze: #e4e6ef; /* quiet fills */
+  --accent: #1a2ffb; /* electric indigo */
   --accent-solid: #1a2ffb;
   --on-accent: #ffffff;
-  --btn: #2b2e3a; /* graphite pill */
-  --btn-fg: #ffffff;
+  --pill: #2b2e3a; /* graphite action pill */
+  --on-pill: #ffffff;
   color-scheme: light;
 }
 
 [data-tone="ink"] {
-  --bg: #0b0c11; /* night stage */
+  --bg: #0b0c10;
   --fg: #f0f1fa;
-  --fg-2: #c3c6d4;
-  --fg-3: #8d91a3;
+  --fg-2: #b9bbc9;
+  --fg-3: #8e91a2;
   --line: #262833;
-  --surface: #15161d;
-  --surface-2: #1d1f28;
-  --accent: #7d8aff; /* indigo lifted for text on dark */
+  --surface: #15161c;
+  --haze: #1d1f27;
+  --accent: #8b97ff;
   --accent-solid: #1a2ffb;
   --on-accent: #ffffff;
-  --btn: #f0f1fa;
-  --btn-fg: #000000;
+  --pill: #f0f1fa;
+  --on-pill: #0b0c10;
   color-scheme: dark;
-}
-
-/* Sections paint their own tone. */
-section[data-tone],
-footer[data-tone],
-main[data-tone],
-[data-curtain][data-tone] {
-  background: var(--bg);
-  color: var(--fg);
 }
 
 @theme inline {
@@ -65,30 +47,28 @@ main[data-tone],
   --color-fg-3: var(--fg-3);
   --color-line: var(--line);
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
+  --color-haze: var(--haze);
   --color-accent: var(--accent);
   --color-accent-solid: var(--accent-solid);
   --color-on-accent: var(--on-accent);
-  --color-btn: var(--btn);
-  --color-btn-fg: var(--btn-fg);
-  --color-gold: var(--gold);
-  --color-indigo: var(--indigo);
+  --color-pill: var(--pill);
+  --color-on-pill: var(--on-pill);
+  --color-lime: #c1ff00;
+  --color-graphite: #2b2e3a;
 
-  --font-sans: var(--font-general), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --radius-card: 15px;
-  --radius-input: 18px;
+  --radius-frame: 24px;
   --radius-tile: 10px;
-  --radius-stage: var(--radius-stage);
-
-  --shadow-whisper: rgba(0, 0, 0, 0.04) 0px 6px 10px 0px, rgba(0, 0, 0, 0.04) 0px 2px 4px 0px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-whisper: 0 6px 10px rgb(0 0 0 / 0.04), 0 2px 4px rgb(0 0 0 / 0.04);
 }
 
-/* Behind the curtain: seen only at the edges of a receding panel. */
 html {
-  background: #d9dbe7;
+  background: var(--bg);
   color: var(--fg);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
@@ -96,8 +76,15 @@ html {
 
 body {
   font-family: var(--font-sans);
-  font-weight: 400;
   letter-spacing: -0.02em;
+}
+
+/* Only dark areas (the Let's Connect card, case "Next project") paint their own background. */
+section[data-tone="ink"],
+footer[data-tone="ink"],
+[data-curtain][data-tone="ink"] {
+  background: var(--bg);
+  color: var(--fg);
 }
 
 @layer base {
@@ -109,8 +96,8 @@ body {
 }
 
 ::selection {
-  background: var(--gold);
-  color: #000;
+  background: var(--accent-solid);
+  color: var(--on-accent);
 }
 
 :focus-visible {
@@ -136,6 +123,56 @@ html[data-preloaded] [data-preloader] {
   }
 }
 
+/* ------------------------------------------------------------------
+   Page transitions (React <ViewTransition>, Next 16 App Router).
+   The project cover morphs from its card into the case-study hero;
+   everything else lifts and fades. The header stays anchored.
+------------------------------------------------------------------- */
+::view-transition-group(.morph) {
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  35% {
+    filter: blur(2px);
+  }
+}
+
+::view-transition-old(.nav-forward),
+::view-transition-old(.nav-back) {
+  animation: 260ms cubic-bezier(0.4, 0, 1, 1) both vt-out;
+}
+::view-transition-new(.nav-forward) {
+  --vt-from: 48px;
+  animation: 520ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both vt-in;
+}
+::view-transition-new(.nav-back) {
+  --vt-from: -48px;
+  animation: 520ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both vt-in;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    translate: 0 -24px;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--vt-from);
+  }
+}
+::view-transition-group(site-header) {
+  animation: none;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 300ms;
+}
+
 /* Lenis */
 html.lenis,
 html.lenis body {
@@ -148,42 +185,27 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-/* Display type: sculpted, weight 400, compressed leading (Lusion's 144px step). */
+/* Lusion type: regular weight, -0.02em tracking, display compressed to 0.9 leading. */
 @utility display {
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
   line-height: 0.9;
 }
 
-/* Headings up to ~50px: weight 500. */
-@utility heading {
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-/* Small uppercase label (nav, buttons, meta). */
+/* Small uppercase labels ("DATA ENGINEERING • SQL • ETL"). */
 @utility label {
   font-size: 12px;
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 1.3;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 @utility container-site {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1600px;
   margin-inline: auto;
-  padding-inline: clamp(16px, 3.4vw, 48px);
-}
-
-/* A gold wash behind a word or number (the "Gold layer" highlight). */
-@utility mark-gold {
-  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--gold) 70%, transparent) 58%);
-  padding-inline: 0.06em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+  padding-inline: clamp(16px, 5vw, 96px);
 }
 
 /* Skill logos: monochrome masks that take the current text colour. */

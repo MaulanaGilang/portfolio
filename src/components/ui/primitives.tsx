@@ -1,19 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
 import { SplitReveal } from "./SplitReveal";
 import { Magnetic } from "./Magnetic";
 
-/** Lusion's signature "+" tick: decorative punctuation, hidden from screen readers. */
-export function Tick({ className }: { className?: string }) {
-  return (
-    <span aria-hidden className={cn("inline-block select-none font-normal", className)}>
-      +
-    </span>
-  );
-}
-
-/** Organisation logo on a white tile so every mark reads on both tones. */
+/** Organisation logo on a white tile so every mark reads on the canvas. */
 export function LogoTile({ src, alt, size = 48, className }: { src: string; alt: string; size?: number; className?: string }) {
   return (
     <span
@@ -26,66 +18,82 @@ export function LogoTile({ src, alt, size = 48, className }: { src: string; alt:
 }
 
 /**
- * Section header: a "+ LABEL +" line over a large centred title, with an
- * optional count. Centred stacks follow Lusion's layout rhythm.
+ * Lusion section header: big regular-weight title on the left, a short
+ * uppercase blurb on the right. Stacks on mobile.
  */
-export function SectionTitle({
+export function SectionHeader({
   title,
-  label,
+  blurb,
   count,
-  align = "center",
   className,
 }: {
   title: string;
-  label: string;
+  blurb?: string;
   count?: number;
-  align?: "center" | "left";
   className?: string;
 }) {
   return (
-    <header className={cn("flex flex-col gap-5", align === "center" ? "items-center text-center" : "items-start", className)}>
-      <p className="label flex items-center gap-3 text-fg-2">
-        <Tick />
-        {label}
-        {count !== undefined && <span className="text-fg-3">({String(count).padStart(2, "0")})</span>}
-        <Tick />
-      </p>
-      <SplitReveal text={title} className="display max-w-[16ch] text-[clamp(2.75rem,7.2vw,7rem)]" />
-    </header>
+    <div data-section-header className={cn("grid items-end gap-5 md:grid-cols-12", className)}>
+      <div className="flex items-start gap-3 md:col-span-8">
+        <SplitReveal text={title} className="display text-[clamp(2.6rem,5.2vw,6.25rem)]" />
+        {count !== undefined && (
+          <span className="mt-[0.4em] text-sm tabular-nums text-fg-3 md:mt-[0.9em]" aria-label={`${count} items`}>
+            ({String(count).padStart(2, "0")})
+          </span>
+        )}
+      </div>
+      {blurb && <p className="label max-w-[34ch] text-fg md:col-span-4 md:justify-self-end md:pb-3">{blurb}</p>}
+    </div>
   );
 }
 
 type ButtonProps = {
   href: string;
   children: React.ReactNode;
-  variant?: "solid" | "outline";
+  variant?: "dark" | "light";
+  /** Arrow for links that take you somewhere; dot for in-page actions. Defaults to arrow when external. */
+  icon?: "dot" | "arrow";
   external?: boolean;
   className?: string;
 };
 
-/** Pill button: graphite fill (or hairline outline), uppercase label with a leading "+" tick. */
-export function PillButton({ href, children, variant = "solid", external, className }: ButtonProps) {
+/** Lusion pill: uppercase label with a small dot. Dark = graphite fill, light = white fill. */
+export function PillButton({ href, children, variant = "dark", icon, external, className }: ButtonProps) {
+  const arrow = (icon ?? (external ? "arrow" : "dot")) === "arrow";
   const cls = cn(
-    "label inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-[13px] whitespace-nowrap transition-[opacity,transform,background-color,border-color] duration-300 active:scale-[0.97]",
-    variant === "solid"
-      ? "bg-btn text-btn-fg shadow-whisper hover:opacity-85"
-      : "border border-fg/15 bg-surface/60 text-fg hover:border-fg/40",
+    "group/btn inline-flex h-12 items-center gap-3 rounded-full px-6 text-sm font-medium tracking-normal whitespace-nowrap uppercase shadow-[var(--shadow-whisper)] transition-transform duration-300 active:scale-[0.97]",
+    variant === "dark" ? "bg-pill text-on-pill" : "bg-surface text-fg",
     className,
   );
   const inner = (
     <>
-      <Tick className="text-[15px] leading-none transition-transform duration-500 group-hover/btn:rotate-90" />
       <span>{children}</span>
+      {arrow ? (
+        <ArrowUpRight
+          aria-hidden
+          size={16}
+          weight="bold"
+          className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
+        />
+      ) : (
+        <span
+          aria-hidden
+          className={cn(
+            "size-1.5 rounded-full transition-transform duration-300 group-hover/btn:scale-[2.2]",
+            variant === "dark" ? "bg-on-pill" : "bg-fg",
+          )}
+        />
+      )}
     </>
   );
   return (
     <Magnetic strength={0.25}>
       {external ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cn("group/btn", cls)} data-sound="click">
+        <a href={href} target="_blank" rel="noopener noreferrer" className={cls} data-sound="click">
           {inner}
         </a>
       ) : (
-        <Link href={href} className={cn("group/btn", cls)} data-sound="click">
+        <Link href={href} className={cls} data-sound="click">
           {inner}
         </Link>
       )}
@@ -95,8 +103,21 @@ export function PillButton({ href, children, variant = "solid", external, classN
 
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex h-7 items-center rounded-full border border-line bg-bg px-3 text-[12px] font-medium text-fg-2">
+    <span className="inline-flex h-7 items-center rounded-full bg-haze px-3 text-xs font-medium text-fg-2">
       {children}
     </span>
+  );
+}
+
+/** "+" tick row, Lusion's signature divider. */
+export function Ticks({ label, className }: { label?: string; className?: string }) {
+  return (
+    <div aria-hidden className={cn("flex items-center justify-between text-fg", className)}>
+      <span>+</span>
+      <span className="hidden sm:inline">+</span>
+      {label ? <span className="label">{label}</span> : <span>+</span>}
+      <span className="hidden sm:inline">+</span>
+      <span>+</span>
+    </div>
   );
 }

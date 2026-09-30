@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import { Curtain } from "@/components/Curtain";
 import { About } from "@/components/sections/About";
 import { Connect } from "@/components/sections/Connect";
@@ -7,32 +8,28 @@ import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
 import { Skills } from "@/components/sections/Skills";
 
-// Each Curtain is one card in the stack; consecutive sections of the same tone share a card.
+// One lavender canvas (Lusion-style). The page ends with the only card
+// transition: Skills pins and recedes while the dark Connect card slides over.
 export default function Home() {
   return (
-    <>
-      <main id="main">
-        <Curtain index={0} tone="paper">
-          <Hero />
-        </Curtain>
-        <Curtain index={1} tone="paper">
-          <About />
-        </Curtain>
-        <Curtain index={2} tone="paper">
-          <Experience />
-          <Education />
-        </Curtain>
-        <Curtain index={3} tone="paper">
-          <Projects />
-        </Curtain>
-        <Curtain index={4} tone="paper">
+    <ViewTransition
+      enter={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
+      exit={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
+      default="none"
+    >
+      <main id="main" className="relative">
+        <Hero />
+        <About />
+        <Experience />
+        <Education />
+        <Projects />
+        <Curtain index={0}>
           <Skills />
         </Curtain>
-        {/* Inside <main> so every panel shares one sticky container and Connect can slide over Skills. */}
-        <Curtain index={5} tone="ink" last>
+        <Curtain index={1} tone="ink" last>
           <Connect />
         </Curtain>
       </main>
-    </>
+    </ViewTransition>
   );
 }

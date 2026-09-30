@@ -2,48 +2,39 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { SpeakerHigh, SpeakerSlash } from "@phosphor-icons/react";
+import { SpeakerSlash, Waveform } from "@phosphor-icons/react";
 import { nav, profile } from "@/data/content";
 import { play, setSound, useSound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 import { Magnetic } from "./ui/Magnetic";
 import { Scramble } from "./ui/Scramble";
-import { Tick } from "./ui/primitives";
 
-const socials = [
-  { label: "Email", href: `mailto:${profile.email}` },
-  { label: "LinkedIn", href: profile.linkedin },
-  { label: "GitHub", href: profile.github },
-  { label: "Résumé", href: profile.resume },
-];
-
-/**
- * Typographic header in the Lusion manner: wordmark left, a short line in the
- * centre, "Let's talk" pill and a MENU trigger right. Sections live in a
- * floating panel. Hides while scrolling down and takes the tone of the
- * panel underneath it.
- */
 export function Nav() {
   const pathname = usePathname();
   const home = pathname === "/";
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [tone, setTone] = useState<"paper" | "ink">("paper");
   const sound = useSound();
   const { scrollY } = useScroll();
-  const panel = useRef<HTMLDivElement>(null);
-  const trigger = useRef<HTMLButtonElement>(null);
 
+  // Hide while scrolling down, reveal on the way up.
   useMotionValueEvent(scrollY, "change", (y) => {
     const prev = scrollY.getPrevious() ?? 0;
     const next = y > prev && y > 160;
     if (next !== hidden) setHidden(next);
     if (y > 24 !== scrolled) setScrolled(y > 24);
+    const past = y > window.innerHeight * 0.6;
+    if (past !== pastHero) setPastHero(past);
   });
+
+  // The hero already shows the name large, so the nav name waits until it's scrolled past.
+  const showName = !home || pastHero || open;
 
   // Curtain panels stay pinned after they're covered, so several can overlap a
   // band at once: the one latest in document order is the one on top.
@@ -64,42 +55,43 @@ export function Nav() {
       return io;
     };
 
+    // Nav takes the tone of whatever sits under it.
     const toned = Array.from(document.querySelectorAll<HTMLElement>("section[data-tone], footer[data-tone], main[data-tone]"));
-    const toneIO = topmost(toned, "0px 0px -92% 0px", (el) => el && setTone(el.dataset.tone === "ink" ? "ink" : "paper"));
+    const toneIO = topmost(toned, "0px 0px -92% 0px", (el) => setTone(el?.dataset.tone === "ink" ? "ink" : "paper"));
+
+    // Highlight the section in the middle of the viewport.
     const sections = nav.map((n) => document.getElementById(n.id)).filter(Boolean) as HTMLElement[];
     const activeIO = home ? topmost(sections, "-50% 0px -50% 0px", (el) => setActive(el?.id ?? null)) : null;
+
     return () => {
       toneIO.disconnect();
       activeIO?.disconnect();
     };
   }, [home, pathname]);
 
-  // Close the menu on Escape or an outside click; move focus into it when it opens.
+  // A reload lands mid-page without a scroll event.
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        trigger.current?.focus();
-      }
-    };
-    const onDown = (e: PointerEvent) => {
-      const t = e.target as Node;
-      if (!panel.current?.contains(t) && !trigger.current?.contains(t)) setOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("pointerdown", onDown);
-    panel.current?.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("pointerdown", onDown);
-    };
+    const t = setTimeout(() => setPastHero(window.scrollY > window.innerHeight * 0.6), 0);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
   }, [open]);
 
-  const toggle = () => {
-    play(open ? "close" : "open");
-    setOpen(!open);
-  };
+  const toggleSound = (
+    <Magnetic strength={0.3}>
+      <button
+        type="button"
+        onClick={() => setSound(!sound)}
+        aria-pressed={sound}
+        aria-label={sound ? "Turn interface sound off" : "Turn interface sound on"}
+        className="grid size-11 place-items-center rounded-full bg-haze text-fg transition-transform active:scale-95"
+      >
+        {sound ? <Waveform size={18} weight="bold" /> : <SpeakerSlash size={17} weight="bold" />}
+      </button>
+    </Magnetic>
+  );
 
   return (
     <>
@@ -107,51 +99,63 @@ export function Nav() {
         initial={false}
         animate={{ y: hidden && !open ? "-110%" : "0%" }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        data-tone={tone}
+        data-tone={open ? "paper" : tone}
+        style={{ viewTransitionName: "site-header" }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 text-fg transition-[background-color] duration-300",
-          scrolled ? "bg-bg" : "bg-transparent",
+          "fixed inset-x-0 top-0 z-50 text-fg transition-[background-color,color] duration-300",
+          scrolled && !open ? "bg-bg/88" : "bg-transparent",
         )}
       >
-        <div className="container-site grid h-16 grid-cols-[1fr_auto] items-center gap-6 md:h-20 lg:grid-cols-[1fr_auto_1fr]">
-          <Link href="/" className="label text-[14px] md:text-[15px]" aria-label={`${profile.name}, home`}>
+        <div className="container-site flex h-[76px] items-center justify-between gap-6 md:h-[92px]">
+          <Link
+            href="/"
+            className={cn(
+              "text-[15px] font-medium tracking-[0.01em] whitespace-nowrap uppercase transition-[opacity,translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-[19px]",
+              !showName && "pointer-events-none -translate-y-2 opacity-0",
+            )}
+            onClick={() => setOpen(false)}
+            aria-label={`${profile.name}, home`}
+            aria-hidden={!showName || undefined}
+            tabIndex={showName ? undefined : -1}
+          >
             Gilang Maulana
           </Link>
 
-          <p className="hidden text-[15px] text-fg-2 lg:block">
-            {profile.location} <span className="text-fg-3">·</span> Open to remote &amp; relocation
-          </p>
+          <nav aria-label="Sections" className="hidden lg:block">
+            <ul className="flex items-center gap-7">
+              {nav.map((n) => (
+                <NavLink key={n.id} id={n.id} label={n.label} active={active === n.id} />
+              ))}
+            </ul>
+          </nav>
 
-          <div className="flex items-center justify-end gap-2 sm:gap-3">
-            <button
-              type="button"
-              onClick={() => setSound(!sound)}
-              aria-pressed={sound}
-              aria-label={sound ? "Turn interface sound off" : "Turn interface sound on"}
-              className="grid size-10 place-items-center rounded-full text-fg-2 transition-opacity hover:opacity-60"
-            >
-              {sound ? <SpeakerHigh size={17} /> : <SpeakerSlash size={17} />}
-            </button>
+          <div className="flex items-center gap-2.5">
+            {toggleSound}
             <Magnetic strength={0.25} className="hidden sm:inline-block">
               <Link
                 href="/#connect"
                 data-sound="click"
-                className="group/btn label inline-flex h-11 items-center gap-2.5 rounded-full bg-btn px-5 text-[13px] text-btn-fg shadow-whisper transition-opacity hover:opacity-85"
+                className="group/lt inline-flex h-11 items-center gap-3 rounded-full bg-pill px-6 text-sm font-medium tracking-normal text-on-pill uppercase transition-transform active:scale-[0.97]"
               >
-                <Tick className="text-[15px] leading-none transition-transform duration-500 group-hover/btn:rotate-90" />
-                Let’s talk
+                Let&apos;s talk
+                <span aria-hidden className="size-1.5 rounded-full bg-on-pill transition-transform duration-300 group-hover/lt:scale-[2.2]" />
               </Link>
             </Magnetic>
             <button
-              ref={trigger}
               type="button"
-              onClick={toggle}
+              className="inline-flex h-11 items-center gap-3 rounded-full bg-haze px-5 text-sm font-medium tracking-normal uppercase lg:hidden"
               aria-expanded={open}
-              aria-controls="site-menu"
-              className="label inline-flex h-11 items-center gap-2 rounded-full px-3 text-[13px] transition-opacity hover:opacity-60"
+              aria-controls="mobile-menu"
+              onClick={() => {
+                play(open ? "close" : "open");
+                setOpen(!open);
+              }}
             >
               {open ? "Close" : "Menu"}
-              <Tick className={cn("text-[16px] leading-none transition-transform duration-500", open && "rotate-45")} />
+              <span aria-hidden className="flex gap-1">
+                <span className="size-1.5 rounded-full bg-fg" />
+                <span className="size-1.5 rounded-full bg-fg" />
+              </span>
             </button>
           </div>
         </div>
@@ -160,43 +164,35 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            ref={panel}
-            id="site-menu"
-            data-tone="paper"
-            role="dialog"
-            aria-label="Site menu"
-            className="fixed inset-x-4 top-[72px] z-50 origin-top-right sm:inset-x-auto sm:right-[clamp(16px,3.4vw,48px)] sm:w-[440px] rounded-card border border-line bg-surface p-3 text-fg shadow-whisper md:top-[84px]"
-            initial={{ opacity: 0, scale: 0.96, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: -6 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            id="mobile-menu"
+            className="fixed inset-0 z-40 flex flex-col justify-end bg-bg px-4 pt-24 pb-10 lg:hidden"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
           >
             <nav aria-label="Sections">
-              <ul>
-                {[...nav, { id: "connect", label: "Let’s talk" }].map((n, i) => (
-                  <motion.li
-                    key={n.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.04 * i, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <MenuLink id={n.id} label={n.label} active={active === n.id} onNavigate={() => setOpen(false)} />
-                  </motion.li>
+              <ul className="flex flex-col">
+                {[...nav, { id: "connect", label: "Let's connect" }].map((n, i) => (
+                  <li key={n.id} className="overflow-hidden border-b border-line">
+                    <motion.div
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.6, delay: 0.15 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <Link
+                        href={`/#${n.id}`}
+                        onClick={() => setOpen(false)}
+                        className="flex items-baseline justify-between py-3 display text-[clamp(2.5rem,11vw,4.5rem)]"
+                      >
+                        {n.label}
+                        <span className="label text-fg-3">0{i + 1}</span>
+                      </Link>
+                    </motion.div>
+                  </li>
                 ))}
               </ul>
             </nav>
-            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 rounded-[12px] bg-bg px-4 py-4">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  {...(s.href.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-                  className="label text-fg-2 transition-colors hover:text-accent"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -204,24 +200,29 @@ export function Nav() {
   );
 }
 
-function MenuLink({ id, label, active, onNavigate }: { id: string; label: string; active: boolean; onNavigate: () => void }) {
+function NavLink({ id, label, active }: { id: string; label: string; active: boolean }) {
   const [hover, setHover] = useState(0);
   return (
-    <Link
-      href={`/#${id}`}
-      onClick={onNavigate}
-      onPointerEnter={() => {
-        setHover((h) => h + 1);
-        play("hover");
-      }}
-      aria-current={active ? "true" : undefined}
-      className={cn(
-        "group/m flex items-center justify-between rounded-[12px] px-4 py-2.5 transition-colors hover:bg-bg",
-        active && "text-accent",
-      )}
-    >
-      <Scramble text={label} trigger={hover} duration={360} className="heading text-[clamp(1.75rem,3vw,2.25rem)]" />
-      <Tick className="text-[20px] text-fg-3 transition-transform duration-500 group-hover/m:rotate-90 group-hover/m:text-fg" />
-    </Link>
+    <li>
+      <Link
+        href={`/#${id}`}
+        onPointerEnter={() => {
+          setHover((h) => h + 1);
+          play("hover");
+        }}
+        aria-current={active ? "true" : undefined}
+        className="relative inline-flex h-9 items-center text-sm font-medium tracking-normal uppercase"
+      >
+        {active && (
+          <motion.span
+            layoutId="nav-dot"
+            aria-hidden
+            className="absolute top-1/2 -left-3.5 size-1.5 -translate-y-1/2 rounded-full bg-accent-solid"
+            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+          />
+        )}
+        <Scramble text={label} trigger={hover} delay={0} duration={380} />
+      </Link>
+    </li>
   );
 }

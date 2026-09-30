@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { FluidCursor } from "@/components/FluidCursor";
 import { Nav } from "@/components/Nav";
 import { Preloader, preloaderScript } from "@/components/Preloader";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -7,18 +8,17 @@ import { SoundBridge } from "@/components/providers/SoundBridge";
 import { profile } from "@/data/content";
 import "./globals.css";
 
-// General Sans (Indian Type Foundry, ITF Free Font License), self-hosted. The closest
-// free match to Aeonik; like Lusion, only weights 400 and 500 are used.
-const general = localFont({
-  variable: "--font-general",
+// Satoshi (Fontshare, ITF Free Font License), self-hosted. Stand-in for Lusion's Aeonik.
+const satoshi = localFont({
+  variable: "--font-satoshi",
   display: "swap",
   src: [
-    { path: "./fonts/GeneralSans-Regular.woff2", weight: "400", style: "normal" },
-    { path: "./fonts/GeneralSans-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/Satoshi-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/Satoshi-500.woff2", weight: "500", style: "normal" },
   ],
 });
 
-const title = `${profile.name} | Data Analyst → Data Engineer`;
+const title = profile.name;
 const description =
   "Data Analyst moving into Data Engineering, based in Tuban, East Java. SQL data warehousing, ETL pipelines, dashboards and cloud. Open to remote work and relocation.";
 
@@ -31,8 +31,13 @@ export const metadata: Metadata = {
   title: { default: title, template: `%s | ${profile.name}` },
   description,
   authors: [{ name: profile.name, url: profile.linkedin }],
-  openGraph: { title, description, type: "profile", siteName: profile.name },
-  twitter: { card: "summary_large_image", title, description },
+  openGraph: {
+    title: `${profile.name} | Data Analyst → Data Engineer`,
+    description,
+    type: "profile",
+    siteName: profile.name,
+  },
+  twitter: { card: "summary_large_image", title: `${profile.name} | Data Analyst → Data Engineer`, description },
 };
 
 export const viewport: Viewport = {
@@ -54,7 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-tone="paper"
-      className={`${general.variable} antialiased`}
+      className={`${satoshi.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -74,6 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <FluidCursor />
         <SmoothScroll>
           <Preloader />
           <Nav />
