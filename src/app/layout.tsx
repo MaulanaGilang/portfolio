@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Nav } from "@/components/Nav";
 import { Preloader, preloaderScript } from "@/components/Preloader";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -7,8 +7,16 @@ import { SoundBridge } from "@/components/providers/SoundBridge";
 import { profile } from "@/data/content";
 import "./globals.css";
 
-const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// General Sans (Indian Type Foundry, ITF Free Font License), self-hosted. The closest
+// free match to Aeonik; like Lusion, only weights 400 and 500 are used.
+const general = localFont({
+  variable: "--font-general",
+  display: "swap",
+  src: [
+    { path: "./fonts/GeneralSans-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/GeneralSans-Medium.woff2", weight: "500", style: "normal" },
+  ],
+});
 
 const title = `${profile.name} | Data Analyst → Data Engineer`;
 const description =
@@ -28,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f2f2ef",
+  themeColor: "#f0f1fa",
 };
 
 const jsonLd = {
@@ -46,7 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-tone="paper"
-      className={`${geist.variable} ${geistMono.variable} antialiased`}
+      className={`${general.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>

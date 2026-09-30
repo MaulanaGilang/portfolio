@@ -35,7 +35,7 @@ export function Curtain({
   // 0 when the panel pins, 1 when the next panel has fully covered it.
   const progress = useTransform(scrollY, (y) => Math.min(1, Math.max(0, (y - geo.current.pinAt) / geo.current.vh)));
   const scale = useTransform(progress, [0, 1], [1, reduce ? 1 : 0.94]);
-  const shade = useTransform(progress, [0, 1], [0, reduce ? 0 : 0.35]);
+  const shade = useTransform(progress, [0, 1], [0, reduce ? 0 : 0.1]);
 
   useEffect(() => {
     const el = ref.current;
@@ -82,7 +82,7 @@ export function Curtain({
           "relative",
           !last && "sticky top-[var(--pin,auto)]",
           index > 0 &&
-            "-mt-[var(--radius-curtain)] overflow-clip rounded-t-[var(--radius-curtain)] shadow-[0_-24px_60px_-24px_rgb(8_9_11/0.45)]",
+            "-mt-[var(--radius-curtain)] overflow-clip rounded-t-[var(--radius-curtain)] shadow-[0_-18px_48px_-20px_rgb(43_46_58/0.22)]",
           className,
         )}
       >
@@ -91,7 +91,7 @@ export function Curtain({
           <motion.div
             aria-hidden
             style={{ opacity: shade }}
-            className="pointer-events-none absolute inset-0 z-10 bg-[#08090b]"
+            className="pointer-events-none absolute inset-0 z-10 bg-[#2b2e3a]"
           />
         )}
       </motion.div>

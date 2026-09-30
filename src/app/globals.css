@@ -2,38 +2,50 @@
 @import "tailwindcss" source("..");
 
 /* ------------------------------------------------------------------
-   Tone system. Every section declares data-tone="paper" | "ink" and the
-   tokens below are scoped to it, so colours are static per section (no
-   runtime colour animation). Sections meet through the Curtain stack.
+   "Gallery floor" system, adapted from Lusion (see DESIGN.md).
+   A cool lavender canvas and pure black type; the dark 3D content
+   (hero stage, project covers, final card) carries the drama.
+   Two tones, scoped per element with data-tone:
+     paper = lavender canvas (default)   ink = night stage
+   Accents: electric indigo (signal) + gold (the "Gold layer").
 ------------------------------------------------------------------- */
 :root {
-  --radius-curtain: clamp(20px, 3.2vw, 48px);
+  --radius-curtain: clamp(24px, 3.4vw, 48px);
+  --radius-stage: clamp(28px, 6.5vw, 100px);
+  --gold: #ffb81c;
+  --indigo: #1a2ffb;
 }
 
 :root,
 [data-tone="paper"] {
-  --bg: #f2f2ef;
-  --fg: #0e0f12;
-  --fg-2: #4a4b50;
-  --fg-3: #6a6b70;
-  --line: #d9d9d4;
-  --surface: #e8e8e4;
-  --accent: #2f5bff;
-  --accent-solid: #2f5bff;
+  --bg: #f0f1fa; /* lavender mist */
+  --fg: #000000; /* ink */
+  --fg-2: #2b2e3a; /* graphite */
+  --fg-3: #5b5f6e; /* meta text, AA on the canvas */
+  --line: #dcdee9; /* hairline, a step darker than haze so it reads */
+  --surface: #ffffff; /* paper cards */
+  --surface-2: #e4e6ef; /* haze */
+  --accent: #1a2ffb;
+  --accent-solid: #1a2ffb;
   --on-accent: #ffffff;
+  --btn: #2b2e3a; /* graphite pill */
+  --btn-fg: #ffffff;
   color-scheme: light;
 }
 
 [data-tone="ink"] {
-  --bg: #0e0f12;
-  --fg: #f2f2ef;
-  --fg-2: #a9aab0;
-  --fg-3: #8b8c92;
-  --line: #25262b;
-  --surface: #17181c;
-  --accent: #7b96ff;
-  --accent-solid: #2f5bff;
+  --bg: #0b0c11; /* night stage */
+  --fg: #f0f1fa;
+  --fg-2: #c3c6d4;
+  --fg-3: #8d91a3;
+  --line: #262833;
+  --surface: #15161d;
+  --surface-2: #1d1f28;
+  --accent: #7d8aff; /* indigo lifted for text on dark */
+  --accent-solid: #1a2ffb;
   --on-accent: #ffffff;
+  --btn: #f0f1fa;
+  --btn-fg: #000000;
   color-scheme: dark;
 }
 
@@ -53,22 +65,30 @@ main[data-tone],
   --color-fg-3: var(--fg-3);
   --color-line: var(--line);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-accent: var(--accent);
   --color-accent-solid: var(--accent-solid);
   --color-on-accent: var(--on-accent);
+  --color-btn: var(--btn);
+  --color-btn-fg: var(--btn-fg);
+  --color-gold: var(--gold);
+  --color-indigo: var(--indigo);
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-general), ui-sans-serif, system-ui, sans-serif;
 
-  --radius-card: 14px;
+  --radius-card: 15px;
+  --radius-input: 18px;
   --radius-tile: 10px;
+  --radius-stage: var(--radius-stage);
+
+  --shadow-whisper: rgba(0, 0, 0, 0.04) 0px 6px 10px 0px, rgba(0, 0, 0, 0.04) 0px 2px 4px 0px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* The "stage" behind the curtain: visible only at the edges of a receding panel. */
+/* Behind the curtain: seen only at the edges of a receding panel. */
 html {
-  background: #08090b;
+  background: #d9dbe7;
   color: var(--fg);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
@@ -76,6 +96,8 @@ html {
 
 body {
   font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 @layer base {
@@ -87,8 +109,8 @@ body {
 }
 
 ::selection {
-  background: var(--accent-solid);
-  color: var(--on-accent);
+  background: var(--gold);
+  color: #000;
 }
 
 :focus-visible {
@@ -126,17 +148,42 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
+/* Display type: sculpted, weight 400, compressed leading (Lusion's 144px step). */
 @utility display {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+/* Headings up to ~50px: weight 500. */
+@utility heading {
   font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Small uppercase label (nav, buttons, meta). */
+@utility label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 @utility container-site {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1400px;
   margin-inline: auto;
-  padding-inline: clamp(16px, 4vw, 48px);
+  padding-inline: clamp(16px, 3.4vw, 48px);
+}
+
+/* A gold wash behind a word or number (the "Gold layer" highlight). */
+@utility mark-gold {
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--gold) 70%, transparent) 58%);
+  padding-inline: 0.06em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* Skill logos: monochrome masks that take the current text colour. */
@@ -148,9 +195,6 @@ html.lenis body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    transition: none;
-  }
   *,
   *::before,
   *::after {
@@ -160,4 +204,3 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
-

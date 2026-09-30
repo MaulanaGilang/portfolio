@@ -1,9 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
 import { SplitReveal } from "./SplitReveal";
 import { Magnetic } from "./Magnetic";
+
+/** Lusion's signature "+" tick: decorative punctuation, hidden from screen readers. */
+export function Tick({ className }: { className?: string }) {
+  return (
+    <span aria-hidden className={cn("inline-block select-none font-normal", className)}>
+      +
+    </span>
+  );
+}
 
 /** Organisation logo on a white tile so every mark reads on both tones. */
 export function LogoTile({ src, alt, size = 48, className }: { src: string; alt: string; size?: number; className?: string }) {
@@ -17,17 +25,33 @@ export function LogoTile({ src, alt, size = 48, className }: { src: string; alt:
   );
 }
 
-/** Big section title with an optional superscript count (e.g. Projects⁵). */
-export function SectionTitle({ title, count, className }: { title: string; count?: number; className?: string }) {
+/**
+ * Section header: a "+ LABEL +" line over a large centred title, with an
+ * optional count. Centred stacks follow Lusion's layout rhythm.
+ */
+export function SectionTitle({
+  title,
+  label,
+  count,
+  align = "center",
+  className,
+}: {
+  title: string;
+  label: string;
+  count?: number;
+  align?: "center" | "left";
+  className?: string;
+}) {
   return (
-    <div className={cn("flex items-start gap-3", className)}>
-      <SplitReveal text={title} className="display text-[clamp(3rem,8vw,7.5rem)]" />
-      {count !== undefined && (
-        <span className="mt-[0.6em] font-mono text-sm text-fg-3 md:mt-[1.1em]" aria-label={`${count} items`}>
-          ({String(count).padStart(2, "0")})
-        </span>
-      )}
-    </div>
+    <header className={cn("flex flex-col gap-5", align === "center" ? "items-center text-center" : "items-start", className)}>
+      <p className="label flex items-center gap-3 text-fg-2">
+        <Tick />
+        {label}
+        {count !== undefined && <span className="text-fg-3">({String(count).padStart(2, "0")})</span>}
+        <Tick />
+      </p>
+      <SplitReveal text={title} className="display max-w-[16ch] text-[clamp(2.75rem,7.2vw,7rem)]" />
+    </header>
   );
 }
 
@@ -39,33 +63,29 @@ type ButtonProps = {
   className?: string;
 };
 
-/** Pill button. Solid = cobalt; outline = hairline that fills on hover. */
+/** Pill button: graphite fill (or hairline outline), uppercase label with a leading "+" tick. */
 export function PillButton({ href, children, variant = "solid", external, className }: ButtonProps) {
   const cls = cn(
-    "group/btn relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-full px-6 text-[15px] font-medium whitespace-nowrap transition-[transform,background-color,color,border-color] duration-300 active:scale-[0.97]",
+    "label inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-[13px] whitespace-nowrap transition-[opacity,transform,background-color,border-color] duration-300 active:scale-[0.97]",
     variant === "solid"
-      ? "bg-accent-solid text-on-accent hover:bg-fg hover:text-bg"
-      : "border border-fg/25 text-fg hover:border-fg hover:bg-fg hover:text-bg",
+      ? "bg-btn text-btn-fg shadow-whisper hover:opacity-85"
+      : "border border-fg/15 bg-surface/60 text-fg hover:border-fg/40",
     className,
   );
   const inner = (
     <>
+      <Tick className="text-[15px] leading-none transition-transform duration-500 group-hover/btn:rotate-90" />
       <span>{children}</span>
-      <ArrowUpRight
-        size={16}
-        weight="bold"
-        className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
-      />
     </>
   );
   return (
     <Magnetic strength={0.25}>
       {external ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cls} data-sound="click">
+        <a href={href} target="_blank" rel="noopener noreferrer" className={cn("group/btn", cls)} data-sound="click">
           {inner}
         </a>
       ) : (
-        <Link href={href} className={cls} data-sound="click">
+        <Link href={href} className={cn("group/btn", cls)} data-sound="click">
           {inner}
         </Link>
       )}
@@ -75,7 +95,7 @@ export function PillButton({ href, children, variant = "solid", external, classN
 
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex h-7 items-center rounded-full border border-line px-3 font-mono text-[11px] text-fg-2">
+    <span className="inline-flex h-7 items-center rounded-full border border-line bg-bg px-3 text-[12px] font-medium text-fg-2">
       {children}
     </span>
   );

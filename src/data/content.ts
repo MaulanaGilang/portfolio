@@ -23,9 +23,9 @@ export const nav = [
 ];
 
 export const about = {
-  // Rendered as a scroll-lit statement. Words wrapped in * * render in cobalt.
+  // Rendered as a scroll-lit statement. *word* renders in indigo, ^word^ gets a gold wash.
   statement:
-    "I started by fixing how a company tracked *3,000 tickets* and *1,000 assets*. Now I build the *pipelines* underneath the dashboards.",
+    "I started by fixing how a company tracked ^3,000 tickets^ and ^1,000 assets.^ Now I build the *pipelines* underneath the dashboards.",
   paragraphs: [
     "At Rata.id I grew from General Services Analyst to IT & Maintenance Analyst, replacing ad hoc operations with automated, data-driven workflows. Ticket triage went from manual review to five minutes a day, and legacy processes went from minutes to seconds.",
     "I studied Computer Engineering at ITS, trained as a Cloud Engineer at Bangkit Academy and finished RevoU's Full-Stack Data Analytics program. Since then I've studied data engineering through DataCamp's Data Engineer path, from SQL and Python pipelines to PySpark, Databricks, Docker and Kubernetes. Today I'm focused on data engineering: modelling warehouses, writing reliable ETL and making clean data easy to use.",

@@ -32,10 +32,13 @@ export function ExpandAll({ className }: { className?: string }) {
         group.set(!allOpen);
       }}
       className={cn(
-        "rounded-full border border-line px-4 py-2 font-mono text-xs text-fg-2 transition-colors hover:border-fg hover:text-fg",
+        "label inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-fg/15 px-4 text-fg-2 transition-colors hover:border-fg/40 hover:text-fg",
         className,
       )}
     >
+      <span aria-hidden className={cn("text-[14px] transition-transform duration-500", allOpen && "rotate-45")}>
+        +
+      </span>
       {allOpen ? "Collapse all" : "Expand all"}
     </button>
   );
@@ -75,8 +78,8 @@ export function Disclosure({
         <span
           aria-hidden
           className={cn(
-            "mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-line text-fg-2 transition-[transform,background-color,color,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/d:border-fg group-hover/d:text-fg",
-            open && "rotate-45 border-accent-solid bg-accent-solid text-on-accent group-hover/d:border-accent-solid group-hover/d:text-on-accent",
+            "mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-fg/15 text-fg-2 transition-[transform,background-color,color,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/d:border-fg/50 group-hover/d:text-fg",
+            open && "rotate-45 border-btn bg-btn text-btn-fg group-hover/d:border-btn group-hover/d:text-btn-fg",
           )}
         >
           <Plus size={14} weight="bold" />

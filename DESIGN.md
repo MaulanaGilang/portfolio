@@ -1,60 +1,49 @@
 ---
-version: 5.0
-name: Raw-to-Refined
-description: "Recruiter-first portfolio for Gilang Maulana (Data Analyst → Data Engineer). Lusion-inspired motion (smooth scroll, whole-page tone shifts, playful micro-details) on a strict paper + ink + cobalt system. One showpiece: a WebGL data-pipeline hero."
-design-read: "Developer portfolio for recruiters and engineering leads, with a bold-typographic Lusion-style language, leaning toward Next.js 16 + Tailwind v4 + Motion + Lenis + React Three Fiber."
-dials: { DESIGN_VARIANCE: 7, MOTION_INTENSITY: 7, VISUAL_DENSITY: 4 }
+version: 6.0
+name: Gallery-Floor
+description: "Recruiter-first portfolio for Gilang Maulana (Data Analyst → Data Engineer), adapted from the Lusion style reference (styles.refero.design): a cool lavender gallery floor, pure black type, graphite pills, and dark 3D stages that carry all the colour."
+design-read: "Developer portfolio for recruiters and engineering leads, in Lusion's gallery language, on Next.js 16 + Tailwind v4 + Motion + Lenis + React Three Fiber."
 ---
 
-## Tone system (no theme toggle)
-Two tones, scoped per section: every section declares `data-tone` and the tokens are defined on `[data-tone]`, so colours are static (never animated at runtime; an earlier whole-page crossfade cost 20-95 ms of style recalc per frame).
-
-Sections meet through the **Curtain** stack (`components/Curtain.tsx`): each panel scrolls until its bottom meets the viewport bottom, pins (sticky, negative top), and the next panel slides over it as a card with rounded top corners while the covered panel scales to 0.94 and dims (transform/opacity only). Consecutive same-tone sections share a panel. Progress is computed from page scroll plus each panel's in-flow marker, because sticky elements report their pinned position; same-page anchors use `naturalTop()` for the same reason. The nav takes the tone of the panel under it.
-
-| Section | Tone |
-|---|---|
-| Hero | paper |
-| About | ink |
-| Experience, Education | paper |
-| Projects | ink |
-| Skills & Certifications | paper |
-| Connect + footer | ink |
-| Case-study pages | paper |
+## Principle
+The UI is quiet and achromatic; the dark 3D content (hero pipeline stage, project covers, final card) does the dramatic work. Everything else is a tactile object resting on the lavender canvas.
 
 ## Tokens
-| Token | Paper | Ink |
-|---|---|---|
-| `--bg` | #F2F2EF | #0E0F12 |
-| `--fg` | #0E0F12 | #F2F2EF |
-| `--fg-2` (secondary text) | #4A4B50 | #A9AAB0 |
-| `--fg-3` (meta, AA) | #6A6B70 | #8B8C92 |
-| `--line` | #D9D9D4 | #25262B |
-| `--surface` | #E8E8E4 | #17181C |
-| `--accent` (text/links) | #2F5BFF | #7B96FF |
-| `--accent-solid` (fills) | #2F5BFF | #2F5BFF |
+| Token | Paper (canvas) | Ink (stage) | Role |
+|---|---|---|---|
+| `--bg` | #f0f1fa lavender mist | #0b0c11 night | canvas |
+| `--fg` | #000000 | #f0f1fa | all text |
+| `--fg-2` | #2b2e3a graphite | #c3c6d4 | secondary text |
+| `--fg-3` | #5b5f6e | #8d91a3 | meta (AA) |
+| `--line` | #dcdee9 | #262833 | hairlines |
+| `--surface` | #ffffff | #15161d | cards |
+| `--surface-2` | #e4e6ef haze | #1d1f28 | chips, icon discs |
+| `--btn` / `--btn-fg` | #2b2e3a / #fff | #f0f1fa / #000 | pill buttons |
+| `--accent` | #1a2ffb electric indigo | #7d8aff | punctuation, active states, focus |
+| `--gold` | #ffb81c | | the "Gold layer" highlight |
 
-Cobalt is the only accent: links, the active tab, focus rings, the "refined" particles, and the primary button. No second accent.
+**Accents:** electric indigo is punctuation (ticks, the word "pipelines", active tab text, focus ring), never a large fill. Gold replaces Lusion's acid lime: it is indigo's complement and the medallion **Gold layer** (business-ready data). Uses: modeled packets in the hero stage, a gold wash (`mark-gold`) under key metrics, the Gold boxes in the lineage diagram, and "your data." in the final card.
 
 ## Type
-- Geist Sans (variable) for everything. Display is weight 500, tracking -0.045em, leading 0.9.
-- Geist Mono for dates, durations, credential IDs, and tags.
-- Scale: hero name `clamp(3.5rem, 12.5vw, 13rem)`, section title `clamp(2.75rem, 7vw, 6.5rem)`, statement `clamp(1.75rem, 3.6vw, 3.25rem)`, body 1rem/1.6 at max 65ch.
-- Emphasis uses the same family in cobalt, never a serif.
+General Sans (ITF, free), self-hosted, weights 400 and 500 only, tracking -0.02em everywhere.
+- `display`: 400, leading 0.9 (section titles up to 7rem, finale up to 9rem).
+- `heading`: 500, leading 1.1 (hero headline, card titles).
+- `label`: 12-13px, 500, uppercase (nav, buttons, meta, dates).
+- Body 16-18px/1.5. Monospace only for SQL table names in the lineage diagram.
 
 ## Shape
-Cards and images use 14px corners (`rounded-card`). Buttons, tabs, and chips are full pills. Logos sit in 10px tiles.
+Cards 15px (`rounded-card`), pills fully round, hero stage and featured covers `--radius-stage` (clamp to 100px), project cards clamp to 64px, logos 10px tiles. Shadows: the single 4% whisper (`shadow-whisper`).
+
+## Signatures
+- "+" ticks (`<Tick/>`) around section labels and inside buttons (rotates 90° on hover).
+- Header: wordmark left, availability centre, "+ Let's talk" pill and "Menu +" right; sections live in a floating white menu panel.
+- Hero: "+ role +" label, three-line centred headline, two pills, then the dark 100px stage with the raw → cleaning → modeled pipeline, then "+ Scroll to explore +".
+- Section headers: centred "+ LABEL (count) +" over a display title.
 
 ## Motion
-- Lenis smooth scroll, plus the tone crossfade (600ms).
-- Split-word reveals on section titles. Scramble text on the hero role and nav hover.
-- Magnetic buttons and social icons (fine pointers only).
-- A preloader on the first visit of each session.
-- Synthesized UI sound (Web Audio), off by default, toggled in the nav.
-- Everything collapses to static under `prefers-reduced-motion`.
+Unchanged from v5: Curtain stack (lavender cards with a soft top shadow slide over pinned panels; covered panels scale to 0.94 and dim 10% toward the #d9dbe7 backdrop), Lenis, split-word reveals, scramble, magnetic pills, preloader ("Ingesting"), optional UI sound. Reduced motion respected via `MotionConfig reducedMotion="user"`.
 
 ## Rules
-- Zero em or en dashes in visible copy. Date ranges use " - ".
-- No eyebrows above section titles. The only small label is the hero availability line.
-- Experience and Education rows are collapsed by default. Certifications are grouped by issuer and collapsed.
-- Projects: three centered tabs, Data Engineering is the default, and each card links to `/projects/[slug]`.
+- No bold (600+), no em dashes in copy, no gradients or glass (the gold wash is a highlight mark, not decoration).
+- Experience/Education collapsed by default; certifications grouped by issuer.
 - All copy lives in `src/data/content.ts`.

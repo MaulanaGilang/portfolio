@@ -15,14 +15,14 @@ export default function Home() {
         <Curtain index={0} tone="paper">
           <Hero />
         </Curtain>
-        <Curtain index={1} tone="ink">
+        <Curtain index={1} tone="paper">
           <About />
         </Curtain>
         <Curtain index={2} tone="paper">
           <Experience />
           <Education />
         </Curtain>
-        <Curtain index={3} tone="ink">
+        <Curtain index={3} tone="paper">
           <Projects />
         </Curtain>
         <Curtain index={4} tone="paper">

@@ -52,15 +52,15 @@ export function Preloader() {
     <motion.div
       data-preloader
       aria-hidden
-      className="fixed inset-0 z-[100] flex flex-col justify-between bg-[#0e0f12] p-[clamp(16px,4vw,48px)] text-[#f2f2ef]"
+      className="fixed inset-0 z-[100] flex flex-col justify-between bg-[#f0f1fa] p-[clamp(16px,3.4vw,48px)] text-black"
       initial={false}
       animate={phase === "exit" ? { y: "-100%" } : { y: "0%" }}
       transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
       onAnimationComplete={() => phase === "exit" && setPhase("gone")}
     >
-      <div className="flex justify-between font-mono text-xs text-[#8b8c92]">
-        <span>Gilang Maulana</span>
-        <span>raw → refined</span>
+      <div className="label flex justify-between text-[#2b2e3a]">
+        <span>+ Gilang Maulana</span>
+        <span>Raw → Refined +</span>
       </div>
       <div className="flex items-end justify-between gap-6">
         <div className="-mb-[0.22em] overflow-hidden pb-[0.22em]">
@@ -73,7 +73,7 @@ export function Preloader() {
             Ingesting
           </motion.p>
         </div>
-        <span ref={count} className="font-mono text-[clamp(1.5rem,4vw,3rem)] tabular-nums text-[#7b96ff]">
+        <span ref={count} className="text-[clamp(1.5rem,4vw,3rem)] tabular-nums text-[#1a2ffb]">
           000
         </span>
       </div>

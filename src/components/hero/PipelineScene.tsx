@@ -80,6 +80,7 @@ const vertex = /* glsl */ `
 
 const fragment = /* glsl */ `
   uniform vec3 uRaw;
+  uniform vec3 uClean;
   uniform vec3 uRefined;
   uniform float uFade;
   varying float vOrder;
@@ -91,8 +92,10 @@ const fragment = /* glsl */ `
     float d = length(c);
     if (d > 0.5) discard;
     float edge = 1.0 - smoothstep(0.38, 0.5, d);
-    vec3 col = mix(uRaw, uRefined, smoothstep(0.35, 0.9, vOrder));
-    float a = mix(0.28 + vSeed * 0.4, 0.95, vOrder) * vAlpha * edge * uFade;
+    // raw (grey) -> cleaning (indigo) -> modeled (gold, the "Gold layer")
+    vec3 col = mix(uRaw, uClean, smoothstep(0.05, 0.45, vOrder));
+    col = mix(col, uRefined, smoothstep(0.6, 0.95, vOrder));
+    float a = mix(0.22 + vSeed * 0.45, 1.0, vOrder) * vAlpha * edge * uFade;
     gl_FragColor = vec4(col, a);
   }
 `;
@@ -172,8 +175,11 @@ function Particles({
       uBandH: { value: 200 },
       uScroll: { value: 0 },
       uFade: { value: 0 },
-      uRaw: { value: new THREE.Color("#0e0f12") },
-      uRefined: { value: new THREE.Color("#2f5bff") },
+      // Lit for the dark stage: lavender-grey records, electric indigo while cleaning, gold when modeled.
+      uRaw: { value: new THREE.Color("#c9ccdc") },
+      uClean: { value: new THREE.Color("#4152ff") },
+      // A shade lighter than the UI gold: tiny points on a dark stage otherwise read as orange.
+      uRefined: { value: new THREE.Color("#ffd04d") },
     }),
     [],
   );
@@ -190,9 +196,9 @@ function Particles({
     u.uSize.value.set(W, H);
     u.uPixelRatio.value = viewport.dpr;
     // Band sits in the upper part of the hero, above the name.
-    const mobile = W < 768;
-    u.uBandY.value = H * (mobile ? 0.14 : 0.16);
-    u.uBandH.value = Math.min(H * (mobile ? 0.3 : 0.36), 340);
+    // The canvas now fills the rounded stage: centre the band, a touch low to clear the stage labels.
+    u.uBandY.value = -H * 0.04;
+    u.uBandH.value = Math.min(H * 0.5, 320);
     u.uTime.value += dt * (calm ? 0.35 : 1);
     u.uScroll.value = calm ? 0 : (scroll?.get() ?? 0);
     u.uFade.value = Math.min(1, u.uFade.value + dt * 1.2);

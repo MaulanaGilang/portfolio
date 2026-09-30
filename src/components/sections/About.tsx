@@ -1,34 +1,36 @@
 import { about } from "@/data/content";
 import { ScrollLit } from "../ui/ScrollLit";
-import { SectionTitle } from "../ui/primitives";
+import { Reveal } from "../ui/Reveal";
+import { Tick } from "../ui/primitives";
 
 export function About() {
   return (
-    <section id="about" data-tone="ink" className="relative py-[clamp(96px,14vw,200px)]">
-      <div className="container-site">
-        <SectionTitle title="About" />
+    <section id="about" data-tone="paper" className="relative py-[clamp(96px,12vw,168px)]">
+      <div className="container-site flex flex-col items-center text-center">
+        <p className="label flex items-center gap-3 text-fg-2">
+          <Tick />
+          About
+          <Tick />
+        </p>
         <ScrollLit
           text={about.statement}
-          className="mt-10 max-w-[22ch] display text-[clamp(2rem,5.2vw,4.75rem)] leading-[1.02] md:mt-16"
+          className="heading mt-8 max-w-[22ch] text-[clamp(2rem,4.6vw,4.25rem)] leading-[1.05] font-normal"
         />
 
-        <div className="mt-20 grid gap-12 md:mt-28 md:grid-cols-12">
-          <div className="space-y-5 text-[17px] leading-relaxed text-fg-2 md:col-span-6 md:col-start-1">
-            {about.paragraphs.map((p) => (
-              <p key={p.slice(0, 24)} className="max-w-[60ch]">
-                {p}
-              </p>
-            ))}
-          </div>
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-8 self-start md:col-span-5 md:col-start-8">
-            {about.facts.map((f) => (
-              <div key={f.label} className="border-t border-line pt-4">
-                <dt className="font-mono text-xs text-fg-3">{f.label}</dt>
-                <dd className="mt-2 text-[15px] font-medium">{f.value}</dd>
-              </div>
-            ))}
-          </dl>
+        <div className="mt-16 max-w-[62ch] space-y-5 text-[17px] leading-[1.55] text-fg-2 md:mt-20 md:text-[18px]">
+          {about.paragraphs.map((p) => (
+            <p key={p.slice(0, 24)}>{p}</p>
+          ))}
         </div>
+
+        <dl className="mt-16 grid w-full max-w-[1100px] grid-cols-2 gap-3 text-left md:mt-20 md:grid-cols-4 md:gap-4">
+          {about.facts.map((f, i) => (
+            <Reveal key={f.label} delay={i * 0.05} className="rounded-card bg-surface p-5 md:p-6">
+              <dt className="label text-fg-3">{f.label}</dt>
+              <dd className="mt-6 text-[17px] leading-snug font-medium md:mt-10 md:text-[19px]">{f.value}</dd>
+            </Reveal>
+          ))}
+        </dl>
       </div>
     </section>
   );
