@@ -2,7 +2,7 @@
 
 import { animate, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { finishIntro } from "@/lib/intro";
+import { finishIntro, settleIntro } from "@/lib/intro";
 
 const KEY = "gm-preloaded";
 
@@ -20,7 +20,7 @@ export function Preloader() {
     const root = document.documentElement;
     if (root.dataset.preloaded !== undefined || reduce) {
       root.dataset.preloaded = "";
-      finishIntro();
+      settleIntro();
       const t = setTimeout(() => setPhase("gone"), 0);
       return () => clearTimeout(t);
     }
@@ -56,7 +56,11 @@ export function Preloader() {
       initial={false}
       animate={phase === "exit" ? { y: "-100%" } : { y: "0%" }}
       transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-      onAnimationComplete={() => phase === "exit" && setPhase("gone")}
+      onAnimationComplete={() => {
+        if (phase !== "exit") return;
+        settleIntro();
+        setPhase("gone");
+      }}
     >
       <p className="label text-white/60">Gilang Maulana</p>
 

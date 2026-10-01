@@ -125,68 +125,64 @@ float scene(vec2 uv, vec2 cell) {
 // right with a dotted trail. Send a message.
 export const plane = shell(`
 float dot2(vec3 v) { return dot(v, v); }
-float udTriangle(vec3 p, vec3 a, vec3 b, vec3 c) {
-  vec3 ba = b - a, pa = p - a, cb = c - b, pb = p - b, ac = a - c, pc = p - c;
-  vec3 nor = cross(ba, ac);
-  return sqrt((sign(dot(cross(ba, nor), pa)) + sign(dot(cross(cb, nor), pb)) + sign(dot(cross(ac, nor), pc)) < 2.0)
-    ? min(min(dot2(ba * clamp(dot(ba, pa) / dot2(ba), 0.0, 1.0) - pa), dot2(cb * clamp(dot(cb, pb) / dot2(cb), 0.0, 1.0) - pb)), dot2(ac * clamp(dot(ac, pc) / dot2(ac), 0.0, 1.0) - pc))
-    : dot(nor, pa) * dot(nor, pa) / dot2(nor));
+// Side-on, like the Telegram icon: long, pointing forward, with three folded facets
+// in different densities. A cursor is one arrowhead pointing up-left; this can't be.
+float tri(vec2 p, vec2 a, vec2 b, vec2 c) {
+  float d1 = (p.x - b.x) * (a.y - b.y) - (a.x - b.x) * (p.y - b.y);
+  float d2 = (p.x - c.x) * (b.y - c.y) - (b.x - c.x) * (p.y - c.y);
+  float d3 = (p.x - a.x) * (c.y - a.y) - (c.x - a.x) * (p.y - a.y);
+  bool neg = d1 < 0.0 || d2 < 0.0 || d3 < 0.0;
+  bool pos = d1 > 0.0 || d2 > 0.0 || d3 > 0.0;
+  return (neg && pos) ? 0.0 : 1.0;
 }
-float glide() { return smoothstep(0.25, 1.0, uProgress); }
-vec2 path(float e) { return mix(vec2(-0.45 * uAspect, -0.42), vec2(0.22 * uAspect, 0.18), e) + vec2(0.0, 0.12 * sin(e * 3.14159)); }
-float map(vec3 p) {
-  float e = glide();
-  p.xy -= path(e);
-  // Nose points up and to the right; the plane banks a little as it climbs.
-  p.xy = rot(0.85 - 0.25 * e + 0.04 * sin(uTime * 0.8)) * p.xy;
-  // Seen mostly from above, like the "send" icon: the centre fold shows between a
-  // lit wing and a shaded one; a small roll reveals a sliver of keel.
-  p.yz = rot(-1.0) * p.yz;
-  p.xz = rot(0.2 + 0.25 * e) * p.xz;
-  float S = 0.66;
-  // Deep dihedral so the two wings catch different light, and a tall keel fold.
-  vec3 N = vec3(0.0, 0.0, 1.0) * S, T = vec3(0.0, 0.0, -0.9) * S;
-  vec3 L = vec3(-0.7, 0.32, -0.9) * S, R = vec3(0.7, 0.32, -0.9) * S, K = vec3(0.0, -0.36, -0.9) * S;
-  float d = min(udTriangle(p, N, L, T), udTriangle(p, N, R, T));
-  d = min(d, udTriangle(p, N, T, K));
-  return d - 0.012;
+// Flight path: a gentle S-curve climb that settles at the resting spot.
+const vec2 P0 = vec2(-1.05, -0.62);
+const vec2 P1 = vec2(0.72, 0.3);
+vec2 path(float k) {
+  vec2 d = normalize(P1 - P0);
+  vec2 n = vec2(-d.y, d.x);
+  return mix(P0, P1, k) + n * (0.13 * sin(6.28318 * k));
 }
-vec3 nor(vec3 p) {
-  vec2 e = vec2(0.002, 0.0);
-  return normalize(vec3(map(p + e.xyy) - map(p - e.xyy), map(p + e.yxy) - map(p - e.yxy), map(p + e.yyx) - map(p - e.yyx)));
-}
+float glide() { return smoothstep(0.2, 1.0, uProgress); }
 float scene(vec2 uv, vec2 cell) {
-  vec3 ro = vec3(uv, -3.0);
-  float t = 0.0;
-  bool hit = false;
-  // Cheap bound first: only cells near the plane pay for the raymarch.
-  if (length(uv - path(glide())) > 0.8) t = 7.0;
-  for (int i = 0; i < 56; i++) {
-    if (t > 6.0) break;
-    float d = map(ro + vec3(0, 0, t));
-    if (d < 0.001) { hit = true; break; }
-    t += d;
-    if (t > 6.0) break;
-  }
-  if (hit) {
-    vec3 n = nor(ro + vec3(0, 0, t));
-    float dif = abs(dot(n, normalize(vec3(-0.5, 0.75, -0.45))));
-    // Wide tonal range: the lit wing reads dense, the shaded wing and keel sparse.
-    float s = clamp(0.1 + 0.95 * dif * dif, 0.0, 1.0);
-    if (formed(cell, 0.0, 0.4) > 0.5) return s;
-    return hash(cell + floor(uTime * 5.0)) < 0.08 ? 1.0 : -1.0;
-  }
-  // Dotted trail along the flight path, thinning out behind the plane.
   float e = glide();
-  if (e > 0.02) {
+  vec2 pos = path(e);
+  vec2 tng = path(min(e + 0.02, 1.0)) - path(max(e - 0.02, 0.0));
+  // Tilt eases toward the travel direction but is softly capped at ~15° from the
+  // resting angle (tanh), so it glides rather than spins.
+  vec2 dir = P1 - P0;
+  float base = atan(dir.y, dir.x);
+  float dev = atan(tng.y, tng.x) - base;
+  float ang = base + 0.26 * tanh(dev / 0.26) + 0.025 * sin(uTime * 0.9);
+  // Plane-local coordinates: x runs tail to nose; half-length 0.46.
+  vec2 p = rot(ang) * (uv - pos) / 0.46;
+  if (abs(p.x) < 1.15 && abs(p.y) < 0.8) {
+    vec2 N = vec2(1.0, 0.02);     // nose
+    vec2 T1 = vec2(-1.0, 0.6);    // far wingtip, raised
+    vec2 C = vec2(-0.48, 0.0);    // the centre crease at the tail
+    vec2 T2 = vec2(-0.88, -0.26); // near wing trailing tip
+    vec2 K = vec2(-0.3, -0.5);    // keel fold hanging below
+    float s = -1.0;
+    if (tri(p, N, T1, C) > 0.5) s = 0.72;               // far wing: mid tone
+    if (tri(p, N, C, T2) > 0.5) s = 1.0;                // near wing: solid, brightest
+    if (tri(p, vec2(0.38, -0.04), C, K) > 0.5) s = 0.42; // keel: dimmer fold
+    if (s > 0.0) {
+      if (formed(cell, 0.0, 0.35) > 0.5) return s;
+      return hash(cell + floor(uTime * 5.0)) < 0.08 ? 1.0 : -1.0;
+    }
+  }
+  // Dotted trail behind the plane along the S, fading with age.
+  // Ends just behind the tail crease (~0.22 units behind the plane's centre).
+  float tail = e - 0.12;
+  if (tail > 0.0) {
     float best = 1e3, at = 0.0;
-    for (int i = 0; i <= 24; i++) {
-      float k = e * float(i) / 24.0;
+    for (int i = 0; i <= 40; i++) {
+      float k = tail * float(i) / 40.0;
       float dd = length(uv - path(k));
       if (dd < best) { best = dd; at = k; }
     }
     float fade = at / e;
-    if (best < 0.035 && mod(cell.x + cell.y, 3.0) < 1.0 && fade < 0.9) return fade * 0.8;
+    if (best < 0.035 && mod(cell.x + cell.y, 2.0) < 1.0) return 0.3 + fade * 0.65;
   }
   return -1.0;
 }

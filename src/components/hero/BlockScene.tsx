@@ -260,9 +260,10 @@ export default function BlockScene({ calm = false, active = true }: { calm?: boo
     <div ref={wrap} className="absolute inset-0">
       <Canvas
         camera={{ position: [0, 0.6, 16], fov: 32 }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        frameloop={active ? "always" : "never"}
+        // "demand" still renders the first frame, so shaders compile and the frame isn't empty.
+        frameloop={active ? "always" : "demand"}
         aria-hidden
       >
         <Blocks count={count} batches={batches} pointer={pointer} calm={calm} />

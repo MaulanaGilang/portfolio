@@ -35,7 +35,7 @@ export const about = {
   facts: [
     { label: "Based in", value: "Tuban, East Java, Indonesia" },
     { label: "Open to", value: "Remote and relocation" },
-    { label: "Focus", value: "SQL, Python, ETL, cloud data" },
+    { label: "Focus", value: "SQL, Python, Cloud, Data Warehousing" },
     { label: "Degree", value: "B.Eng. Computer Engineering, ITS" },
   ],
 };
@@ -242,7 +242,7 @@ export const projects: Project[] = [
     category: "Data Engineering",
     title: "SQL Data Warehouse",
     context: "Personal project",
-    year: "2025",
+    year: "2026",
     cover: "/projects/sql-data-warehouse-photo.webp",
     short: "A Medallion-architecture warehouse in SQL Server that merges ERP and CRM sales data into a star schema.",
     overview:

@@ -24,7 +24,7 @@ export function Connect() {
           scene="plane"
           tone="dark"
           offset={["start end", "end end"]}
-          className="absolute top-[34%] right-[3%] bottom-[14%] hidden w-[46%] md:block"
+          className="absolute top-[30%] right-[3%] bottom-[12%] hidden w-[50%] md:block"
         />
         <div className="relative container-site">
           <SplitReveal

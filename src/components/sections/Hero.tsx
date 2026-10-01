@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { profile } from "@/data/content";
-import { useIntroDone } from "@/lib/intro";
+import { useIntroDone, useIntroSettled } from "@/lib/intro";
 import { PillButton, Ticks } from "../ui/primitives";
 import { Scramble } from "../ui/Scramble";
 
@@ -24,6 +24,7 @@ const stages = [
 export function Hero() {
   const frame = useRef<HTMLDivElement>(null);
   const ready = useIntroDone();
+  const settled = useIntroSettled();
   const reduce = useReducedMotion();
   const [onScreen, setOnScreen] = useState(true);
 
@@ -107,7 +108,8 @@ export function Hero() {
             aria-hidden
             className="absolute inset-x-[10%] bottom-[6%] h-[22%] rounded-[50%] bg-[radial-gradient(closest-side,rgb(40_44_70/0.16),transparent)]"
           />
-          <BlockScene calm={!!reduce} active={onScreen} />
+          {/* Draws one frame (compiling its shaders) under the preloader, then animates once the curtain is gone. */}
+          <BlockScene calm={!!reduce} active={onScreen && settled} />
 
           {/* Stage markers along the top, each at the point where that stage begins. */}
           <div aria-hidden className="pointer-events-none absolute inset-x-0 top-4 bottom-4 md:top-5">
