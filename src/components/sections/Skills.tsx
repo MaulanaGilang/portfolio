@@ -17,25 +17,42 @@ export function Skills() {
             <Reveal key={g.group} delay={gi * 0.04} className="grid gap-3 border-t border-line py-5 md:grid-cols-12 md:gap-6">
               <h3 className="label pt-2.5 text-fg md:col-span-3">{g.group}</h3>
               <ul className="flex flex-wrap gap-2 md:col-span-9">
-                {g.items.map((s) => (
-                  <li
-                    key={s.name}
-                    className="group/skill inline-flex h-10 items-center gap-2.5 rounded-full bg-surface pr-4 pl-1.5 shadow-[var(--shadow-whisper)]"
-                  >
-                    <span className="grid size-7 place-items-center rounded-full bg-haze text-fg transition-colors duration-300 group-hover/skill:bg-accent-solid group-hover/skill:text-on-accent">
-                      {s.icon ? (
-                        <span
-                          aria-hidden
-                          className="logo-mask size-3.5"
-                          style={{ maskImage: `url(/skills/${s.icon}.svg)`, WebkitMaskImage: `url(/skills/${s.icon}.svg)` }}
-                        />
-                      ) : (
-                        <Database aria-hidden size={14} weight="bold" />
-                      )}
-                    </span>
-                    <span className="text-[14px]">{s.name}</span>
-                  </li>
-                ))}
+                {g.items.map((s) =>
+                  s.level ? (
+                    // Spoken language: the tool pill mirrored. Name first, then the level in a
+                    // chip that turns blue on hover, like a tool's logo disc.
+                    <li
+                      key={s.name}
+                      className="group/skill inline-flex h-10 items-center gap-2.5 rounded-full bg-surface pr-1.5 pl-4 shadow-[var(--shadow-whisper)]"
+                    >
+                      <span className="text-[14px]">{s.name}</span>
+                      <span className="inline-flex h-7 items-center rounded-full bg-haze px-2.5 text-[11px] leading-none font-medium tracking-[0.02em] text-fg-2 uppercase transition-colors duration-300 group-hover/skill:bg-accent-solid group-hover/skill:text-on-accent">
+                        {s.level}
+                      </span>
+                    </li>
+                  ) : (
+                    <li
+                      key={s.name}
+                      className="group/skill inline-flex h-10 items-center gap-2.5 rounded-full bg-surface pr-4 pl-1.5 shadow-[var(--shadow-whisper)]"
+                    >
+                      <span className="grid size-7 place-items-center rounded-full bg-haze text-fg transition-colors duration-300 group-hover/skill:bg-accent-solid group-hover/skill:text-on-accent">
+                        {s.icon ? (
+                          <span
+                            aria-hidden
+                            className="logo-mask size-3.5"
+                            style={{
+                              maskImage: `url(/skills/${s.icon}.svg)`,
+                              WebkitMaskImage: `url(/skills/${s.icon}.svg)`,
+                            }}
+                          />
+                        ) : (
+                          <Database aria-hidden size={14} weight="bold" />
+                        )}
+                      </span>
+                      <span className="text-[14px]">{s.name}</span>
+                    </li>
+                  ),
+                )}
               </ul>
             </Reveal>
           ))}

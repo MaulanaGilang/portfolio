@@ -372,7 +372,8 @@ export const projects: Project[] = [
   },
 ];
 
-export type Skill = { name: string; icon?: string };
+/** `level` marks a spoken language (LinkedIn proficiency scale); those pills show no icon. */
+export type Skill = { name: string; icon?: string; level?: string };
 
 // icon = file in /public/skills (simple-icons, monochrome). No icon = generic database glyph.
 export const skills: { group: string; items: Skill[] }[] = [
@@ -418,6 +419,16 @@ export const skills: { group: string; items: Skill[] }[] = [
       { name: "TypeScript", icon: "typescript" },
       { name: "Git", icon: "git" },
       { name: "Figma", icon: "figma" },
+    ],
+  },
+  {
+    group: "Spoken Languages",
+    items: [
+      { name: "Indonesian", level: "Native" },
+      { name: "English", level: "Professional working" },
+      { name: "Mandarin", level: "Elementary" },
+      { name: "Spanish", level: "Elementary" },
+      { name: "Russian", level: "Elementary" },
     ],
   },
 ];
