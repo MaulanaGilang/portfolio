@@ -19,16 +19,17 @@ export function Skills() {
               <ul className="flex flex-wrap gap-2 md:col-span-9">
                 {g.items.map((s) =>
                   s.level ? (
-                    // Spoken language: the tool pill mirrored. Name first, then the level in a
-                    // chip that turns blue on hover, like a tool's logo disc.
+                    // Spoken language, laid out like a tool pill: the language sits in the chip
+                    // (where a tool's logo disc is) and turns blue on hover; the level follows.
+                    // Same size and leading on both, so their baselines line up.
                     <li
                       key={s.name}
-                      className="group/skill inline-flex h-10 items-center gap-2.5 rounded-full bg-surface pr-1.5 pl-4 shadow-[var(--shadow-whisper)]"
+                      className="group/skill inline-flex h-10 items-center gap-2.5 rounded-full bg-surface pr-4 pl-1.5 text-[14px] leading-none shadow-[var(--shadow-whisper)]"
                     >
-                      <span className="text-[14px]">{s.name}</span>
-                      <span className="inline-flex h-7 items-center rounded-full bg-haze px-2.5 text-[11px] leading-none font-medium tracking-[0.02em] text-fg-2 uppercase transition-colors duration-300 group-hover/skill:bg-accent-solid group-hover/skill:text-on-accent">
-                        {s.level}
+                      <span className="inline-flex h-7 items-center rounded-full bg-haze px-3 text-fg transition-colors duration-300 group-hover/skill:bg-accent-solid group-hover/skill:text-on-accent">
+                        {s.name}
                       </span>
+                      <span className="text-fg-3">{s.level}</span>
                     </li>
                   ) : (
                     <li
