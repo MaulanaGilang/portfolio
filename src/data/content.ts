@@ -11,7 +11,7 @@ export const profile = {
   email: "maulana.gilang305@gmail.com",
   github: "https://github.com/MaulanaGilang",
   linkedin: "https://www.linkedin.com/in/gilang-maulanatbn",
-  resume: "https://drive.google.com/file/d/1ZFC5LHz7g-cqFpqVPUEH24qFVV7MBsY8/view?usp=sharing",
+  resume: "https://drive.google.com/file/d/16fC-HS6kaGex3UCrbvCkc6AYVs1cxAuK/view?usp=sharing",
 };
 
 export const nav = [
