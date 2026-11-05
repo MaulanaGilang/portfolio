@@ -428,7 +428,6 @@ export const skills: { group: string; items: Skill[] }[] = [
       { name: "English", level: "Professional working" },
       { name: "Mandarin", level: "Elementary" },
       { name: "Spanish", level: "Elementary" },
-      { name: "Russian", level: "Elementary" },
     ],
   },
 ];
