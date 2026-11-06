@@ -24,7 +24,7 @@ The portfolio shows Gilang at work. This page shows the rest: favourite games, m
 | Base design | Dune-inspired feudal sci-fi |
 | House colours | Maroon and silver |
 | House name | House Maulana. Motto to be decided |
-| House emblem | A rose inside a closed thorn ring, nothing else (see [design.md](design.md)) |
+| House emblem | A rose inside a thorn ring, on a striped maroon and silver cloth (see [design.md](design.md)) |
 | Footer link | After Hours |
 | Cost | Free services only, with no exceptions |
 | Spotify | Profile link only. No Premium, so no Spotify API |

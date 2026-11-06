@@ -27,21 +27,26 @@ Dune's own banners are simple in the books: Atreides is [described as black and 
 
 ## 3. The house banner
 
-**Concept: a rose guarded by its own thorns.** The thorns circle the rose and nothing else is on the field. The banner borrows only the idea of one flat field and one simple emblem from Dune. The diamond frame and thin line style of the Harkonnen banner are not used.
+**Concept: a rose guarded by its own thorns.** A large rose sits inside a thorn ring on a central silver stripe, with thin stripes beside it and angled rails down both edges. This design was chosen by Gilang from an AI-generated image and recoloured to maroon and silver.
 
-Current banner: [assets/house-banner.png](assets/house-banner.png), in the exact flat palette. The ring is already a vector, [assets/house-ring.svg](assets/house-ring.svg), drawn to match the thorns of an earlier open-ring concept. The five-petal spiral rose comes from a FLUX.2 generation and still needs tracing into the same vector master.
+| File | Use |
+|---|---|
+| [assets/house-banner-cloth.png](assets/house-banner-cloth.png) | Woven cloth version, with folds and fringe. For the Arrival screen and the share image |
+| [assets/house-banner-flat.png](assets/house-banner-flat.png) | Two-colour version in the exact palette. Stripes and rails are redrawn straight; the sigil still needs tracing into the vector master |
 
 | Part | Decision |
 |---|---|
-| Field | Maroon `#5A0F1E`, tall standard |
+| Field | Maroon `#5A0F1E`, wide cloth |
+| Motifs | One wide central silver stripe, two thin stripes beside it, angled rails on both edges |
+| Spires | A thin spire with a small diamond above and below the ring, cut through the stripe in maroon |
 | Emblem | Silver `#C9CDD3`, one flat colour |
 | Rose | Seen from above, petals around a spiral heart. The spiral is what makes it a rose: an earlier side-on version read as a lotus |
-| Thorns | One clean closed band around the rose, not touching it. Six large outer thorns and six smaller inner ones, unevenly spaced so it never reads as a gear or crosshair |
+| Thorns | One clean closed ring touching the rose's petals, with long thorns radiating outward |
 | Text | None on the banner. The name is set in type beside it |
 
-**Rules.** Two colours only. Rose and thorns only: no sword, shield, leaves or diamond frame. Never add a gradient or a glow. Minimum size 48px tall; below that, use the rose head alone. The silver emblem may sit on Basalt without the cloth.
+**Rules.** Two colours only. No sword, shield or leaves. Never add a gradient or a glow to the flat version. Minimum size 48px tall; below that, use the rose head alone. The silver emblem may sit on Basalt without the cloth.
 
-**Cloth version.** A render of the banner hanging in a stone hall is optional, and would be made from the final emblem.
+**Shape.** The source image is landscape, so the Arrival screen shows it as a wide hanging cloth rather than a tall standard.
 
 ## 4. Colour
 
@@ -146,8 +151,8 @@ Errors say what happened and what to do, for example "That message is over 280 c
 
 ## 10. Avoid
 
-Sand and gold palette. Any Dune font, logo, name or quote. Parchment textures. Swords, shields, diamond frames and leafy wreaths. Glowing edges. Small uppercase labels. Monospace labels. Identical card grids. Motion on every section. A second bright element competing with the banner.
+Sand and gold palette. Any Dune font, logo, name or quote. Parchment textures. Swords, shields and leafy wreaths. Glowing edges. Small uppercase labels. Monospace labels. Identical card grids. Motion on every section. A second bright element competing with the banner.
 
 ## 11. Next design step
 
-Pick a banner and trace it into a clean vector. Then mock up the Arrival screen and one Records block before building, to judge Marcellus at real size and the maroon against Basalt on a real screen.
+Trace the sigil into a clean vector. Then mock up the Arrival screen and one Records block before building, to judge Marcellus at real size and the maroon against Basalt on a real screen.
