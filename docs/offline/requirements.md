@@ -22,7 +22,7 @@ The portfolio shows Gilang at work. This page shows the rest: favourite games, m
 | One site or two | One site, a separate page at `/offline` with its own look |
 | Entry point | One small link in the portfolio footer, not in the main nav |
 | Base design | Dune-inspired feudal sci-fi |
-| House colours | Wine red field, cream sigil, silver stripes |
+| House colours | Wine red field, silver sigil and centre stripes, cream edge rails |
 | House name | House Maulana. Motto to be decided |
 | House emblem | A rose inside a thorn ring, on a striped wine red, cream and silver cloth (see [design.md](design.md)) |
 | Footer link | After Hours |
@@ -56,7 +56,7 @@ Priority: **P1** needed for launch, **P2** soon after launch.
 
 ### S1 Arrival
 - **FR-1.1** The first screen shows the house banner and the name House Maulana. The motto joins them once decided, and the layout must work without it.
-- **FR-1.2** The emblem forms from cream grains as the page opens, once, then stays still.
+- **FR-1.2** The emblem forms from silver grains as the page opens, once, then stays still.
 - **FR-1.3** A link back to the portfolio is visible without scrolling.
 
 ### S2 Character sheet
