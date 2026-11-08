@@ -27,7 +27,7 @@ Dune's own banners are simple in the books: Atreides is [described as black and 
 
 ## 3. The house banner
 
-**Concept: a rose guarded by its own thorns.** A large rose sits inside a thorn ring on a central silver stripe, with thin stripes beside it and angled rails down both edges. This design was chosen by Gilang from an AI-generated image and recoloured to maroon and silver.
+**Concept: a rose guarded by its own thorns.** A large rose sits inside a thorn ring on a central silver stripe, with thin stripes beside it and angled rails down both edges. This design was chosen by Gilang from an AI-generated image and recoloured to the house palette: wine red field, cream sigil, silver stripes and rails.
 
 | File | Use |
 |---|---|
@@ -39,12 +39,12 @@ Dune's own banners are simple in the books: Atreides is [described as black and 
 | Field | Maroon `#5A0F1E`, wide cloth |
 | Motifs | One wide central silver stripe, two thin stripes beside it, angled rails on both edges |
 | Spires | A thin spire with a small diamond above and below the ring, cut through the stripe in maroon |
-| Emblem | Silver `#C9CDD3`, one flat colour |
+| Emblem | Cream `#F0E8D6`, one flat colour |
 | Rose | Seen from above, petals around a spiral heart. The spiral is what makes it a rose: an earlier side-on version read as a lotus |
 | Thorns | One clean closed ring touching the rose's petals, with long thorns radiating outward |
 | Text | None on the banner. The name is set in type beside it |
 
-**Rules.** Two colours only. No sword, shield or leaves. Never add a gradient or a glow to the flat version. Minimum size 48px tall; below that, use the rose head alone. The silver emblem may sit on Basalt without the cloth.
+**Rules.** Three colours with fixed roles: wine red field, cream sigil, silver stripes. Cream and silver never touch, because they are too close in brightness (1.31:1). No sword, shield or leaves. Never add a gradient or a glow to the flat version. Minimum size 48px tall; below that, use the rose head alone. The cream emblem may sit on Basalt without the cloth.
 
 **Shape.** The source image is landscape, so the Arrival screen shows it as a wide hanging cloth rather than a tall standard.
 
@@ -56,7 +56,8 @@ Dune's own banners are simple in the books: Atreides is [described as black and 
 | Stone | `#1E1817` | Raised surfaces |
 | House | `#5A0F1E` | Maroon. Surfaces only: banner, selected tab, active states |
 | Wine | `#8E2A3C` | Hairlines and focus halos on maroon. Not for text |
-| Silver | `#C9CDD3` | Emblem, rail, headings |
+| Cream | `#F0E8D6` | Emblem, house name |
+| Silver | `#C9CDD3` | Banner stripes, thorn rail, headings |
 | Bone | `#ECE7E1` | Body text |
 | Ash | `#9A9496` | Secondary text |
 
@@ -65,6 +66,8 @@ Measured contrast:
 | Pair | Ratio | Use |
 |---|---|---|
 | Bone on Basalt | 15.60 | Body |
+| Cream on Basalt | 15.73 | House name |
+| Cream on House | 11.31 | Emblem on the banner |
 | Silver on Basalt | 12.02 | Headings |
 | Ash on Basalt | 6.44 | Secondary text |
 | Bone on Stone | 14.26 | Text on cards |
@@ -74,7 +77,7 @@ Measured contrast:
 | House on Basalt | 1.39 | **Never for text or icons** |
 | Wine on Basalt | 2.33 | **Never for text**; decorative only |
 
-No sand, no gold. Those belong to the films. Maroon and silver make this house its own.
+No sand, no gold. Those belong to the films. Wine red, cream and silver make this house its own.
 
 ## 5. Type
 
@@ -125,7 +128,7 @@ Scale: 16 body, 20 lead, 28 small heading, 44 section title, `clamp(56px, 11vw, 
 
 ## 7. Motion
 
-One orchestrated moment: on load, silver grains settle into the emblem over about two seconds, then everything is still. It reuses the dither idea already in the portfolio's About and Connect scenes.
+One orchestrated moment: on load, cream grains settle into the emblem over about two seconds, then everything is still. It reuses the dither idea already in the portfolio's About and Connect scenes.
 
 - Cursor: grains near the pointer part slightly over the emblem, as in the prism and plane.
 - Scroll: the rail fills. Nothing else animates on scroll.
