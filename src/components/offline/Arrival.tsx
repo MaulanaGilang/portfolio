@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
@@ -110,7 +110,7 @@ export function Arrival() {
       <div className="ah-frame ah-hud-frame">
         <div className="ah-hud-top">
           <p className="ah-label">After hours</p>
-          <Link href="/" className="ah-label ah-link max-[899px]:hidden">
+          <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link max-[899px]:hidden">
             Back to the portfolio
           </Link>
         </div>
@@ -145,7 +145,7 @@ export function Arrival() {
           <div className="ah-frame ah-panel">
             <p className="ah-label mb-3">About</p>
             <p className="text-[15px] leading-relaxed text-[var(--bone)]">{house.intro}</p>
-            <Link href="/" className="ah-label ah-link mt-4 inline-block min-[900px]:hidden">
+            <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link mt-4 inline-block min-[900px]:hidden">
               Back to the portfolio
             </Link>
           </div>

@@ -13,8 +13,8 @@ import { Skills } from "@/components/sections/Skills";
 export default function Home() {
   return (
     <ViewTransition
-      enter={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
-      exit={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
+      enter={{ "nav-forward": "nav-forward", "nav-back": "nav-back", "world-out": "world-enter", default: "none" }}
+      exit={{ "nav-forward": "nav-forward", "nav-back": "nav-back", "world-in": "world-exit", default: "none" }}
       default="none"
     >
       <main id="main" className="relative">

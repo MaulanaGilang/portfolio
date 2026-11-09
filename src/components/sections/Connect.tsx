@@ -64,7 +64,7 @@ export function Connect() {
           <p>© {new Date().getFullYear()} Gilang Maulana</p>
           <p>Designed and built with Next.js and WebGL</p>
           <div className="flex gap-6">
-            <Link href="/offline" className="hover:text-fg">
+            <Link href="/offline" transitionTypes={["world-in"]} className="hover:text-fg">
               After Hours
             </Link>
             <a href="#top" className="hover:text-fg">

@@ -75,8 +75,17 @@ export const records = {
   ],
 };
 
+export type Favourite = {
+  title: string;
+  year: number;
+  /** Poster image shown on hover: a path under /public or a full URL. */
+  poster?: string;
+  /** Optional short muted clip (mp4/webm) shown on hover instead of the poster. */
+  clip?: string;
+};
+
 /** Things Gilang likes, in three categories. Unranked, any length. */
-export const favourites: { id: string; label: string; items: { title: string; year: number }[] }[] = [
+export const favourites: { id: string; label: string; items: Favourite[] }[] = [
   {
     id: "games",
     label: "Games",

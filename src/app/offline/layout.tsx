@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Image from "next/image";
 import { Michroma } from "next/font/google";
+import { ViewTransition } from "react";
+import { Scenes } from "@/components/offline/Scenes";
 import "./offline.css";
 
 // Michroma (SIL Open Font License): wide, geometric capitals in the spirit of the films'
@@ -24,12 +25,12 @@ export const viewport: Viewport = {
 /** After Hours has its own chrome, colours and display face. Nothing from the portfolio loads here. */
 export default function OfflineLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div data-world="offline" className={michroma.variable}>
-      {/* One fixed scene behind every panel: a desert at dusk. */}
-      <div className="ah-scene" aria-hidden>
-        <Image src="/offline/scene.webp" alt="" fill priority sizes="100vw" />
+    // Crossing from or to the portfolio: this world sinks or rises (see globals.css).
+    <ViewTransition enter={{ "world-in": "world-enter", default: "none" }} exit={{ "world-out": "world-exit", default: "none" }} default="none">
+      <div data-world="offline" className={michroma.variable}>
+        <Scenes />
+        {children}
       </div>
-      {children}
-    </div>
+    </ViewTransition>
   );
 }

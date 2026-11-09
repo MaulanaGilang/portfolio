@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { motion, useScroll } from "motion/react";
@@ -80,7 +80,7 @@ export function ThornRail() {
                 </li>
               ))}
               <li>
-                <Link href="/">Back to the portfolio</Link>
+                <Link href="/" transitionTypes={["world-out"]}>Back to the portfolio</Link>
               </li>
             </ol>
           </nav>

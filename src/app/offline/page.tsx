@@ -1,6 +1,7 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
 import { CopyButton } from "@/components/offline/CopyButton";
+import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
 import { HoursChart } from "@/components/offline/HoursChart";
 import { ThornRail } from "@/components/offline/ThornRail";
@@ -153,20 +154,7 @@ export default function AfterHours() {
 
             <section id="favourites" aria-labelledby="favourites-title" className="ah-section">
               <Title id="favourites">Favourites</Title>
-              <div className="ah-grid ah-grid-3">
-                {favourites.map((c) => (
-                  <Panel key={c.id} label={c.label} meta={`${c.items.length} titles`}>
-                    <ul className="ah-rows">
-                      {c.items.map((it) => (
-                        <li key={it.title} className="!grid-cols-[1fr_auto]">
-                          <span className="text-[var(--bone)]">{it.title}</span>
-                          <span className="ah-num text-[14px] text-[var(--ash)]">{it.year}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Panel>
-                ))}
-              </div>
+              <Favourites categories={favourites} />
             </section>
 
             <div className="ah-grid ah-grid-5-7">
@@ -239,7 +227,7 @@ export default function AfterHours() {
           <div className="flex flex-col gap-6 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="ah-label">House Maulana</p>
             <div className="flex flex-wrap gap-x-8 gap-y-3">
-              <Link href="/" className="ah-label ah-link">
+              <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link">
                 Back to the portfolio
               </Link>
               <a href="#arrival" className="ah-label ah-link">
