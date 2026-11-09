@@ -73,7 +73,7 @@ Route groups do not change URLs, so every existing link keeps working.
 | Emblem | Generalise `src/components/dither/DitherCanvas.tsx` with a `banner` scene sampling the emblem as a mask. One WebGL2 canvas, no Three.js |
 | Fallback | Inline SVG renders first, so the emblem exists with no JavaScript, no WebGL and under reduced motion |
 | Manual content | Typed file `src/data/offline.ts`, mirroring `src/data/content.ts` |
-| Fonts | Marcellus self-hosted with `next/font/local`, loaded only in the offline layout |
+| Fonts | Michroma through `next/font/google` (downloaded at build, served from the site), loaded only in the offline layout |
 | Cover art | Downloaded into `public/offline/covers`, served through `next/image`. Avoids hotlinking and makes the duotone reliable |
 | Chart | Hand-built SVG from gold data. No chart library for one chart |
 
@@ -224,4 +224,4 @@ Every part runs at no cost. Nothing depends on a paid plan.
 | Presence (optional) | Lanyard | Free public API |
 | Failure alerts | GitHub's built-in email | Included |
 | Spam guard (only if needed) | Cloudflare Turnstile | Free tier |
-| Fonts | Marcellus, Satoshi | Open licence; Satoshi is already in the project |
+| Fonts | Michroma, Satoshi | Open licence; Satoshi is already in the project |

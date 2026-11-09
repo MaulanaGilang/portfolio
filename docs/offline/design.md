@@ -2,6 +2,8 @@
 
 Status: draft for review. This document is for `/offline` only. The portfolio keeps its own [DESIGN.md](../../DESIGN.md).
 
+> **Revised direction (November 2026).** The page is now a heads-up display over a cinematic scene, after the "Dunezed" web UI reference Gilang picked: one fixed desert-at-dusk image (`public/offline/scene.webp`, generated with FLUX.2), glass panels with hairline frames and corner ticks, and Michroma (SIL Open Font License) for wide capital labels and titles in place of Marcellus. The cloth banner is replaced on the page by the sigil alone, shown as a silver emblem that forms from grains. Top 3 is replaced by Favourites: unranked lists of games, movies and anime. Where the sections below disagree with this note, this note wins; they still describe the palette, writing and motion rules.
+
 ## 1. Direction
 
 **Subject:** the private archive of a noble house in a far-future empire, kept by its last working heir.

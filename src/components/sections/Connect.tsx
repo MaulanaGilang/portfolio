@@ -1,4 +1,5 @@
 import { EnvelopeSimple, FileText, GithubLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 import { profile } from "@/data/content";
 import { DitherCanvas } from "../dither/DitherCanvas";
 import { Magnetic } from "../ui/Magnetic";
@@ -62,9 +63,14 @@ export function Connect() {
         <div className="relative container-site mt-14 flex flex-col gap-3 border-t border-line pt-5 label text-fg-3 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Gilang Maulana</p>
           <p>Designed and built with Next.js and WebGL</p>
-          <a href="#top" className="hover:text-fg">
-            Back to top ↑
-          </a>
+          <div className="flex gap-6">
+            <Link href="/offline" className="hover:text-fg">
+              After Hours
+            </Link>
+            <a href="#top" className="hover:text-fg">
+              Back to top ↑
+            </a>
+          </div>
         </div>
       </section>
     </footer>

@@ -3,8 +3,7 @@
 import { animate, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { finishIntro, settleIntro } from "@/lib/intro";
-
-const KEY = "gm-preloaded";
+import { PRELOADED_KEY as KEY } from "@/lib/preloader";
 
 /**
  * First visit per session: a black loader with a large "Ingesting" and a
@@ -84,6 +83,3 @@ export function Preloader() {
     </motion.div>
   );
 }
-
-/** Runs before paint: skip the preloader on repeat visits within a session. */
-export const preloaderScript = `try{if(sessionStorage.getItem("${KEY}"))document.documentElement.dataset.preloaded=""}catch(e){}`;

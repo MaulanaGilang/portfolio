@@ -1,10 +1,8 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { FluidCursor } from "@/components/FluidCursor";
-import { Nav } from "@/components/Nav";
-import { Preloader, preloaderScript } from "@/components/Preloader";
+import { introScript } from "@/components/offline/intro";
+import { preloaderScript } from "@/lib/preloader";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
-import { SoundBridge } from "@/components/providers/SoundBridge";
 import { profile } from "@/data/content";
 import "./globals.css";
 
@@ -40,52 +38,26 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `${profile.name} | Data Analyst → Data Engineer`, description },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#f0f1fa",
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: profile.name,
-  jobTitle: profile.role,
-  email: `mailto:${profile.email}`,
-  address: { "@type": "PostalAddress", addressLocality: "Tuban", addressRegion: "East Java", addressCountry: "ID" },
-  sameAs: [profile.github, profile.linkedin],
-};
-
+/**
+ * The thin shell both sides of the site share: document, font and smooth
+ * scroll. The portfolio's chrome lives in (work)/layout.tsx and the After
+ * Hours page has its own in offline/layout.tsx, so neither loads the other's.
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      data-tone="paper"
-      className={`${satoshi.variable} antialiased`}
-      suppressHydrationWarning
-    >
+    <html lang="en" data-tone="paper" className={`${satoshi.variable} antialiased`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: preloaderScript }} />
-        <noscript>
-          <style>{`[data-preloader]{display:none}`}</style>
-        </noscript>
+        {/* Before first paint. The root layout never re-renders on navigation, so these run once per load. */}
+        <script dangerouslySetInnerHTML={{ __html: preloaderScript + introScript }} />
       </head>
       <body className="min-h-dvh overflow-x-clip">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-bg"
         >
           Skip to content
         </a>
-        <FluidCursor />
-        <SmoothScroll>
-          <Preloader />
-          <Nav />
-          {children}
-        </SmoothScroll>
-        <SoundBridge />
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

@@ -45,7 +45,7 @@ Priority: **P1** needed for launch, **P2** soon after launch.
 |---|---|---|---|
 | S1 | Arrival: banner, house name, motto | P1 | Manual |
 | S2 | Character sheet | P1 | Manual |
-| S3 | Top 3 per genre | P1 | Manual |
+| S3 | Favourites: games, movies, anime | P1 | Manual |
 | S5 | Trophy room | P1 | Manual, some from Steam |
 | S6 | Play with me and accounts | P1 | Manual |
 | S7 | Records (live stats) | P1 | Pipeline |
@@ -65,12 +65,10 @@ Priority: **P1** needed for launch, **P2** soon after launch.
 - **FR-2.3** Languages: Indonesian native, English B2, Mandarin elementary (HSK 1), Spanish elementary (A1).
 - **FR-2.4** The tone is a chill gamer, not a ranked grinder.
 
-### S3 Top 3
-- **FR-3.1** Categories at launch: games, movies, anime. The list is data-driven, so adding series or books needs no code.
-- **FR-3.2** Each category holds about 3 genres. Each genre holds exactly 3 ranked picks.
-- **FR-3.3** Each pick shows title, cover art, rank and one short line on why it made the list.
-- **FR-3.4** One category shows at a time, so the section stays short.
-- **FR-3.5** Ranking here is a true sequence, so numbered markers are allowed.
+### S3 Favourites
+- **FR-3.1** Three categories: games, movies, anime. The list is data-driven, so adding a category needs no code.
+- **FR-3.2** Each category is a plain, unranked list of things Gilang likes, of any length. Each entry shows a title and year.
+- **FR-3.3** All three categories show at once, side by side on desktop.
 
 ### S5 Trophy room
 - **FR-5.1** Shows best achievements and most-played games.
@@ -127,7 +125,7 @@ Riot rank, quest log, hot takes, a top artists list, AniList, accounts or logins
 
 - The motto
 - Character sheet content: title, class, roles, attributes
-- Top 3 lists with a line per pick, and the genres for each category
+- Favourite games, movies and anime, with years
 - Trophies worth showing
 - Handles and links to show, and usual play hours
 - A public Steam profile, with game details set to public
