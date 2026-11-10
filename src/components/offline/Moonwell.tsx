@@ -11,11 +11,8 @@ const REFILL_PER_SECOND = 0.12; // slow: nothing Moonwake does is fast
 const REFILL_DELAY_MS = 900; // a pause before the water starts to return
 const FLOOR = 0.12; // the well never runs completely dry
 
-// A small horns-down crescent, the house moon.
-const CRESCENT = "M2 12A8 8 0 0 1 18 12A8 6.2 0 0 0 2 12Z";
-
 /**
- * Section navigation. On desktop, a fixed well down the left edge with a crescent
+ * Section navigation. On desktop, a fixed well down the left edge with a marker
  * per section; the current one is lit red-violet. On phones, a slim bar at the top
  * that names the current section and opens the list.
  */
@@ -94,9 +91,7 @@ export function Moonwell() {
             {sections.map((s) => (
               <li key={s.id}>
                 <a href={`#${s.id}`} className="ah-mark" aria-current={current === s.id ? "true" : undefined}>
-                  <svg viewBox="0 0 20 14" aria-hidden>
-                    <path d={CRESCENT} />
-                  </svg>
+                  <span aria-hidden className="ah-mark-dot" />
                   <span className="ah-mark-label ah-label">{s.label}</span>
                 </a>
               </li>

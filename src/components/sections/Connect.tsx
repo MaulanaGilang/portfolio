@@ -64,27 +64,8 @@ export function Connect() {
           <p>© {new Date().getFullYear()} Gilang Maulana</p>
           <p>Designed and built with Next.js and WebGL</p>
           <div className="flex items-center gap-6">
-            {/* The way into After Hours: a dark pill with the house crest. On hover and focus,
-                wine red sweeps in from the left, the crest grows a little, and the letters open up. */}
-            <Link
-              href="/offline"
-              transitionTypes={["world-in"]}
-              data-sound="click"
-              className="group/ah relative isolate inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-[#8e2a3c] bg-[#120e0e] py-2 pr-4 pl-2 text-fg"
-            >
-              <span
-                aria-hidden
-                className="absolute inset-0 -z-10 origin-left scale-x-0 bg-[#5a0f1e] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/ah:scale-x-100 group-focus-visible/ah:scale-x-100"
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element -- a 24px static SVG needs no optimisation */}
-              <img
-                src="/offline/crest.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="size-6 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/ah:scale-115 group-focus-visible/ah:scale-115"
-              />
-              <span className="transition-[letter-spacing] duration-500 group-hover/ah:tracking-[0.06em]">After Hours</span>
+            <Link href="/offline" transitionTypes={["world-in"]} className="hover:text-fg">
+              After Hours
             </Link>
             <a href="#top" className="hover:text-fg">
               Back to top ↑

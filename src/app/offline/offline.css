@@ -115,8 +115,7 @@
 }
 
 /* ---------------- frames: carved stone with silver inlay ----------------
-   An outer silver line, a fainter inner line 5px inside it (the double inlay),
-   and a small crescent set into the top-left and bottom-right corners. */
+   An outer silver line and a fainter inner line 4px inside it (the double inlay). */
 .ah-frame {
   position: relative;
   border: 1px solid var(--line-strong);
@@ -127,15 +126,6 @@
   inset: 4px;
   border: 1px solid var(--line);
   pointer-events: none;
-}
-.ah-frame::after {
-  content: "";
-  position: absolute;
-  inset: -9px;
-  pointer-events: none;
-  background:
-    var(--crescent) left top / 20px 14px no-repeat,
-    var(--crescent) right bottom / 20px 14px no-repeat;
 }
 
 .ah-panel {
@@ -226,7 +216,7 @@
 }
 .ah-emblem {
   position: relative;
-  width: min(100%, 520px, 62dvh);
+  width: min(100%, 440px, 52dvh);
   aspect-ratio: 1;
   justify-self: center;
 }
@@ -237,9 +227,10 @@
   height: 100%;
 }
 /* The crest. A faint red-violet glow behind it: the lamp left on. */
+/* Part of the scene, not floating over it: no hard shadow, only the lamp's faint glow. */
 .ah-crest {
   overflow: visible;
-  filter: drop-shadow(0 0 40px rgb(184 48 110 / 0.28));
+  filter: drop-shadow(0 0 40px rgb(184 48 110 / 0.18));
 }
 /* Moonrise: the field fades in, then the moon rises from inside the circle and settles. */
 .ah-crest-rise .ah-crest-field {
@@ -666,10 +657,11 @@
     color 700ms var(--ease-slow),
     box-shadow 900ms var(--ease-slow);
 }
-.ah-mark svg {
-  width: 16px;
-  height: 11px;
-  fill: currentColor;
+.ah-mark-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
 }
 .ah-mark:hover,
 .ah-mark:focus-visible {
@@ -699,64 +691,46 @@
   opacity: 1;
 }
 
-/* ---------------- the familiar ---------------- */
+/* ---------------- the familiar ----------------
+   A silver dragon silhouette (mask). On hover or focus one red-violet eye
+   opens: the eye sits at 86.7% / 43.7% of the image. */
 .ah-dragon {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
-  width: 78px;
-  height: 52px;
+  width: 132px;
+  aspect-ratio: 480 / 263;
   cursor: default;
   outline-offset: 6px;
 }
-.ah-dragon svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-.ah-dragon-body {
-  stroke: var(--silver);
-}
-.ah-dragon-fill {
-  fill: var(--silver);
-}
-.ah-dragon-eye-shut {
-  stroke: var(--basalt);
-  transition: opacity 500ms var(--ease-slow);
+.ah-dragon-shape {
+  position: absolute;
+  inset: 0;
+  background: var(--silver);
+  -webkit-mask: url(/offline/dragon.png) center / contain no-repeat;
+  mask: url(/offline/dragon.png) center / contain no-repeat;
+  opacity: 0.85;
+  transition: opacity 900ms var(--ease-slow);
 }
 .ah-dragon-eye {
-  fill: var(--lamp);
-  opacity: 0;
-  transition: opacity 900ms var(--ease-slow) 200ms;
-}
-.ah-dragon-head {
-  transform-origin: 30px 60px;
-  transition: transform 1200ms var(--ease-slow);
-}
-.ah-dragon-caption {
   position: absolute;
-  right: 0;
-  bottom: calc(100% + 8px);
-  white-space: nowrap;
+  left: 86.7%;
+  top: 43.7%;
+  width: 5px;
+  height: 3px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: #f6c9de;
+  box-shadow: 0 0 6px 2px rgb(184 48 110 / 0.9);
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 700ms var(--ease-slow);
+  transition: opacity 900ms var(--ease-slow) 150ms;
 }
-.ah-dragon:hover .ah-dragon-eye-shut,
-.ah-dragon:focus-visible .ah-dragon-eye-shut {
-  opacity: 0;
+.ah-dragon:hover .ah-dragon-shape,
+.ah-dragon:focus-visible .ah-dragon-shape {
+  opacity: 1;
 }
 .ah-dragon:hover .ah-dragon-eye,
 .ah-dragon:focus-visible .ah-dragon-eye {
-  opacity: 1;
-  filter: drop-shadow(0 0 2px rgb(184 48 110 / 0.9));
-}
-.ah-dragon:hover .ah-dragon-head,
-.ah-dragon:focus-visible .ah-dragon-head {
-  transform: translateY(-5px) rotate(-8deg);
-}
-.ah-dragon:hover .ah-dragon-caption,
-.ah-dragon:focus-visible .ah-dragon-caption {
   opacity: 1;
 }
 
