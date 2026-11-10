@@ -495,7 +495,10 @@
   font-size: 15px;
 }
 
-/* ---------------- thorn rail ---------------- */
+/* ---------------- the Moonwell: section rail ----------------
+   A slim glass well down the left edge. Its water level (--level, set by
+   Moonwell.tsx) drains as the reader scrolls and slowly refills when they stop.
+   One crescent per section; the current one is lit by the lamp. */
 .ah-rail {
   position: fixed;
   top: 0;
@@ -507,54 +510,66 @@
   align-items: center;
   justify-content: center;
 }
+.ah-well-frame {
+  position: relative;
+}
 .ah-rail ol {
+  position: relative;
   height: min(60vh, 520px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.ah-rail-stem {
+.ah-well {
+  --level: 1;
   position: absolute;
   left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--line);
+  top: -14px;
+  bottom: -14px;
+  width: 8px;
+  margin-left: -4px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgb(10 8 9 / 0.6);
+  overflow: hidden;
 }
-.ah-rail-fill {
+.ah-well-water {
   position: absolute;
   inset: 0;
-  background: var(--cream);
-  transform-origin: top;
+  transform-origin: bottom;
+  transform: scaleY(var(--level));
+  background: linear-gradient(to top, var(--abyss), var(--house) 55%, var(--lamp));
+  box-shadow: 0 0 12px 1px rgb(184 48 110 / 0.5);
 }
-.ah-thorn {
+.ah-mark {
   position: relative;
-  display: block;
-  width: 22px;
-  height: 22px;
-  color: rgb(240 232 214 / 0.6);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--basalt);
+  color: rgb(201 205 211 / 0.6);
+  transition:
+    color 700ms var(--ease-slow),
+    box-shadow 900ms var(--ease-slow);
 }
-.ah-thorn svg {
-  width: 100%;
-  height: 100%;
+.ah-mark svg {
+  width: 16px;
+  height: 11px;
+  fill: currentColor;
 }
-.ah-thorn-shape {
-  fill: var(--basalt);
-  stroke: currentColor;
-  stroke-width: 1.5;
-  transition: fill 200ms;
-}
-.ah-thorn:hover,
-.ah-thorn:focus-visible {
+.ah-mark:hover,
+.ah-mark:focus-visible {
   color: var(--cream);
 }
-.ah-thorn[aria-current="true"] {
-  color: var(--cream);
+.ah-mark[aria-current="true"] {
+  color: #f6c9de;
+  box-shadow:
+    0 0 0 1px rgb(184 48 110 / 0.7),
+    0 0 18px 2px rgb(184 48 110 / 0.55);
 }
-.ah-thorn[aria-current="true"] .ah-thorn-shape {
-  fill: var(--cream);
-}
-.ah-thorn-label {
+.ah-mark-label {
   position: absolute;
   left: calc(100% + 12px);
   top: 50%;
@@ -565,11 +580,71 @@
   padding: 5px 10px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 150ms;
+  transition: opacity 400ms var(--ease-slow);
 }
-.ah-thorn:hover .ah-thorn-label,
-.ah-thorn:focus-visible .ah-thorn-label {
+.ah-mark:hover .ah-mark-label,
+.ah-mark:focus-visible .ah-mark-label {
   opacity: 1;
+}
+
+/* ---------------- the lamp in the fog ---------------- */
+.ah-mist {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ah-mist span {
+  position: absolute;
+  width: 70vmax;
+  height: 40vmax;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(240 232 214 / 0.07), transparent);
+  filter: blur(20px);
+  animation: ah-drift 70s ease-in-out infinite alternate;
+}
+.ah-mist span:first-child {
+  left: -20vmax;
+  bottom: -10vmax;
+}
+.ah-mist span:last-child {
+  right: -25vmax;
+  top: 10vmax;
+  animation-duration: 90s;
+  animation-direction: alternate-reverse;
+}
+@keyframes ah-drift {
+  to {
+    translate: 30vmax -6vmax;
+  }
+}
+.ah-lamp {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+.ah-lamp-light {
+  position: absolute;
+  top: -180px;
+  left: -180px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(184 48 110 / 0.2), rgb(184 48 110 / 0.06) 55%, transparent);
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-slow);
+}
+.ah-lamp-light[data-on] {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ah-mist span {
+    animation: none;
+  }
 }
 
 .ah-rail-mobile {

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cinzel, Cinzel_Decorative, Cormorant_Garamond, Cormorant_SC } from "next/font/google";
 import { ViewTransition } from "react";
+import { Lamp } from "@/components/offline/Lamp";
 import { Scenes } from "@/components/offline/Scenes";
 import "./offline.css";
 
@@ -36,6 +37,7 @@ export default function OfflineLayout({ children }: { children: React.ReactNode 
         className={`${cinzel.variable} ${cinzelDecorative.variable} ${cormorantSC.variable} ${cormorant.variable}`}
       >
         <Scenes />
+        <Lamp />
         {children}
       </div>
     </ViewTransition>

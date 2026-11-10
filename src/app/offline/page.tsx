@@ -1,11 +1,11 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
 import { CopyButton } from "@/components/offline/CopyButton";
 import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
 import { posterProps, steamArt } from "@/components/offline/poster";
 import { PosterHover } from "@/components/offline/PosterHover";
-import { ThornRail } from "@/components/offline/ThornRail";
+import { Moonwell } from "@/components/offline/Moonwell";
 import {
   accounts,
   characterSheet,
@@ -67,7 +67,7 @@ export default async function AfterHours() {
   const steam = await getSteamStats();
   return (
     <>
-      <ThornRail />
+      <Moonwell />
       <PosterHover />
 
       <div className="ah-main">
