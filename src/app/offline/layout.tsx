@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Michroma } from "next/font/google";
-import localFont from "next/font/local";
+import { Cinzel, Cinzel_Decorative, Cormorant_Garamond, Cormorant_SC } from "next/font/google";
 import { ViewTransition } from "react";
 import { Scenes } from "@/components/offline/Scenes";
 import "./offline.css";
 
-// Michroma (SIL Open Font License): wide, geometric capitals in the spirit of the films'
-// interfaces, without using their typeface. next/font serves it from this site.
-const michroma = Michroma({ weight: "400", subsets: ["latin"], variable: "--font-michroma", display: "swap" });
-
-// Dune Rise (Fontswan, SIL Open Font License; licence in src/fonts/Dune_Rise-OFL.txt).
-// Served unmodified. A display face: used for the house name, section titles and big numbers only.
-const duneRise = localFont({ src: "../../fonts/Dune_Rise.ttf", variable: "--font-dune", display: "swap" });
+// Moonwake type (all SIL Open Font License, served from this site by next/font):
+// Cinzel Decorative for the house name only, Cinzel for titles, Cormorant SC for labels,
+// Cormorant Garamond italic for the motto. Body text inherits Satoshi from the root layout.
+const cinzel = Cinzel({ weight: ["400", "500"], subsets: ["latin"], variable: "--font-cinzel", display: "swap" });
+const cinzelDecorative = Cinzel_Decorative({ weight: "400", subsets: ["latin"], variable: "--font-cinzel-deco", display: "swap" });
+const cormorantSC = Cormorant_SC({ weight: ["500", "600"], subsets: ["latin"], variable: "--font-cormorant-sc", display: "swap" });
+const cormorant = Cormorant_Garamond({ weight: "400", style: "italic", subsets: ["latin"], variable: "--font-cormorant", display: "swap" });
 
 export const metadata: Metadata = {
   title: "After Hours",
@@ -24,15 +23,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#120E0E",
+  themeColor: "#0A0809",
 };
 
-/** After Hours has its own chrome, colours and display face. Nothing from the portfolio loads here. */
+/** After Hours has its own chrome, colours and type. Nothing from the portfolio loads here. */
 export default function OfflineLayout({ children }: { children: React.ReactNode }) {
   return (
     // Crossing from or to the portfolio: this world sinks or rises (see globals.css).
     <ViewTransition enter={{ "world-in": "world-enter", default: "none" }} exit={{ "world-out": "world-exit", default: "none" }} default="none">
-      <div data-world="offline" className={`${michroma.variable} ${duneRise.variable}`}>
+      <div
+        data-world="offline"
+        className={`${cinzel.variable} ${cinzelDecorative.variable} ${cormorantSC.variable} ${cormorant.variable}`}
+      >
         <Scenes />
         {children}
       </div>

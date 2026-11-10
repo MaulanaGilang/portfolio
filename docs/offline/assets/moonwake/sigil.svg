@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="t">
+  <title id="t">House Maulana of Moonwake: a silver crescent, horns down, over a still pool holding its reflection and one red-violet gleam</title>
+  <defs>
+    <!-- One crescent shape: a disc minus the same disc nudged down, so the horns point at the water. -->
+    <mask id="cut" maskUnits="userSpaceOnUse">
+      <rect width="1000" height="1000" fill="#fff"/>
+      <circle cx="500" cy="482" r="150" fill="#000"/>
+    </mask>
+    <g id="moon"><circle cx="500" cy="450" r="152" mask="url(#cut)"/></g>
+
+    <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F3F4F7"/>
+      <stop offset="1" stop-color="#B7BCC6"/>
+    </linearGradient>
+    <!-- The reflection fades as it sinks. -->
+    <linearGradient id="sink" x1="0" y1="590" x2="0" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="fade" maskUnits="userSpaceOnUse"><rect x="0" y="590" width="1000" height="410" fill="url(#sink)"/></mask>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#F6C9DE"/>
+      <stop offset="0.18" stop-color="#B8306E"/>
+      <stop offset="0.55" stop-color="#7A1F55" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7A1F55" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+
+  <rect width="1000" height="1000" fill="#000"/>
+
+  <!-- The moon -->
+  <use href="#moon" fill="url(#silver)"/>
+
+  <!-- Its reflection: the same crescent mirrored across the surface, flattened by the water, dim and fading. -->
+  <g mask="url(#fade)">
+    <g filter="url(#blur)">
+      <use href="#moon" fill="#C9CDD3" transform="translate(0 590) scale(1 -0.45) translate(0 -590)"/>
+    </g>
+  </g>
+
+  <!-- The pool: one flat surface, nothing moves -->
+  <line x1="240" y1="590" x2="760" y2="590" stroke="#C9CDD3" stroke-width="2" stroke-linecap="round"/>
+  <line x1="340" y1="604" x2="660" y2="604" stroke="#C9CDD3" stroke-opacity="0.18" stroke-width="1.25" stroke-linecap="round"/>
+
+  <!-- The lamp left on: one warm red-violet gleam in the water, off-centre -->
+  <circle cx="592" cy="636" r="40" fill="url(#halo)"/>
+  <rect x="589.5" y="620" width="5" height="48" rx="2.5" fill="#B8306E" opacity="0.6" filter="url(#soft)"/>
+</svg>
