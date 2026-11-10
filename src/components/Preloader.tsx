@@ -12,6 +12,8 @@ import { PRELOADED_KEY as KEY } from "@/lib/preloader";
  */
 export function Preloader() {
   const reduce = useReducedMotion();
+  // On repeat visits (and when arriving from After Hours, which marks the session) the
+  // loader is in the DOM for a moment but hidden by `html[data-preloaded] [data-preloader]`.
   const [phase, setPhase] = useState<"run" | "exit" | "gone">("run");
   const count = useRef<HTMLSpanElement>(null);
 

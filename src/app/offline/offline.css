@@ -331,7 +331,8 @@ html[data-ah-intro] .ah-emblem-ink {
   cursor: default;
   transition: color 150ms;
 }
-.ah-fav:hover > :first-child {
+.ah-fav:hover,
+.ah-fav:hover > * {
   color: var(--cream);
 }
 .ah-preview {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import { house } from "@/data/offline";
+import { PRELOADED_KEY } from "@/lib/preloader";
 import { INTRO_FLAG as FLAG } from "./intro";
 import { sections } from "./sections";
 
@@ -24,6 +25,11 @@ export function Arrival() {
 
   useLayoutEffect(() => {
     const root = document.documentElement;
+    // The visitor is already inside the site: crossing to the portfolio must not replay its loader.
+    root.dataset.preloaded = "";
+    try {
+      sessionStorage.setItem(PRELOADED_KEY, "1");
+    } catch {}
     const finish = () => {
       delete root.dataset[FLAG];
       setGrains(false);

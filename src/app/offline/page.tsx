@@ -3,6 +3,8 @@ import { Arrival } from "@/components/offline/Arrival";
 import { CopyButton } from "@/components/offline/CopyButton";
 import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
+import { posterProps, steamArt } from "@/components/offline/poster";
+import { PosterHover } from "@/components/offline/PosterHover";
 import { ThornRail } from "@/components/offline/ThornRail";
 import {
   accounts,
@@ -66,6 +68,7 @@ export default async function AfterHours() {
   return (
     <>
       <ThornRail />
+      <PosterHover />
 
       <div className="ah-main">
         <main id="main">
@@ -97,8 +100,16 @@ export default async function AfterHours() {
                           <span className="ah-label">{n.verb}</span>
                           <span>
                             {n.titles.map((t) => (
-                              <span key={t} className="block text-[19px] leading-snug text-[var(--bone)]">
-                                {t}
+                              <span
+                                key={t.title}
+                                className="ah-fav block text-[19px] leading-snug text-[var(--bone)]"
+                                {...posterProps({
+                                  title: t.title,
+                                  meta: n.verb,
+                                  ...(t.steamAppId ? steamArt(t.steamAppId) : { poster: t.poster }),
+                                })}
+                              >
+                                {t.title}
                               </span>
                             ))}
                           </span>
@@ -138,7 +149,7 @@ export default async function AfterHours() {
                   {steam ? (
                     <ol className="ah-ranked">
                       {steam.mostPlayed.map((g, i) => (
-                        <li key={g.name}>
+                        <li key={g.appid} className="ah-fav" {...posterProps({ title: g.name, meta: "Steam", ...steamArt(g.appid) })}>
                           <span className="ah-num text-[var(--ash)]">{i + 1}</span>
                           <span>{g.name}</span>
                           <span className="ah-num text-[var(--ash)]">{g.hours.toLocaleString("en-US")} h</span>
@@ -153,7 +164,7 @@ export default async function AfterHours() {
                   {steam?.recent.length ? (
                     <ol className="ah-ranked">
                       {steam.recent.map((g) => (
-                        <li key={g.name} className="!grid-cols-[1fr_auto]">
+                        <li key={g.appid} className="ah-fav !grid-cols-[1fr_auto]" {...posterProps({ title: g.name, meta: "Steam", ...steamArt(g.appid) })}>
                           <span>{g.name}</span>
                           <span className="ah-num text-[var(--ash)]">{g.hours} h</span>
                         </li>

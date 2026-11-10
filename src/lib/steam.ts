@@ -13,8 +13,8 @@ type RecentGame = { appid: number; name: string; playtime_2weeks: number; playti
 export type SteamStats = {
   gameCount: number;
   totalHours: number;
-  mostPlayed: { name: string; hours: number }[];
-  recent: { name: string; hours: number }[];
+  mostPlayed: { appid: number; name: string; hours: number }[];
+  recent: { appid: number; name: string; hours: number }[];
   fetchedAt: string;
 };
 
@@ -68,10 +68,10 @@ export async function getSteamStats(): Promise<SteamStats | null> {
     mostPlayed: byTime
       .filter((g) => g.playtime_forever > 0)
       .slice(0, 5)
-      .map((g) => ({ name: g.name ?? `App ${g.appid}`, hours: hours(g.playtime_forever) })),
+      .map((g) => ({ appid: g.appid, name: g.name ?? `App ${g.appid}`, hours: hours(g.playtime_forever) })),
     recent: (recent?.games ?? [])
       .slice(0, 5)
-      .map((g) => ({ name: g.name, hours: Math.max(1, hours(g.playtime_2weeks)) })),
+      .map((g) => ({ appid: g.appid, name: g.name, hours: Math.max(1, hours(g.playtime_2weeks)) })),
     fetchedAt: new Date().toISOString(),
   };
 }

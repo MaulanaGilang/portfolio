@@ -27,9 +27,25 @@ export const characterSheet: { label: string; value: string }[] = [
 export type Medium = "game" | "show";
 
 /** What's on rotation. A music line joins when there is a live music source. */
-export const nowPlaying: { medium: Medium; verb: string; titles: string[] }[] = [
-  { medium: "game", verb: "Playing", titles: ["League of Legends", "Albion Online"] },
-  { medium: "show", verb: "Watching", titles: ["Arcane", "Cyberpunk: Edgerunners"] },
+export const nowPlaying: { medium: Medium; verb: string; titles: { title: string; poster?: string; steamAppId?: number }[] }[] = [
+  {
+    medium: "game",
+    verb: "Playing",
+    titles: [
+      // No portrait key art found publicly; shows the placeholder card.
+      { title: "League of Legends" },
+      { title: "Albion Online", steamAppId: 761890 },
+    ],
+  },
+  {
+    medium: "show",
+    verb: "Watching",
+    titles: [
+      // Posters from TMDB.
+      { title: "Arcane", poster: "https://image.tmdb.org/t/p/w500/87C0wecB8bHb1PsrKBI4kJiEkgV.jpg" },
+      { title: "Cyberpunk: Edgerunners", poster: "https://image.tmdb.org/t/p/w500/v3JuB15WybKmxDeT1hWdK3j6eSJ.jpg" },
+    ],
+  },
 ];
 
 export type Favourite = {
