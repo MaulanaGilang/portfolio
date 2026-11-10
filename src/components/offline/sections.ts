@@ -1,6 +1,7 @@
 /** The page's sections in order: the arrival HUD's nav and the thorn rail both read this. */
 export const sections = [
-  { id: "arrival", label: "House" },
+  { id: "arrival", label: "Moonwake" },
+  { id: "codex", label: "Codex" },
   { id: "dossier", label: "Dossier" },
   { id: "now", label: "Now playing" },
   { id: "records", label: "Records" },

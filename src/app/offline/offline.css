@@ -495,6 +495,115 @@
   font-size: 15px;
 }
 
+/* ---------------- the Codex ----------------
+   Chapters down the left like a book's contents; the open chapter on the right. */
+.ah-codex {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.ah-codex-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: sticky;
+  top: 24px;
+}
+.ah-codex-tab {
+  position: relative;
+  text-align: left;
+  padding: 10px 14px 10px 26px;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--ash);
+  cursor: pointer;
+  transition:
+    color 600ms var(--ease-slow),
+    background-color 600ms var(--ease-slow);
+}
+.ah-codex-tab::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 12px;
+  height: 9px;
+  translate: 0 -50%;
+  background: var(--crescent) center / contain no-repeat;
+  opacity: 0;
+  transition: opacity 600ms var(--ease-slow);
+}
+.ah-codex-tab:hover {
+  color: var(--cream);
+}
+.ah-codex-tab[aria-selected="true"] {
+  color: var(--cream);
+  background: linear-gradient(90deg, rgb(90 15 30 / 0.7), transparent);
+}
+.ah-codex-tab[aria-selected="true"]::before {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px rgb(184 48 110 / 0.9));
+}
+.ah-codex-panel {
+  animation: ah-page-in 900ms var(--ease-slow);
+}
+@keyframes ah-page-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+.ah-ranks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  counter-reset: rank var(--start, 0);
+}
+.ah-ranks li {
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  font-size: 14.5px;
+  color: var(--bone);
+}
+.ah-ranks-house li {
+  border-color: var(--line-strong);
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+}
+.ah-ranks-house li:last-child {
+  background: var(--house);
+  box-shadow: 0 0 22px -4px rgb(184 48 110 / 0.7);
+}
+@media (max-width: 899px) {
+  .ah-codex {
+    grid-template-columns: 1fr;
+  }
+  .ah-codex-tabs {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .ah-codex-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .ah-codex-tab {
+    white-space: nowrap;
+    padding-left: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ah-codex-panel {
+    animation: none;
+  }
+}
+
 /* ---------------- the Moonwell: section rail ----------------
    A slim glass well down the left edge. Its water level (--level, set by
    Moonwell.tsx) drains as the reader scrolls and slowly refills when they stop.

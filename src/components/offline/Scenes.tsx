@@ -11,7 +11,7 @@ import type { SectionId } from "./sections";
  * balcony (play, guestbook).
  */
 const scenes: { src: string; sections: SectionId[] }[] = [
-  { src: "/offline/scene-courtyard.webp", sections: ["arrival", "dossier", "now"] },
+  { src: "/offline/scene-courtyard.webp", sections: ["arrival", "codex", "dossier", "now"] },
   { src: "/offline/scene-hall.webp", sections: ["records"] },
   { src: "/offline/scene-glasshouse.webp", sections: ["favourites"] },
   { src: "/offline/scene-balcony.webp", sections: ["play", "guestbook"] },

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
+import { Codex } from "@/components/offline/Codex";
 import { CopyButton } from "@/components/offline/CopyButton";
 import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
@@ -75,6 +76,11 @@ export default async function AfterHours() {
           <Arrival />
 
           <div className="ah-wrap">
+            <section id="codex" aria-labelledby="codex-title" className="ah-section">
+              <Title id="codex">Codex of Moonwake</Title>
+              <Codex />
+            </section>
+
             <section id="dossier" aria-labelledby="dossier-title" className="ah-section">
               <Title id="dossier">Dossier</Title>
               <div className="ah-grid ah-grid-7-5">
@@ -260,6 +266,12 @@ export default async function AfterHours() {
               </a>
             </div>
           </div>
+          {/* Required by Riot Games' fan content policy ("Legal Jibber Jabber"). Keep it verbatim, and keep this page free. */}
+          <p className="mt-8 max-w-[90ch] text-[13px] leading-relaxed text-[var(--ash)]">
+            House Maulana isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or
+            anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated
+            properties are trademarks or registered trademarks of Riot Games, Inc.
+          </p>
         </footer>
       </div>
     </>
