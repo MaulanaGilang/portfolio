@@ -233,15 +233,37 @@
   width: 100%;
   height: 100%;
 }
-.ah-emblem-ink {
-  background: var(--silver);
-  -webkit-mask: url(/offline/sigil.png) center / contain no-repeat;
-  mask: url(/offline/sigil.png) center / contain no-repeat;
-  transition: opacity 700ms ease;
+/* The crest. A faint red-violet glow behind it: the lamp left on. */
+.ah-crest {
+  overflow: visible;
+  filter: drop-shadow(0 0 40px rgb(184 48 110 / 0.28));
 }
-/* Set before first paint, cleared when the grains have settled. */
-html[data-ah-intro] .ah-emblem-ink {
-  opacity: 0;
+/* Moonrise: the field fades in, then the moon rises from inside the circle and settles. */
+.ah-crest-rise .ah-crest-field {
+  animation: ah-field-in 1400ms var(--ease-slow) both;
+}
+.ah-crest-rise .ah-crest-moon {
+  animation: ah-moon-rise 2200ms var(--ease-slow) 600ms both;
+}
+@keyframes ah-field-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ah-moon-rise {
+  from {
+    opacity: 0;
+    transform: translateY(150px);
+  }
+  40% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ah-crest-rise .ah-crest-field,
+  .ah-crest-rise .ah-crest-moon {
+    animation: none;
+  }
 }
 .ah-hud-bottom {
   display: grid;

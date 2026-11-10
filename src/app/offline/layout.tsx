@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "House Maulana | After Hours",
     description: "The other side of Gilang Maulana: games, music, films and anime.",
-    images: [{ url: "/offline/banner.webp", width: 1536, height: 1024, alt: "The House Maulana banner" }],
+    images: [{ url: "/offline/og.png", width: 1200, height: 630, alt: "The House Maulana crest: a silver crescent on a wine-red circle" }],
   },
 };
 

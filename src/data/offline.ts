@@ -7,8 +7,9 @@
 
 export const house = {
   name: "House Maulana",
-  /** Leave empty until the motto is decided; the arrival screen works without it. */
-  motto: "",
+  /** The house's seat: a cliff-city over deep water. */
+  seat: "Moonwake",
+  motto: "Quiet, eternal, and ours.",
   intro: "Games, music, films and anime. The side of Gilang Maulana that isn't on the CV.",
 };
 

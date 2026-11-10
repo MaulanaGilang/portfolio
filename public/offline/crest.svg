@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t">
+  <title id="t">House Maulana of Moonwake: a silver crescent, horns down, in a wine-red circle with a thin black border</title>
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse">
+      <rect width="400" height="400" fill="#fff"/>
+      <circle cx="200" cy="203" r="80" fill="#000"/>
+    </mask>
+  </defs>
+  <circle cx="200" cy="200" r="141" fill="#5A0F1E" stroke="#000" stroke-width="4"/>
+  <!-- Crescent spans y 82 to 206.9; shifted so its box is centred in the circle. -->
+  <g transform="translate(0 55.6)">
+    <circle cx="200" cy="170" r="88" fill="#C9CDD3" mask="url(#cut)"/>
+  </g>
+</svg>

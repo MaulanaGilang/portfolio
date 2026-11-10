@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { introScript } from "@/components/offline/intro";
 import { preloaderScript } from "@/lib/preloader";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { profile } from "@/data/content";
@@ -47,8 +46,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-tone="paper" className={`${satoshi.variable} antialiased`} suppressHydrationWarning>
       <head>
-        {/* Before first paint. The root layout never re-renders on navigation, so these run once per load. */}
-        <script dangerouslySetInnerHTML={{ __html: preloaderScript + introScript }} />
+        {/* Before first paint. The root layout never re-renders on navigation, so this runs once per load. */}
+        <script dangerouslySetInnerHTML={{ __html: preloaderScript }} />
       </head>
       <body className="min-h-dvh overflow-x-clip">
         <a

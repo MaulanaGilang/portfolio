@@ -176,25 +176,24 @@ html:active-view-transition-type(world-in, world-out)::view-transition {
 }
 /* The portfolio header normally stays put across navigations; when leaving for After Hours it sinks too. */
 html:active-view-transition-type(world-in)::view-transition-old(site-header) {
-  animation: 520ms cubic-bezier(0.4, 0, 1, 1) both world-sink;
+  animation: 700ms cubic-bezier(0.4, 0, 0.2, 1) both world-sink;
 }
 ::view-transition-old(.world-exit) {
-  animation: 520ms cubic-bezier(0.4, 0, 1, 1) both world-sink;
+  animation: 700ms cubic-bezier(0.4, 0, 0.2, 1) both world-sink;
 }
 ::view-transition-new(.world-enter) {
-  animation: 900ms cubic-bezier(0.16, 1, 0.3, 1) 420ms both world-rise;
+  animation: 1400ms cubic-bezier(0.22, 1, 0.36, 1) 900ms both world-rise;
 }
+/* The Quiet Hour: the page falls silent into black, black holds for a breath, then the moon rises. */
 @keyframes world-sink {
   to {
     opacity: 0;
-    scale: 0.96;
-    filter: blur(6px);
   }
 }
 @keyframes world-rise {
   from {
     opacity: 0;
-    translate: 0 48px;
+    translate: 0 32px;
   }
 }
 ::view-transition-old(root),

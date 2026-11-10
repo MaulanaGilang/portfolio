@@ -64,8 +64,8 @@ export function Connect() {
           <p>© {new Date().getFullYear()} Gilang Maulana</p>
           <p>Designed and built with Next.js and WebGL</p>
           <div className="flex items-center gap-6">
-            {/* The way into After Hours: a dark pill with the house sigil. On hover and focus,
-                wine red sweeps in from the left, the rose turns, and the letters open up. */}
+            {/* The way into After Hours: a dark pill with the house crest. On hover and focus,
+                wine red sweeps in from the left, the crest grows a little, and the letters open up. */}
             <Link
               href="/offline"
               transitionTypes={["world-in"]}
@@ -76,17 +76,13 @@ export function Connect() {
                 aria-hidden
                 className="absolute inset-0 -z-10 origin-left scale-x-0 bg-[#5a0f1e] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/ah:scale-x-100 group-focus-visible/ah:scale-x-100"
               />
-              <span
-                aria-hidden
-                className="size-6 bg-[#c9cdd3] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/ah:scale-110 group-hover/ah:rotate-180 group-focus-visible/ah:rotate-180"
-                style={{
-                  maskImage: "url(/offline/sigil.png)",
-                  maskSize: "contain",
-                  maskRepeat: "no-repeat",
-                  WebkitMaskImage: "url(/offline/sigil.png)",
-                  WebkitMaskSize: "contain",
-                  WebkitMaskRepeat: "no-repeat",
-                }}
+              {/* eslint-disable-next-line @next/next/no-img-element -- a 24px static SVG needs no optimisation */}
+              <img
+                src="/offline/crest.svg"
+                alt=""
+                width={24}
+                height={24}
+                className="size-6 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/ah:scale-115 group-focus-visible/ah:scale-115"
               />
               <span className="transition-[letter-spacing] duration-500 group-hover/ah:tracking-[0.06em]">After Hours</span>
             </Link>
