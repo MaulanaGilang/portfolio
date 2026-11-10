@@ -82,9 +82,9 @@ export default async function AfterHours() {
             </section>
 
             <section id="dossier" aria-labelledby="dossier-title" className="ah-section">
-              <Title id="dossier">Dossier</Title>
+              <Title id="dossier">The Archmagus</Title>
               <div className="ah-grid ah-grid-7-5">
-                <Panel label="Character sheet">
+                <Panel label="Character">
                   <dl className="ah-rows">
                     {characterSheet.map((row) => (
                       <div key={row.label}>
@@ -128,7 +128,7 @@ export default async function AfterHours() {
             </section>
 
             <section id="records" aria-labelledby="records-title" className="ah-section">
-              <Title id="records">Record book</Title>
+              <Title id="records">The Ledger</Title>
               <div className="ah-grid ah-grid-3 mb-5">
                 {[
                   { label: "Hours on Steam", value: steam ? steam.totalHours.toLocaleString("en-US") : "—" },
@@ -200,13 +200,13 @@ export default async function AfterHours() {
             </section>
 
             <section id="favourites" aria-labelledby="favourites-title" className="ah-section">
-              <Title id="favourites">Favourites</Title>
+              <Title id="favourites">The Library</Title>
               <Favourites categories={favourites} />
             </section>
 
             <div>
               <section id="play" aria-labelledby="play-title" className="ah-section">
-                <Title id="play">Play with me</Title>
+                <Title id="play">The Long Bridge</Title>
                 <Panel label="Accounts" meta={playHours.zone}>
                   <p className="mb-5 text-[15px] text-[var(--bone)]">{playHours.when}.</p>
                   <ul className="ah-rows">
@@ -230,7 +230,7 @@ export default async function AfterHours() {
             </div>
 
             <section id="guestbook" aria-labelledby="guestbook-title" className="ah-section">
-              <Title id="guestbook">Guestbook</Title>
+              <Title id="guestbook">The Long Table</Title>
               <div className="ah-grid ah-grid-7-5">
                 <Panel label="Notes">
                   <ul className="space-y-6">

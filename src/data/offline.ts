@@ -15,8 +15,11 @@ export const house = {
 
 export const characterSheet: { label: string; value: string }[] = [
   { label: "Name", value: "Gilang Maulana" },
-  { label: "Class", value: "Data person by day, chill gamer by night" },
+  { label: "Title", value: "Archmagus of the Coast, ruler of Moonwake" },
+  { label: "Class", value: "All-rounder mage. By day a data person, by night a chill gamer" },
   { label: "Main roles", value: "Mage, Support" },
+  { label: "Familiar", value: "A dragon" },
+  { label: "Focus", value: "A black staff with a crescent head and a red-violet light: the Lamp, carried into the world" },
   { label: "Home", value: "Tuban, East Java" },
   { label: "Plays", value: "For fun, not for rank" },
   {

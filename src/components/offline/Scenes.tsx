@@ -2,19 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import type { SectionId } from "./sections";
 
 /**
- * The fixed backdrop. Each part of the page has its own place in the house, and
- * the scene crossfades as the reader moves between them:
- * courtyard (arrival, dossier), hall (records), glasshouse (favourites),
- * balcony (play, guestbook).
+ * The fixed backdrop: four places in Moonwake, crossfading as the reader moves
+ * between them. The Long Bridge (arrival, codex), the Moonwell courtyard (the
+ * Archmagus), the Hall of Names (ledger, library), the harbour under the
+ * aurora (long bridge, long table).
  */
-const scenes: { src: string; sections: SectionId[] }[] = [
-  { src: "/offline/scene-courtyard.webp", sections: ["arrival", "codex", "dossier", "now"] },
-  { src: "/offline/scene-hall.webp", sections: ["records"] },
-  { src: "/offline/scene-glasshouse.webp", sections: ["favourites"] },
-  { src: "/offline/scene-balcony.webp", sections: ["play", "guestbook"] },
+const scenes: { src: string; sections: string[] }[] = [
+  { src: "/offline/moonwake-bridge.webp", sections: ["arrival", "codex"] },
+  { src: "/offline/moonwake-courtyard.webp", sections: ["dossier", "now"] },
+  { src: "/offline/moonwake-hall.webp", sections: ["records", "favourites"] },
+  { src: "/offline/moonwake-harbour.webp", sections: ["play", "guestbook"] },
 ];
 
 export function Scenes() {
@@ -25,7 +24,7 @@ export function Scenes() {
       (entries) => {
         for (const e of entries) {
           if (!e.isIntersecting) continue;
-          const i = scenes.findIndex((s) => s.sections.includes(e.target.id as SectionId));
+          const i = scenes.findIndex((s) => s.sections.includes(e.target.id));
           if (i >= 0) setActive(i);
         }
       },
