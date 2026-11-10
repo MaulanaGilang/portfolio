@@ -1,9 +1,9 @@
 /**
  * Content for /offline (After Hours).
  *
- * DUMMY DATA. Every title, handle, number and note below is a placeholder so
- * the page can be built and reviewed. Replace it with real content; the live
- * parts (music, Steam, guestbook) will come from the pipeline later.
+ * Identity, now playing, favourites and accounts are real. Still placeholders:
+ * the record book (Steam hours, totals, top tracks: they come from the Steam
+ * pipeline and the Spotify data export) and the guestbook notes.
  */
 
 export const house = {
@@ -15,9 +15,8 @@ export const house = {
 
 export const characterSheet: { label: string; value: string }[] = [
   { label: "Name", value: "Gilang Maulana" },
-  { label: "Title", value: "Heir of House Maulana" },
-  { label: "Class", value: "Data engineer by day, chill gamer by night" },
-  { label: "Main roles", value: "Support, strategist" },
+  { label: "Class", value: "Data person by day, chill gamer by night" },
+  { label: "Main roles", value: "Mage, Support" },
   { label: "Home", value: "Tuban, East Java" },
   { label: "Plays", value: "For fun, not for rank" },
   {
@@ -26,13 +25,12 @@ export const characterSheet: { label: string; value: string }[] = [
   },
 ];
 
-export type Medium = "music" | "game" | "show" | "book";
+export type Medium = "game" | "show";
 
-export const nowPlaying: { medium: Medium; verb: string; title: string; by?: string }[] = [
-  { medium: "music", verb: "Listening to", title: "Placeholder Track", by: "Placeholder Artist" },
-  { medium: "game", verb: "Playing", title: "Placeholder Game" },
-  { medium: "show", verb: "Watching", title: "Placeholder Series" },
-  { medium: "book", verb: "Reading", title: "Placeholder Book", by: "Placeholder Author" },
+/** What's on rotation. A music line joins when there is a live music source. */
+export const nowPlaying: { medium: Medium; verb: string; titles: string[] }[] = [
+  { medium: "game", verb: "Playing", titles: ["League of Legends", "Albion Online"] },
+  { medium: "show", verb: "Watching", titles: ["Arcane", "Cyberpunk: Edgerunners"] },
 ];
 
 export const records = {
@@ -40,7 +38,7 @@ export const records = {
   totals: [
     { label: "Hours played this year", value: "445" },
     { label: "Games in library", value: "128" },
-    { label: "Tracks played this year", value: "9,312" },
+    { label: "Playlists", value: "3" },
   ],
   /** ISO time of the last pipeline run. */
   refreshedAt: "2026-11-09T06:00:00+07:00",
@@ -58,13 +56,6 @@ export const records = {
     { month: "Sep", hours: 31 },
     { month: "Oct", hours: 46 },
     { month: "Nov", hours: 12 },
-  ],
-  topTracks: [
-    { title: "Placeholder Track A", artist: "Artist One", plays: 142 },
-    { title: "Placeholder Track B", artist: "Artist Two", plays: 118 },
-    { title: "Placeholder Track C", artist: "Artist Three", plays: 97 },
-    { title: "Placeholder Track D", artist: "Artist One", plays: 83 },
-    { title: "Placeholder Track E", artist: "Artist Four", plays: 71 },
   ],
   topGames: [
     { title: "Placeholder Game A", hours: 612 },
@@ -90,38 +81,27 @@ export const favourites: { id: string; label: string; items: Favourite[] }[] = [
     id: "games",
     label: "Games",
     items: [
-      { title: "Placeholder Game A", year: 2018 },
-      { title: "Placeholder Game B", year: 2020 },
-      { title: "Placeholder Game C", year: 2022 },
-      { title: "Placeholder Game D", year: 2024 },
+      // Box art from Wikipedia.
+      { title: "Warcraft III", year: 2002, poster: "https://upload.wikimedia.org/wikipedia/en/6/66/WarcraftIII.jpg" },
     ],
   },
   {
     id: "movies",
     label: "Movies",
     items: [
-      { title: "Placeholder Film A", year: 2014 },
-      { title: "Placeholder Film B", year: 2019 },
-      { title: "Placeholder Film C", year: 2021 },
-      { title: "Placeholder Film D", year: 2024 },
+      // Posters from TMDB (themoviedb.org).
+      { title: "Dune", year: 2021, poster: "https://image.tmdb.org/t/p/w500/v1tRXZ4JtD2Iv6fjkPvT4GiwslV.jpg" },
+      { title: "Dune: Part Two", year: 2024, poster: "https://image.tmdb.org/t/p/w500/uOYAbN3F5n3ne8TzWjzVEvQ7XGX.jpg" },
     ],
   },
   {
     id: "anime",
     label: "Anime",
     items: [
-      { title: "Placeholder Series A", year: 2013 },
-      { title: "Placeholder Series B", year: 2016 },
-      { title: "Placeholder Series C", year: 2020 },
-      { title: "Placeholder Series D", year: 2023 },
+      // Season 6 key visual from MyAnimeList.
+      { title: "Kingdom, Season 6", year: 2025, poster: "https://cdn.myanimelist.net/images/anime/1145/150403l.jpg" },
     ],
   },
-];
-
-export const trophies: { title: string; detail: string }[] = [
-  { title: "Placeholder achievement", detail: "Where and when it happened, in one line." },
-  { title: "Placeholder achievement", detail: "Where and when it happened, in one line." },
-  { title: "Placeholder achievement", detail: "Where and when it happened, in one line." },
 ];
 
 export type Account = {
@@ -129,29 +109,45 @@ export type Account = {
   handle: string;
   /** Profile link, when the service has public profiles. */
   href?: string;
+  /** What the copy button copies, when it isn't the handle (e.g. a profile link). */
+  copy?: string;
 };
 
 export const accounts: Account[] = [
-  { service: "Steam", handle: "placeholder-steam", href: "https://steamcommunity.com/" },
-  { service: "Riot ID", handle: "Placeholder#0000" },
-  { service: "Discord", handle: "placeholder.discord" },
-  { service: "Spotify", handle: "Placeholder", href: "https://open.spotify.com/" },
-  { service: "Instagram", handle: "@placeholder", href: "https://www.instagram.com/" },
+  { service: "Steam", handle: "triplemjr", href: "https://steamcommunity.com/id/triplemjr/", copy: "https://steamcommunity.com/id/triplemjr/" },
+  { service: "Riot ID", handle: "TripleM#3005" },
+  { service: "Discord", handle: "maugyii" },
+  {
+    service: "Spotify",
+    handle: "Spotify profile",
+    href: "https://open.spotify.com/user/31jr75kuegwewafsef26ewqbsjsm",
+    copy: "https://open.spotify.com/user/31jr75kuegwewafsef26ewqbsjsm",
+  },
+  { service: "Instagram", handle: "@_gilang.maulana", href: "https://www.instagram.com/_gilang.maulana" },
 ];
 
 export const playHours = {
-  when: "Weeknights 20:00 to 23:00, weekends whenever",
+  when: "Usually online 19:00 to 22:00",
   zone: "WIB, UTC+7",
-  queue: ["Placeholder Game A", "Placeholder Game B", "Placeholder Game C"],
 };
 
-export const guestbook: { name: string; message: string; recommendation?: string; date: string }[] = [
-  { name: "Placeholder visitor", message: "A short placeholder note left by a visitor.", date: "2026-10-28" },
+/** Spotify playlists, one per language. Links only: listening stats need an API that is not free. */
+export const playlists: { label: string; language: string; href: string }[] = [
+  { label: "ID", language: "Indonesian", href: "https://open.spotify.com/playlist/7fGWquLuhRvHNYyZaSFk4P" },
+  { label: "EN", language: "English", href: "https://open.spotify.com/playlist/34QW9zNjxERkn58z4RyCje" },
+  { label: "JP", language: "Japanese", href: "https://open.spotify.com/playlist/2BYAYUUn34MrJu8YgC2NYR" },
+];
+
+/**
+ * Approved guestbook notes. Until the database is connected this holds one
+ * example, marked as such on the page, to show what a note looks like.
+ */
+export const guestbook: { name: string; message: string; recommendation?: string; date: string; example?: boolean }[] = [
   {
-    name: "Another visitor",
-    message: "Another placeholder note, a little longer, to show how two lines wrap on the page.",
-    recommendation: "A placeholder recommendation",
-    date: "2026-11-02",
+    name: "Rizky",
+    message: "Found this from your portfolio footer. Didn't expect a whole fortress back here. Add me on Riot, I'll carry you in ARAM.",
+    recommendation: "Frieren: Beyond Journey's End",
+    date: "2026-11-08",
+    example: true,
   },
-  { name: "Third visitor", message: "Short one.", date: "2026-11-06" },
 ];

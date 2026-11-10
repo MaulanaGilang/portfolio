@@ -63,7 +63,9 @@
     linear-gradient(to bottom, rgb(18 14 14 / 0.1), rgb(18 14 14 / 0.55) 70%, rgb(18 14 14 / 0.85));
 }
 
-/* ---------------- type ---------------- */
+/* ---------------- type ----------------
+   Dune Rise: house name, section titles, record-book numbers.
+   Michroma: small labels and the chart. Satoshi (inherited): body text. */
 .ah-wide {
   font-family: var(--font-michroma), ui-sans-serif, sans-serif;
   font-weight: 400;
@@ -77,15 +79,18 @@
   line-height: 1.6;
   color: rgb(240 232 214 / 0.72);
 }
+/* Large titles in Dune Rise; Michroma stands in while it loads. */
 .ah-name {
-  font-size: clamp(38px, 6.4vw, 104px);
-  letter-spacing: 0.04em;
-  line-height: 0.95;
+  font-family: var(--font-dune), var(--font-michroma), ui-sans-serif, sans-serif;
+  font-size: clamp(40px, 7.2vw, 120px);
+  letter-spacing: 0.06em;
+  line-height: 1.05;
   color: var(--cream);
 }
 .ah-title {
+  font-family: var(--font-dune), var(--font-michroma), ui-sans-serif, sans-serif;
   font-size: clamp(22px, 2.6vw, 34px);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   color: var(--cream);
 }
 .ah-num {
@@ -216,14 +221,6 @@
 html[data-ah-intro] .ah-emblem-ink {
   opacity: 0;
 }
-/* Faint ring the emblem sits in, like a targeting reticle. */
-.ah-emblem::before {
-  content: "";
-  position: absolute;
-  inset: -6%;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-}
 .ah-hud-bottom {
   display: grid;
   grid-template-columns: 1fr minmax(260px, 360px);
@@ -322,7 +319,7 @@ html[data-ah-intro] .ah-emblem-ink {
 }
 
 .ah-stat {
-  font-family: var(--font-michroma), ui-sans-serif, sans-serif;
+  font-family: var(--font-dune), var(--font-michroma), ui-sans-serif, sans-serif;
   font-size: clamp(26px, 3vw, 40px);
   color: var(--cream);
   line-height: 1.1;

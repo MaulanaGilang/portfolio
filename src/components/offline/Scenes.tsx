@@ -7,13 +7,13 @@ import type { SectionId } from "./sections";
 /**
  * The fixed backdrop. Each part of the page has its own place in the house, and
  * the scene crossfades as the reader moves between them:
- * courtyard (arrival, dossier), hall (records), glasshouse (favourites, trophies),
+ * courtyard (arrival, dossier), hall (records), glasshouse (favourites),
  * balcony (play, guestbook).
  */
 const scenes: { src: string; sections: SectionId[] }[] = [
   { src: "/offline/scene-courtyard.webp", sections: ["arrival", "dossier", "now"] },
   { src: "/offline/scene-hall.webp", sections: ["records"] },
-  { src: "/offline/scene-glasshouse.webp", sections: ["favourites", "trophies"] },
+  { src: "/offline/scene-glasshouse.webp", sections: ["favourites"] },
   { src: "/offline/scene-balcony.webp", sections: ["play", "guestbook"] },
 ];
 

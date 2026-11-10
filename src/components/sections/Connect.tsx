@@ -63,8 +63,26 @@ export function Connect() {
         <div className="relative container-site mt-14 flex flex-col gap-3 border-t border-line pt-5 label text-fg-3 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Gilang Maulana</p>
           <p>Designed and built with Next.js and WebGL</p>
-          <div className="flex gap-6">
-            <Link href="/offline" transitionTypes={["world-in"]} className="hover:text-fg">
+          <div className="flex items-center gap-6">
+            {/* The way into After Hours: a dark pill with the house sigil, wine red on hover. */}
+            <Link
+              href="/offline"
+              transitionTypes={["world-in"]}
+              data-sound="click"
+              className="group/ah inline-flex items-center gap-2.5 rounded-full border border-[#8e2a3c] bg-[#120e0e] py-2 pr-4 pl-2 text-fg transition-[background-color,border-color] duration-300 hover:bg-[#5a0f1e]"
+            >
+              <span
+                aria-hidden
+                className="size-6 bg-[#c9cdd3] transition-transform duration-500 group-hover/ah:rotate-45"
+                style={{
+                  maskImage: "url(/offline/sigil.png)",
+                  maskSize: "contain",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskImage: "url(/offline/sigil.png)",
+                  WebkitMaskSize: "contain",
+                  WebkitMaskRepeat: "no-repeat",
+                }}
+              />
               After Hours
             </Link>
             <a href="#top" className="hover:text-fg">

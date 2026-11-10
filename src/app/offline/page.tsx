@@ -12,8 +12,8 @@ import {
   guestbook,
   nowPlaying,
   playHours,
+  playlists,
   records,
-  trophies,
 } from "@/data/offline";
 
 const wib = (iso: string, withTime = true) =>
@@ -93,8 +93,11 @@ export default function AfterHours() {
                         <li key={n.medium}>
                           <span className="ah-label">{n.verb}</span>
                           <span>
-                            <span className="block text-[19px] leading-snug text-[var(--bone)]">{n.title}</span>
-                            {n.by && <span className="text-[14px] text-[var(--ash)]">{n.by}</span>}
+                            {n.titles.map((t) => (
+                              <span key={t} className="block text-[19px] leading-snug text-[var(--bone)]">
+                                {t}
+                              </span>
+                            ))}
                           </span>
                         </li>
                       ))}
@@ -125,18 +128,19 @@ export default function AfterHours() {
                 <HoursChart data={records.hoursByMonth} />
               </Panel>
               <div className="ah-grid ah-grid-7-5 mt-5">
-                <Panel label="Top tracks, last 12 months">
-                  <ol className="ah-ranked">
-                    {records.topTracks.map((t, i) => (
-                      <li key={t.title}>
-                        <span className="ah-num text-[var(--ash)]">{i + 1}</span>
-                        <span>
-                          {t.title} <span className="text-[var(--ash)]">by {t.artist}</span>
-                        </span>
-                        <span className="ah-num text-[var(--ash)]">{t.plays} plays</span>
+                <Panel label="Playlists" meta="On Spotify">
+                  <ul className="ah-ranked">
+                    {playlists.map((p) => (
+                      <li key={p.label} className="!grid-cols-[44px_1fr_auto]">
+                        <span className="ah-label text-[var(--cream)]">{p.label}</span>
+                        <span>{p.language}</span>
+                        <a href={p.href} target="_blank" rel="noopener noreferrer" className="ah-label ah-link">
+                          Listen
+                          <span className="sr-only"> to the {p.language} playlist on Spotify (opens in a new tab)</span>
+                        </a>
                       </li>
                     ))}
-                  </ol>
+                  </ul>
                 </Panel>
                 <Panel label="Most played games">
                   <ol className="ah-ranked">
@@ -157,28 +161,11 @@ export default function AfterHours() {
               <Favourites categories={favourites} />
             </section>
 
-            <div className="ah-grid ah-grid-5-7">
-              <section id="trophies" aria-labelledby="trophies-title" className="ah-section">
-                <Title id="trophies">Trophies</Title>
-                <Panel label="Trophy room">
-                  <ul className="space-y-5">
-                    {trophies.map((t, i) => (
-                      <li key={i} className="border-l border-[var(--line-strong)] pl-4">
-                        <p className="text-[17px] text-[var(--bone)]">{t.title}</p>
-                        <p className="mt-1 text-[14px] text-[var(--ash)]">{t.detail}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </Panel>
-              </section>
-
+            <div>
               <section id="play" aria-labelledby="play-title" className="ah-section">
                 <Title id="play">Play with me</Title>
                 <Panel label="Accounts" meta={playHours.zone}>
-                  <p className="mb-1 text-[15px] text-[var(--bone)]">Usually online {playHours.when.toLowerCase()}.</p>
-                  <p className="mb-5 text-[15px] text-[var(--ash)]">
-                    Up for a match of {playHours.queue.slice(0, -1).join(", ")} or {playHours.queue.at(-1)}.
-                  </p>
+                  <p className="mb-5 text-[15px] text-[var(--bone)]">{playHours.when}.</p>
                   <ul className="ah-rows">
                     {accounts.map((a) => (
                       <li key={a.service} className="!grid-cols-[110px_1fr_auto] !items-center max-[599px]:!grid-cols-[1fr_auto]">
@@ -191,7 +178,7 @@ export default function AfterHours() {
                         ) : (
                           <span className="text-[17px] [overflow-wrap:anywhere]">{a.handle}</span>
                         )}
-                        <CopyButton value={a.handle} label={`${a.service} handle`} />
+                        <CopyButton value={a.copy ?? a.handle} label={a.copy ? `${a.service} link` : `${a.service} handle`} />
                       </li>
                     ))}
                   </ul>
@@ -202,7 +189,7 @@ export default function AfterHours() {
             <section id="guestbook" aria-labelledby="guestbook-title" className="ah-section">
               <Title id="guestbook">Guestbook</Title>
               <div className="ah-grid ah-grid-7-5">
-                <Panel label="Notes" meta="Shown after approval">
+                <Panel label="Notes">
                   <ul className="space-y-6">
                     {guestbook.map((g) => (
                       <li key={g.name + g.date}>
@@ -210,6 +197,7 @@ export default function AfterHours() {
                         {g.recommendation && <p className="mt-1 text-[var(--cream)]">Recommends {g.recommendation}</p>}
                         <p className="mt-1 text-[14px] text-[var(--ash)]">
                           {g.name}, <time dateTime={g.date}>{wib(g.date, false)}</time>
+                          {g.example && <span className="ah-label ml-3">Example note</span>}
                         </p>
                       </li>
                     ))}

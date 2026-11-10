@@ -93,6 +93,9 @@ export function HoursChart({ data }: { data: { month: string; hours: number }[] 
 
         {/* This month is still running: a wine red band behind it. */}
         <rect x={x(last) - plotW / last / 2} y={pad.t} width={plotW / last / 2} height={plotH} fill="#5a0f1e" opacity={0.7} />
+        <text x={x(last) - plotW / last / 4} y={pad.t + 14} textAnchor="middle" fontSize={9} letterSpacing={1.5} fill="#f0e8d6">
+          NOW
+        </text>
 
         <path d={area} fill={`url(#${gradient})`} />
         <path d={line} fill="none" stroke="#c9cdd3" strokeWidth={1.75} strokeLinejoin="round" />

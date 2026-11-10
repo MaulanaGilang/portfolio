@@ -142,7 +142,7 @@ export function Arrival() {
               </a>
             ))}
           </nav>
-          <div className="ah-frame ah-panel">
+          <div>
             <p className="ah-label mb-3">About</p>
             <p className="text-[15px] leading-relaxed text-[var(--bone)]">{house.intro}</p>
             <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link mt-4 inline-block min-[900px]:hidden">

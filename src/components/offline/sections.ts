@@ -5,7 +5,6 @@ export const sections = [
   { id: "now", label: "Now playing" },
   { id: "records", label: "Records" },
   { id: "favourites", label: "Favourites" },
-  { id: "trophies", label: "Trophies" },
   { id: "play", label: "Play with me" },
   { id: "guestbook", label: "Guestbook" },
 ] as const;

@@ -37,7 +37,9 @@ export function Favourites({ categories }: { categories: { id: string; label: st
           <div key={c.id} className="ah-frame ah-panel">
             <div className="ah-panel-head">
               <h3 className="ah-label">{c.label}</h3>
-              <p className="ah-label">{c.items.length} titles</p>
+              <p className="ah-label">
+                {c.items.length} {c.items.length === 1 ? "title" : "titles"}
+              </p>
             </div>
             <ul className="ah-rows">
               {c.items.map((it) => (
