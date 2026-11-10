@@ -1,9 +1,8 @@
 /**
  * Content for /offline (After Hours).
  *
- * Identity, now playing, favourites and accounts are real. Still placeholders:
- * the record book (Steam hours, totals, top tracks: they come from the Steam
- * pipeline and the Spotify data export) and the guestbook notes.
+ * Hand-written content. Steam numbers are live, from src/lib/steam.ts. The
+ * guestbook holds one example note until the database is connected.
  */
 
 export const house = {
@@ -32,39 +31,6 @@ export const nowPlaying: { medium: Medium; verb: string; titles: string[] }[] = 
   { medium: "game", verb: "Playing", titles: ["League of Legends", "Albion Online"] },
   { medium: "show", verb: "Watching", titles: ["Arcane", "Cyberpunk: Edgerunners"] },
 ];
-
-export const records = {
-  /** Headline figures for the record book. */
-  totals: [
-    { label: "Hours played this year", value: "445" },
-    { label: "Games in library", value: "128" },
-    { label: "Playlists", value: "3" },
-  ],
-  /** ISO time of the last pipeline run. */
-  refreshedAt: "2026-11-09T06:00:00+07:00",
-  /** Steam hours per month, oldest first. The last entry is the current month. */
-  hoursByMonth: [
-    { month: "Dec", hours: 34 },
-    { month: "Jan", hours: 51 },
-    { month: "Feb", hours: 28 },
-    { month: "Mar", hours: 19 },
-    { month: "Apr", hours: 42 },
-    { month: "May", hours: 37 },
-    { month: "Jun", hours: 63 },
-    { month: "Jul", hours: 58 },
-    { month: "Aug", hours: 24 },
-    { month: "Sep", hours: 31 },
-    { month: "Oct", hours: 46 },
-    { month: "Nov", hours: 12 },
-  ],
-  topGames: [
-    { title: "Placeholder Game A", hours: 612 },
-    { title: "Placeholder Game B", hours: 340 },
-    { title: "Placeholder Game C", hours: 205 },
-    { title: "Placeholder Game D", hours: 148 },
-    { title: "Placeholder Game E", hours: 96 },
-  ],
-};
 
 export type Favourite = {
   title: string;

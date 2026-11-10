@@ -3,7 +3,6 @@ import { Arrival } from "@/components/offline/Arrival";
 import { CopyButton } from "@/components/offline/CopyButton";
 import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
-import { HoursChart } from "@/components/offline/HoursChart";
 import { ThornRail } from "@/components/offline/ThornRail";
 import {
   accounts,
@@ -13,8 +12,11 @@ import {
   nowPlaying,
   playHours,
   playlists,
-  records,
 } from "@/data/offline";
+import { getSteamStats } from "@/lib/steam";
+
+// Rebuilt at most once a day, which is also how often Steam is asked for new numbers.
+export const revalidate = 86400;
 
 const wib = (iso: string, withTime = true) =>
   new Intl.DateTimeFormat("en-GB", {
@@ -59,7 +61,8 @@ function Panel({
   );
 }
 
-export default function AfterHours() {
+export default async function AfterHours() {
+  const steam = await getSteamStats();
   return (
     <>
       <ThornRail />
@@ -110,24 +113,58 @@ export default function AfterHours() {
             <section id="records" aria-labelledby="records-title" className="ah-section">
               <Title id="records">Record book</Title>
               <div className="ah-grid ah-grid-3 mb-5">
-                {records.totals.map((t) => (
+                {[
+                  { label: "Hours on Steam", value: steam ? steam.totalHours.toLocaleString("en-US") : "—" },
+                  { label: "Games in library", value: steam ? steam.gameCount.toLocaleString("en-US") : "—" },
+                  { label: "Playlists", value: String(playlists.length) },
+                ].map((t) => (
                   <div key={t.label} className="ah-frame ah-panel">
                     <p className="ah-stat">{t.value}</p>
                     <p className="ah-label mt-2">{t.label}</p>
                   </div>
                 ))}
               </div>
-              <Panel
-                label="Steam hours per month"
-                meta={
-                  <>
-                    Updated <time dateTime={records.refreshedAt}>{wib(records.refreshedAt)} WIB</time>
-                  </>
-                }
-              >
-                <HoursChart data={records.hoursByMonth} />
-              </Panel>
-              <div className="ah-grid ah-grid-7-5 mt-5">
+              <div className="ah-grid ah-grid-7-5">
+                <Panel
+                  label="Most played games"
+                  meta={
+                    steam && (
+                      <>
+                        Updated <time dateTime={steam.fetchedAt}>{wib(steam.fetchedAt)} WIB</time>
+                      </>
+                    )
+                  }
+                >
+                  {steam ? (
+                    <ol className="ah-ranked">
+                      {steam.mostPlayed.map((g, i) => (
+                        <li key={g.name}>
+                          <span className="ah-num text-[var(--ash)]">{i + 1}</span>
+                          <span>{g.name}</span>
+                          <span className="ah-num text-[var(--ash)]">{g.hours.toLocaleString("en-US")} h</span>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p className="text-[var(--ash)]">Steam stats aren&apos;t available right now. They refresh once a day.</p>
+                  )}
+                </Panel>
+                <Panel label="Last two weeks">
+                  {steam?.recent.length ? (
+                    <ol className="ah-ranked">
+                      {steam.recent.map((g) => (
+                        <li key={g.name} className="!grid-cols-[1fr_auto]">
+                          <span>{g.name}</span>
+                          <span className="ah-num text-[var(--ash)]">{g.hours} h</span>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p className="text-[var(--ash)]">{steam ? "Nothing played on Steam in the last two weeks." : "No recent games to show."}</p>
+                  )}
+                </Panel>
+              </div>
+              <div className="mt-5">
                 <Panel label="Playlists" meta="On Spotify">
                   <ul className="ah-ranked">
                     {playlists.map((p) => (
@@ -141,17 +178,6 @@ export default function AfterHours() {
                       </li>
                     ))}
                   </ul>
-                </Panel>
-                <Panel label="Most played games">
-                  <ol className="ah-ranked">
-                    {records.topGames.map((g, i) => (
-                      <li key={g.title}>
-                        <span className="ah-num text-[var(--ash)]">{i + 1}</span>
-                        <span>{g.title}</span>
-                        <span className="ah-num text-[var(--ash)]">{g.hours} h</span>
-                      </li>
-                    ))}
-                  </ol>
                 </Panel>
               </div>
             </section>
