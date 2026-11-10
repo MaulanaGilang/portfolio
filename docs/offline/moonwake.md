@@ -1,6 +1,8 @@
 # Moonwake: rework plan
 
-Status: plan for review. Replaces the Dune direction in [design.md](design.md). Content, live Steam stats, posters, guestbook and the portfolio link all carry over.
+Status: **built** (all six phases, November 2026). This is the current design for `/offline` and replaces the Dune direction in [design.md](design.md). Content, live Steam stats, posters, guestbook and the portfolio link all carried over.
+
+Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moonwake/crest.svg`), Codex text `src/data/codex.ts`, page content `src/data/offline.ts`, rail `Moonwell.tsx`, cursor light and mist `Lamp.tsx`, familiar `Dragon.tsx`, scenes `public/offline/moonwake-*.webp`, styles `src/app/offline/offline.css`.
 
 ## 1. Decisions
 

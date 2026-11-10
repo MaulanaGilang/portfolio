@@ -2,6 +2,8 @@
 
 Status: draft for review. This document is for `/offline` only. The portfolio keeps its own [DESIGN.md](../../DESIGN.md).
 
+> **Superseded.** The page is now **Moonwake**; see [moonwake.md](moonwake.md) for the current design. The notes below record the earlier Dune and HUD directions.
+>
 > **Revised direction (November 2026).** The page is now a heads-up display over a cinematic scene, after the "Dunezed" web UI reference Gilang picked: a fixed backdrop of four places in the house that crossfade as the reader scrolls (rose courtyard, banner hall, glasshouse, balcony over rose fields; `public/offline/scene-*.webp`, generated with FLUX.2), a sink-and-rise view transition when crossing to or from the portfolio, posters or clips on hover in Favourites, glass panels with hairline frames and corner ticks, and Michroma (SIL Open Font License) for wide capital labels and titles in place of Marcellus. The cloth banner is replaced on the page by the sigil alone, shown as a silver emblem that forms from grains. Top 3 is replaced by Favourites: unranked lists of games, movies and anime. Where the sections below disagree with this note, this note wins; they still describe the palette, writing and motion rules.
 
 ## 1. Direction

@@ -64,9 +64,12 @@
   content: "";
   position: absolute;
   inset: 0;
+  /* Shade the left (where the text column sits), the top (the header links) and the
+     bottom, so text reads over the brighter scenes such as the Long Bridge. */
   background:
-    radial-gradient(130% 100% at 50% 40%, transparent 45%, rgb(10 8 9 / 0.45) 100%),
-    linear-gradient(to bottom, transparent, rgb(10 8 9 / 0.28) 70%, rgb(10 8 9 / 0.5));
+    linear-gradient(90deg, rgb(10 8 9 / 0.5), rgb(10 8 9 / 0.12) 50%, transparent 70%),
+    linear-gradient(to bottom, rgb(10 8 9 / 0.45), transparent 20%, transparent 65%, rgb(10 8 9 / 0.5)),
+    radial-gradient(130% 100% at 50% 40%, transparent 45%, rgb(10 8 9 / 0.4) 100%);
 }
 
 /* ---------------- type ----------------
@@ -693,6 +696,67 @@
 }
 .ah-mark:hover .ah-mark-label,
 .ah-mark:focus-visible .ah-mark-label {
+  opacity: 1;
+}
+
+/* ---------------- the familiar ---------------- */
+.ah-dragon {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 78px;
+  height: 52px;
+  cursor: default;
+  outline-offset: 6px;
+}
+.ah-dragon svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.ah-dragon-body {
+  stroke: var(--silver);
+}
+.ah-dragon-fill {
+  fill: var(--silver);
+}
+.ah-dragon-eye-shut {
+  stroke: var(--basalt);
+  transition: opacity 500ms var(--ease-slow);
+}
+.ah-dragon-eye {
+  fill: var(--lamp);
+  opacity: 0;
+  transition: opacity 900ms var(--ease-slow) 200ms;
+}
+.ah-dragon-head {
+  transform-origin: 30px 60px;
+  transition: transform 1200ms var(--ease-slow);
+}
+.ah-dragon-caption {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 700ms var(--ease-slow);
+}
+.ah-dragon:hover .ah-dragon-eye-shut,
+.ah-dragon:focus-visible .ah-dragon-eye-shut {
+  opacity: 0;
+}
+.ah-dragon:hover .ah-dragon-eye,
+.ah-dragon:focus-visible .ah-dragon-eye {
+  opacity: 1;
+  filter: drop-shadow(0 0 2px rgb(184 48 110 / 0.9));
+}
+.ah-dragon:hover .ah-dragon-head,
+.ah-dragon:focus-visible .ah-dragon-head {
+  transform: translateY(-5px) rotate(-8deg);
+}
+.ah-dragon:hover .ah-dragon-caption,
+.ah-dragon:focus-visible .ah-dragon-caption {
   opacity: 1;
 }
 

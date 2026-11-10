@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
 import { Codex } from "@/components/offline/Codex";
 import { CopyButton } from "@/components/offline/CopyButton";
+import { Dragon } from "@/components/offline/Dragon";
 import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
 import { posterProps, steamArt } from "@/components/offline/poster";
@@ -267,11 +268,15 @@ export default async function AfterHours() {
             </div>
           </div>
           {/* Required by Riot Games' fan content policy ("Legal Jibber Jabber"). Keep it verbatim, and keep this page free. */}
-          <p className="mt-8 max-w-[90ch] text-[13px] leading-relaxed text-[var(--ash)]">
-            House Maulana isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or
-            anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated
-            properties are trademarks or registered trademarks of Riot Games, Inc.
-          </p>
+          <div className="mt-8 flex items-end justify-between gap-8">
+            <p className="max-w-[90ch] text-[13px] leading-relaxed text-[var(--ash)]">
+              House Maulana isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or
+              anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated
+              properties are trademarks or registered trademarks of Riot Games, Inc.
+            </p>
+            {/* The familiar, asleep in the corner. */}
+            <Dragon />
+          </div>
         </footer>
       </div>
     </>
