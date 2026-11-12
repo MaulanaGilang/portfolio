@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
-import { Codex } from "@/components/offline/Codex";
 import { CopyButton } from "@/components/offline/CopyButton";
 import { Dragon } from "@/components/offline/Dragon";
 import { Favourites } from "@/components/offline/Favourites";
@@ -77,10 +76,6 @@ export default async function AfterHours() {
           <Arrival />
 
           <div className="ah-wrap">
-            <section id="codex" aria-labelledby="codex-title" className="ah-section">
-              <Title id="codex">Codex of Moonwake</Title>
-              <Codex />
-            </section>
 
             <section id="dossier" aria-labelledby="dossier-title" className="ah-section">
               <Title id="dossier">The Archmagus</Title>

@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 
 /**
  * The fixed backdrop: four places in Moonwake, crossfading as the reader moves
- * between them. The Long Bridge (arrival, codex), the Moonwell courtyard (the
+ * between them. The Long Bridge (arrival), the Moonwell courtyard (the
  * Archmagus), the Hall of Names (ledger, library), the harbour under the
  * aurora (long bridge, long table).
  */
 const scenes: { src: string; sections: string[] }[] = [
-  { src: "/offline/moonwake-bridge.webp", sections: ["arrival", "codex"] },
+  { src: "/offline/moonwake-bridge.webp", sections: ["arrival"] },
   { src: "/offline/moonwake-courtyard.webp", sections: ["dossier", "now"] },
   { src: "/offline/moonwake-hall.webp", sections: ["records", "favourites"] },
   { src: "/offline/moonwake-harbour.webp", sections: ["play", "guestbook"] },

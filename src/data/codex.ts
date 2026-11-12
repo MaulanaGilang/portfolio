@@ -7,6 +7,23 @@
 export type CodexFact = { label: string; value: string };
 export type CodexTab = { id: string; label: string; lead: string; body: string; facts: CodexFact[] };
 
+/** One painted image per chapter (generated with FLUX.2), shown on the Moonwake page and the map panel. */
+export const codexImages: Record<string, string> = {
+  land: "/offline/moonwake/codex-land.webp",
+  nature: "/offline/moonwake/codex-nature.webp",
+  magic: "/offline/moonwake/codex-magic.webp",
+  people: "/offline/moonwake/codex-people.webp",
+  regalia: "/offline/moonwake/codex-regalia.webp",
+  keep: "/offline/moonwake-hall.webp",
+  moonwatch: "/offline/moonwake/codex-moonwatch.webp",
+  rule: "/offline/moonwake/codex-rule.webp",
+  lore: "/offline/moonwake/codex-lore.webp",
+};
+
+/** The short introduction shown on the map panel and at the top of the Moonwake page. */
+export const moonwakeIntro =
+  "A cliff-city over deep water, where the spirit world and arcane craft meet. One bridge in, one bridge out; nobody stumbles in. Moonwake is quiet, deep and held: candle and moonlight, mist off the water, and a well of red-violet magic humming low beneath the stone. It is home that happens to be a fortress.";
+
 export const codex: CodexTab[] = [
   {
     id: "land",
