@@ -6,7 +6,6 @@ import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
 import { posterProps, steamArt } from "@/components/offline/poster";
 import { PosterHover } from "@/components/offline/PosterHover";
-import { Moonwell } from "@/components/offline/Moonwell";
 import {
   accounts,
   characterSheet,
@@ -30,18 +29,38 @@ const wib = (iso: string, withTime = true) =>
     timeZone: "Asia/Jakarta",
   }).format(new Date(iso));
 
-/** A section title with a hairline running to the edge. */
-function Title({ id, children }: { id: string; children: React.ReactNode }) {
+/** A chapter: a full-width painting with the title set over it, then the content on plain black. */
+function Chapter({
+  id,
+  title,
+  lead,
+  image,
+  children,
+}: {
+  id: string;
+  title: string;
+  lead: string;
+  image: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="ah-section-title">
-      <h2 id={`${id}-title`} className="ah-wide ah-title">
-        {children}
-      </h2>
-    </div>
+    <section id={id} aria-labelledby={`${id}-title`} className="ah-chap">
+      <div className="ah-band">
+        {/* eslint-disable-next-line @next/next/no-img-element -- full-bleed band, already sized and compressed */}
+        <img src={image} alt="" loading="lazy" />
+        <div className="ah-wrap ah-band-copy">
+          <h2 id={`${id}-title`} className="ah-band-title">
+            {title}
+          </h2>
+          <p className="ah-motto mt-3">{lead}</p>
+        </div>
+      </div>
+      <div className="ah-wrap ah-chap-body">{children}</div>
+    </section>
   );
 }
 
-/** A glass panel with a labelled head. */
+/** A block of content under a hairline, with a small label. No box. */
 function Panel({
   label,
   meta,
@@ -54,8 +73,8 @@ function Panel({
   className?: string;
 }) {
   return (
-    <div className={`ah-frame ah-panel ${className}`}>
-      <div className="ah-panel-head">
+    <div className={`ah-block ${className}`}>
+      <div className="ah-block-head">
         <h3 className="ah-label">{label}</h3>
         {meta && <div className="ah-label text-right">{meta}</div>}
       </div>
@@ -63,22 +82,18 @@ function Panel({
     </div>
   );
 }
-
 export default async function AfterHours() {
   const steam = await getSteamStats();
   return (
     <>
-      <Moonwell />
       <PosterHover />
 
-      <div className="ah-main">
+      <div>
         <main id="main">
           <Arrival />
 
-          <div className="ah-wrap">
-
-            <section id="dossier" aria-labelledby="dossier-title" className="ah-section">
-              <Title id="dossier">The Archmagus</Title>
+          <div>
+            <Chapter id="dossier" title="The Archmagus" lead="Gilang Maulana, away from the desk." image="/offline/moonwake-courtyard.webp">
               <div className="ah-grid ah-grid-7-5">
                 <Panel label="Character">
                   <dl className="ah-rows">
@@ -121,17 +136,16 @@ export default async function AfterHours() {
                   </Panel>
                 </section>
               </div>
-            </section>
+            </Chapter>
 
-            <section id="records" aria-labelledby="records-title" className="ah-section">
-              <Title id="records">The Ledger</Title>
+            <Chapter id="records" title="The Ledger" lead="Where the hours went." image="/offline/moonwake-hall.webp">
               <div className="ah-grid ah-grid-3 mb-5">
                 {[
                   { label: "Hours on Steam", value: steam ? steam.totalHours.toLocaleString("en-US") : "—" },
                   { label: "Games in library", value: steam ? steam.gameCount.toLocaleString("en-US") : "—" },
                   { label: "Playlists", value: String(playlists.length) },
                 ].map((t) => (
-                  <div key={t.label} className="ah-frame ah-panel">
+                  <div key={t.label} className="ah-block">
                     <p className="ah-stat">{t.value}</p>
                     <p className="ah-label mt-2">{t.label}</p>
                   </div>
@@ -193,18 +207,16 @@ export default async function AfterHours() {
                   </ul>
                 </Panel>
               </div>
-            </section>
+            </Chapter>
 
-            <section id="favourites" aria-labelledby="favourites-title" className="ah-section">
-              <Title id="favourites">The Library</Title>
+            <Chapter id="favourites" title="The Library" lead="Games, films and anime worth keeping." image="/offline/moonwake/codex-lore.webp">
               <Favourites categories={favourites} />
-            </section>
+            </Chapter>
 
             <div>
-              <section id="play" aria-labelledby="play-title" className="ah-section">
-                <Title id="play">The Long Bridge</Title>
+              <Chapter id="play" title="The Long Bridge" lead="One way in. This is how to reach me." image="/offline/moonwake/codex-land.webp">
                 <Panel label="Accounts" meta={playHours.zone}>
-                  <p className="mb-5 text-[15px] text-[var(--bone)]">{playHours.when}.</p>
+                  <p className="mb-5 text-[17px] text-[var(--bone)]">{playHours.when}.</p>
                   <ul className="ah-rows">
                     {accounts.map((a) => (
                       <li key={a.service} className="!grid-cols-[110px_1fr_auto] !items-center max-[599px]:!grid-cols-[1fr_auto]">
@@ -222,11 +234,10 @@ export default async function AfterHours() {
                     ))}
                   </ul>
                 </Panel>
-              </section>
+              </Chapter>
             </div>
 
-            <section id="guestbook" aria-labelledby="guestbook-title" className="ah-section">
-              <Title id="guestbook">The Long Table</Title>
+            <Chapter id="guestbook" title="The Long Table" lead="Everyone eats together. Leave a note." image="/offline/moonwake/codex-people.webp">
               <div className="ah-grid ah-grid-7-5">
                 <Panel label="Notes">
                   <ul className="space-y-6">
@@ -246,7 +257,7 @@ export default async function AfterHours() {
                   <GuestbookForm />
                 </Panel>
               </div>
-            </section>
+            </Chapter>
           </div>
         </main>
 

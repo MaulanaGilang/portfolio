@@ -1,6 +1,7 @@
 /* ------------------------------------------------------------------
    After Hours (/offline): Moonwake, House Maulana's cliff-city.
-   Plan: docs/offline/moonwake.md. Carved-stone panels with silver inlay,
+   Plan: docs/offline/moonwake.md. A lore book: a full-screen opening, then chapters
+   that each open on a painting, with content on plain black under hairlines.
    Cinzel and Cormorant type, red-violet used only as light.
 ------------------------------------------------------------------- */
 [data-world="offline"] {
@@ -41,35 +42,6 @@
   outline: 1px solid var(--cream);
   outline-offset: 3px;
   border-radius: 0;
-}
-
-/* ---------------- scene ---------------- */
-.ah-scene {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: var(--basalt);
-}
-.ah-scene-img {
-  object-fit: cover;
-  object-position: 50% 45%;
-  opacity: 0;
-  transition: opacity 1200ms ease;
-}
-.ah-scene-img[data-active] {
-  opacity: 1;
-}
-/* Darker towards the bottom and edges, so panels read over any part of the image. */
-.ah-scene::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* Shade the left (where the text column sits), the top (the header links) and the
-     bottom, so text reads over the brighter scenes such as the Long Bridge. */
-  background:
-    linear-gradient(90deg, rgb(10 8 9 / 0.5), rgb(10 8 9 / 0.12) 50%, transparent 70%),
-    linear-gradient(to bottom, rgb(10 8 9 / 0.45), transparent 20%, transparent 65%, rgb(10 8 9 / 0.5)),
-    radial-gradient(130% 100% at 50% 40%, transparent 45%, rgb(10 8 9 / 0.4) 100%);
 }
 
 /* ---------------- type ----------------
@@ -598,99 +570,6 @@
   }
 }
 
-/* ---------------- the Moonwell: section rail ----------------
-   A slim glass well down the left edge. Its water level (--level, set by
-   Moonwell.tsx) drains as the reader scrolls and slowly refills when they stop.
-   One crescent per section; the current one is lit by the lamp. */
-.ah-rail {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: var(--rail-w);
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ah-well-frame {
-  position: relative;
-}
-.ah-rail ol {
-  position: relative;
-  height: min(60vh, 520px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.ah-well {
-  --level: 1;
-  position: absolute;
-  left: 50%;
-  top: -14px;
-  bottom: -14px;
-  width: 8px;
-  margin-left: -4px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: rgb(10 8 9 / 0.6);
-  overflow: hidden;
-}
-.ah-well-water {
-  position: absolute;
-  inset: 0;
-  transform-origin: bottom;
-  transform: scaleY(var(--level));
-  background: linear-gradient(to top, var(--abyss), var(--house) 55%, var(--lamp));
-  box-shadow: 0 0 12px 1px rgb(184 48 110 / 0.5);
-}
-.ah-mark {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--basalt);
-  color: rgb(201 205 211 / 0.6);
-  transition:
-    color 700ms var(--ease-slow),
-    box-shadow 900ms var(--ease-slow);
-}
-.ah-mark-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-}
-.ah-mark:hover,
-.ah-mark:focus-visible {
-  color: var(--cream);
-}
-.ah-mark[aria-current="true"] {
-  color: #f6c9de;
-  box-shadow:
-    0 0 0 1px rgb(184 48 110 / 0.7),
-    0 0 18px 2px rgb(184 48 110 / 0.55);
-}
-.ah-mark-label {
-  position: absolute;
-  left: calc(100% + 12px);
-  top: 50%;
-  translate: 0 -50%;
-  white-space: nowrap;
-  background: var(--glass);
-  border: 1px solid var(--line);
-  padding: 5px 10px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 400ms var(--ease-slow);
-}
-.ah-mark:hover .ah-mark-label,
-.ah-mark:focus-visible .ah-mark-label {
-  opacity: 1;
-}
-
 /* ---------------- the familiar ----------------
    A silver wyvern silhouette (mask). On hover or focus its red-violet eye
    opens (the eye sits at 76.1% / 45.9% of the image); selecting it opens the map. */
@@ -1162,5 +1041,143 @@
 @media (min-width: 900px) {
   .ah-rail-mobile {
     display: none;
+  }
+}
+
+/* ---------------- lore book: top bar, opening, chapters ---------------- */
+.ah-top {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px clamp(16px, 3vw, 40px) 28px;
+  background: linear-gradient(rgb(10 8 9 / 0.85), transparent);
+}
+.ah-top-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.ah-top-nav {
+  display: flex;
+  gap: 28px;
+}
+@media (max-width: 1099px) {
+  .ah-top-nav {
+    display: none;
+  }
+}
+
+.ah-hero {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 84px clamp(16px, 3vw, 40px) 32px;
+  overflow: hidden;
+}
+.ah-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: ah-slow-zoom 30s ease-out both;
+}
+.ah-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(10 8 9 / 0.55), transparent 38%, transparent 55%, rgb(10 8 9 / 0.8) 85%, var(--basalt));
+}
+.ah-hero > :not(img) {
+  position: relative;
+  z-index: 1;
+}
+/* The city's name, set as wide as the page. */
+.ah-hero-title {
+  font-family: var(--font-cinzel-deco), var(--font-cinzel), Georgia, serif;
+  font-weight: 400;
+  font-size: 14.2vw;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--cream);
+  text-shadow: 0 4px 40px rgb(10 8 9 / 0.6);
+}
+.ah-hero-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.ah-band {
+  position: relative;
+  height: clamp(340px, 64vh, 660px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.ah-band img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ah-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--basalt), transparent 22%, transparent 40%, rgb(10 8 9 / 0.75) 78%, var(--basalt));
+}
+.ah-band-copy {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 20px;
+}
+.ah-band-title {
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(40px, 7.4vw, 112px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.ah-chap {
+  scroll-margin-top: 0;
+}
+.ah-chap-body {
+  padding-block: 36px clamp(72px, 12vh, 140px);
+}
+
+/* Content sits under a hairline with a small label: no boxes. */
+.ah-block {
+  border-top: 1px solid var(--line-strong);
+  padding-top: 16px;
+}
+.ah-block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.ah-block .ah-stat {
+  font-size: clamp(44px, 5.6vw, 84px);
+}
+.ah-grid {
+  gap: 40px 32px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ah-hero-img {
+    animation: none;
   }
 }

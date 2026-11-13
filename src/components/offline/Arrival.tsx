@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useLayoutEffect } from "react";
@@ -8,8 +8,9 @@ import { Crest } from "./Crest";
 import { sections } from "./sections";
 
 /**
- * The first screen: Moonwake. The crest fills in, the moon rises inside it,
- * then everything is still. The animation is pure CSS (.ah-crest-rise).
+ * The top bar and the opening screen, in the manner of a universe site: a slim
+ * bar with the crest and section links, then one full-screen painting with the
+ * city's name set as wide as the page.
  */
 export function Arrival() {
   useLayoutEffect(() => {
@@ -21,46 +22,39 @@ export function Arrival() {
   }, []);
 
   return (
-    <section id="arrival" aria-labelledby="arrival-title" className="ah-hud">
-      <div className="ah-frame ah-hud-frame">
-        <div className="ah-hud-top">
-          <p className="ah-label">{house.name}</p>
-          <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link max-[899px]:hidden">
-            Back to the portfolio
-          </Link>
-        </div>
+    <>
+      <header className="ah-top">
+        <a href="#arrival" className="ah-top-brand">
+          <Crest className="size-7" />
+          <span className="ah-label whitespace-nowrap max-[599px]:hidden">{house.name}</span>
+        </a>
+        <nav aria-label="Sections" className="ah-top-nav">
+          {sections.slice(1).map((s) => (
+            <a key={s.id} href={`#${s.id}`} className="ah-label ah-link">
+              {s.label}
+            </a>
+          ))}
+        </nav>
+        <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link whitespace-nowrap">
+          Back to the portfolio
+        </Link>
+      </header>
 
-        <div className="ah-hud-body">
-          <div className="ah-arrival-copy">
-            <p className="ah-label mb-4">The other side of Gilang Maulana</p>
-            <h1 id="arrival-title" className="ah-name">
-              {house.seat}
-            </h1>
-            <p className="ah-motto mt-5">{house.motto}</p>
-          </div>
-
-          <div className="ah-emblem">
-            <Crest rise title="The House Maulana crest: a silver crescent moon, horns down, on a wine-red circle" />
-          </div>
-        </div>
-
-        <div className="ah-hud-bottom">
-          <nav aria-label="Jump to a section" className="ah-hud-nav">
-            {sections.slice(1).map((s) => (
-              <a key={s.id} href={`#${s.id}`} className="ah-label">
-                {s.label}
-              </a>
-            ))}
-          </nav>
+      <section id="arrival" aria-labelledby="arrival-title" className="ah-hero">
+        {/* eslint-disable-next-line @next/next/no-img-element -- full-bleed hero, already sized and compressed */}
+        <img src="/offline/moonwake-bridge.webp" alt="" fetchPriority="high" className="ah-hero-img" />
+        <h1 id="arrival-title" className="ah-hero-title">
+          {house.seat}
+        </h1>
+        <span />
+        <div className="ah-hero-foot">
           <div>
-            <p className="ah-label mb-3">About</p>
-            <p className="text-[15px] leading-relaxed text-[var(--bone)]">{house.intro}</p>
-            <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link mt-4 inline-block min-[900px]:hidden">
-              Back to the portfolio
-            </Link>
+            <p className="ah-motto">{house.motto}</p>
+            <p className="mt-3 max-w-[46ch] text-[16px] leading-relaxed text-[var(--bone)]">{house.intro}</p>
           </div>
+          <p className="ah-label max-[899px]:hidden">Scroll to explore</p>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

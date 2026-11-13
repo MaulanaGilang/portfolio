@@ -1,6 +1,6 @@
 # Moonwake: rework plan
 
-Status: **built** (all six phases, November 2026). This is the current design for `/offline` and replaces the Dune direction in [design.md](design.md). Content, live Steam stats, posters, guestbook and the portfolio link all carried over.
+Status: **built** (all six phases, November 2026), then reworked as a lore book: `/offline` opens on a full-screen painting with a top bar, each section is a chapter that opens on an image band, and content sits on plain black under hairlines. The Moonwell rail, fixed scenes and on-page Codex described below were removed; the Codex now lives at `/offline/moonwake`, reached through the map that opens when the dragon in the footer is woken. This is the current design for `/offline` and replaces the Dune direction in [design.md](design.md). Content, live Steam stats, posters, guestbook and the portfolio link all carried over.
 
 Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moonwake/crest.svg`), Codex text `src/data/codex.ts`, page content `src/data/offline.ts`, rail `Moonwell.tsx`, cursor light and mist `Lamp.tsx`, familiar `Dragon.tsx`, scenes `public/offline/moonwake-*.webp`, styles `src/app/offline/offline.css`.
 
