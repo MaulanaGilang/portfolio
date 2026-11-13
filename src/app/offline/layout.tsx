@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Geist_Mono } from "next/font/google";
+import { Cinzel } from "next/font/google";
 import localFont from "next/font/local";
 import { ViewTransition } from "react";
 import { Lamp } from "@/components/offline/Lamp";
@@ -7,10 +7,20 @@ import "./offline.css";
 
 // Moonwake type, the saga system (docs/offline/moonwake.md, section 2):
 // Arcane Nine by Chequered Ink, supplied by Gilang, for the wordmark and titles;
-// Geist Mono (SIL OFL) for all other text, quotes and numbers;
+// Geist Mono (SIL OFL) for all other text, quotes and numbers, self-hosted from
+// src/fonts (latin, 300/400/500): next/font/google could not fetch it on Vercel's builders;
 // Cinzel (SIL OFL) only as the fallback while Arcane Nine loads.
 const arcane = localFont({ src: "../../fonts/ArcaneNine.otf", variable: "--font-arcane", display: "swap" });
-const mono = Geist_Mono({ weight: ["300", "400", "500"], subsets: ["latin"], variable: "--font-hx", display: "swap" });
+const mono = localFont({
+  src: [
+    { path: "../../fonts/GeistMono-300.woff2", weight: "300", style: "normal" },
+    { path: "../../fonts/GeistMono-400.woff2", weight: "400", style: "normal" },
+    { path: "../../fonts/GeistMono-500.woff2", weight: "500", style: "normal" },
+  ],
+  variable: "--font-hx",
+  display: "swap",
+  fallback: ["ui-monospace", "monospace"],
+});
 const cinzel = Cinzel({ weight: ["400"], subsets: ["latin"], variable: "--font-cinzel", display: "swap" });
 
 export const metadata: Metadata = {
