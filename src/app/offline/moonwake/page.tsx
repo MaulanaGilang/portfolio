@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { codex, codexImages, moonwakeIntro, ranks } from "@/data/codex";
+import { ConceptGallery } from "@/components/offline/ConceptGallery";
+import { codex, codexImages, conceptGalleries, moonwakeIntro, ranks } from "@/data/codex";
 
 export const metadata: Metadata = {
   title: "Moonwake",
@@ -29,6 +30,9 @@ export default function MoonwakePage() {
               {t.label}
             </a>
           ))}
+          <a href="#environments" className="ah-label ah-link">
+            Concept art
+          </a>
         </nav>
       </header>
 
@@ -72,6 +76,13 @@ export default function MoonwakePage() {
           </div>
         </section>
       ))}
+
+      {/* Concept art: mosaics of the city, its people and the Moonwatch. */}
+      <div className="cg-wrap">
+        {conceptGalleries.map((g) => (
+          <ConceptGallery key={g.id} {...g} />
+        ))}
+      </div>
 
       <footer className="ah-wrap py-[clamp(64px,10vh,112px)]">
         <div className="flex flex-col gap-6 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">

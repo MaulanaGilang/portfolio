@@ -8,9 +8,9 @@ import { Crest } from "./Crest";
 import { sections } from "./sections";
 
 /**
- * The top bar and the opening screen, in the manner of a universe site: a slim
- * bar with the crest and section links, then one full-screen painting with the
- * city's name set as wide as the page.
+ * The top bar and the opening screen: section links on the left, the house in the
+ * centre, the way home on the right; then one full-screen painting with the city's
+ * name set across the top, its letters arriving one by one.
  */
 export function Arrival() {
   useLayoutEffect(() => {
@@ -23,36 +23,39 @@ export function Arrival() {
 
   return (
     <>
-      <header className="ah-top">
-        <a href="#arrival" className="ah-top-brand">
-          <Crest className="size-7" />
-          <span className="ah-label whitespace-nowrap max-[599px]:hidden">{house.name}</span>
-        </a>
-        <nav aria-label="Sections" className="ah-top-nav">
-          {sections.slice(1).map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="ah-label ah-link">
-              {s.label}
+      <header className="hx-nav">
+        <nav aria-label="Sections" className="hx-nav-links">
+          {sections.map((s, i) => (
+            <a key={s.id} href={`#${s.id}`} className="hx-navlink">
+              {i === 0 && <span aria-hidden className="hx-navdot" />}
+              {s.short}
             </a>
           ))}
         </nav>
-        <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link whitespace-nowrap">
+        <a href="#arrival" className="hx-nav-brand" aria-label={`${house.name}, back to the top`}>
+          <Crest className="size-[18px]" />
+          <span>{house.name}</span>
+        </a>
+        <Link href="/" transitionTypes={["world-out"]} className="hx-navlink hx-nav-home">
           Back to the portfolio
         </Link>
       </header>
 
-      <section id="arrival" aria-labelledby="arrival-title" className="ah-hero">
+      <section id="arrival" aria-labelledby="arrival-title" className="hx-hero">
         {/* eslint-disable-next-line @next/next/no-img-element -- full-bleed hero, already sized and compressed */}
-        <img src="/offline/moonwake-bridge.webp" alt="" fetchPriority="high" className="ah-hero-img" />
-        <h1 id="arrival-title" className="ah-hero-title">
-          {house.seat}
+        <img src="/offline/moonwake-bridge.webp" alt="" fetchPriority="high" className="hx-bleed-img hx-hero-img" />
+        <h1 id="arrival-title" className="hx-mark" aria-label={house.seat}>
+          {house.seat.split("").map((ch, k) => (
+            <span key={k} aria-hidden style={{ animationDelay: `${[3, 0, 5, 1, 6, 2, 4, 7][k % 8] * 110}ms` }}>
+              {ch}
+            </span>
+          ))}
         </h1>
-        <span />
-        <div className="ah-hero-foot">
-          <div>
-            <p className="ah-motto">{house.motto}</p>
-            <p className="mt-3 max-w-[46ch] text-[16px] leading-relaxed text-[var(--bone)]">{house.intro}</p>
-          </div>
-          <p className="ah-label max-[899px]:hidden">Scroll to explore</p>
+        <div className="hx-hero-foot">
+          <p className="hx-small-white">A quiet cliff-city of {house.name}</p>
+          <p className="hx-small-white">
+            <span aria-hidden>⌄ </span>Scroll to explore
+          </p>
         </div>
       </section>
     </>

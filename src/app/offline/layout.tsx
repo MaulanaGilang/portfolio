@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Cinzel_Decorative, Cormorant_Garamond, Cormorant_SC } from "next/font/google";
+import { Cinzel, Cinzel_Decorative, Cormorant_Garamond, Cormorant_SC, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { ViewTransition } from "react";
 import { Lamp } from "@/components/offline/Lamp";
 import "./offline.css";
@@ -10,6 +11,10 @@ import "./offline.css";
 const cinzel = Cinzel({ weight: ["400", "500"], subsets: ["latin"], variable: "--font-cinzel", display: "swap" });
 const cinzelDecorative = Cinzel_Decorative({ weight: "400", subsets: ["latin"], variable: "--font-cinzel-deco", display: "swap" });
 const cormorantSC = Cormorant_SC({ weight: ["500", "600"], subsets: ["latin"], variable: "--font-cormorant-sc", display: "swap" });
+// Arcane Nine by Chequered Ink, supplied by Gilang: the wordmark and titles.
+const arcane = localFont({ src: "../../fonts/ArcaneNine.otf", variable: "--font-arcane", display: "swap" });
+// Geist Mono (SIL OFL): the tracked uppercase text, quotes and numbers.
+const mono = Geist_Mono({ weight: ["300", "400", "500"], subsets: ["latin"], variable: "--font-hx", display: "swap" });
 const cormorant = Cormorant_Garamond({ weight: "400", style: "italic", subsets: ["latin"], variable: "--font-cormorant", display: "swap" });
 
 export const metadata: Metadata = {
@@ -33,7 +38,7 @@ export default function OfflineLayout({ children }: { children: React.ReactNode 
     <ViewTransition enter={{ "world-in": "world-enter", default: "none" }} exit={{ "world-out": "world-exit", default: "none" }} default="none">
       <div
         data-world="offline"
-        className={`${cinzel.variable} ${cinzelDecorative.variable} ${cormorantSC.variable} ${cormorant.variable}`}
+        className={`${cinzel.variable} ${cinzelDecorative.variable} ${cormorantSC.variable} ${cormorant.variable} ${arcane.variable} ${mono.variable}`}
       >
         <Lamp />
         {children}

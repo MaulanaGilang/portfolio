@@ -1,19 +1,24 @@
 import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
+import { CharacterPanel } from "@/components/offline/CharacterPanel";
 import { CopyButton } from "@/components/offline/CopyButton";
 import { Dragon } from "@/components/offline/Dragon";
-import { Favourites } from "@/components/offline/Favourites";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
 import { posterProps, steamArt } from "@/components/offline/poster";
 import { PosterHover } from "@/components/offline/PosterHover";
+import { QuoteReel } from "@/components/offline/QuoteReel";
+import { sections } from "@/components/offline/sections";
 import {
   accounts,
+  characters,
   characterSheet,
   favourites,
   guestbook,
+  house,
   nowPlaying,
   playHours,
   playlists,
+  type Character,
 } from "@/data/offline";
 import { getSteamStats } from "@/lib/steam";
 
@@ -29,262 +34,430 @@ const wib = (iso: string, withTime = true) =>
     timeZone: "Asia/Jakarta",
   }).format(new Date(iso));
 
-/** A chapter: a full-width painting with the title set over it, then the content on plain black. */
-function Chapter({
-  id,
-  title,
-  lead,
-  image,
-  children,
-}: {
-  id: string;
-  title: string;
-  lead: string;
-  image: string;
-  children: React.ReactNode;
-}) {
+const sheet = (label: string) => characterSheet.find((r) => r.label === label)?.value ?? "";
+
+/** Small crosshairs in the four corners of a full-bleed image. */
+function Corners() {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="ah-chap">
-      <div className="ah-band">
-        {/* eslint-disable-next-line @next/next/no-img-element -- full-bleed band, already sized and compressed */}
-        <img src={image} alt="" loading="lazy" />
-        <div className="ah-wrap ah-band-copy">
-          <h2 id={`${id}-title`} className="ah-band-title">
-            {title}
-          </h2>
-          <p className="ah-motto mt-3">{lead}</p>
-        </div>
-      </div>
-      <div className="ah-wrap ah-chap-body">{children}</div>
-    </section>
+    <>
+      {["tl", "tr", "bl", "br"].map((c) => (
+        <span key={c} aria-hidden className={`hx-plus hx-plus-${c}`} />
+      ))}
+    </>
   );
 }
 
-/** A block of content under a hairline, with a small label. No box. */
-function Panel({
-  label,
-  meta,
-  children,
-  className = "",
-}: {
-  label: string;
-  meta?: React.ReactNode;
-  children: React.ReactNode;
-  className?: string;
-}) {
+/** A full-width image that opens out from an inset frame as it scrolls in, with its title over the lower left. */
+function Feature({ id, image, title, text, href, cta }: { id: string; image: string; title: string; text: string; href: string; cta: string }) {
   return (
-    <div className={`ah-block ${className}`}>
-      <div className="ah-block-head">
-        <h3 className="ah-label">{label}</h3>
-        {meta && <div className="ah-label text-right">{meta}</div>}
+    <article className="hx-feature" aria-labelledby={id}>
+      <div className="hx-feature-media">
+        {/* eslint-disable-next-line @next/next/no-img-element -- large inset image, already compressed */}
+        <img src={image} alt="" loading="lazy" />
       </div>
-      {children}
+      <div className="hx-feature-copy">
+        <span aria-hidden className="hx-dot-mark" />
+        <h2 id={id} className="hx-h1">
+          {title}
+        </h2>
+        <p className="hx-small-white mt-4 max-w-[46ch]">{text}</p>
+        {href.startsWith("/") ? (
+          <Link href={href} className="hx-bracket mt-5">
+            {cta}
+          </Link>
+        ) : (
+          <a href={href} className="hx-bracket mt-5">
+            {cta}
+          </a>
+        )}
+      </div>
+    </article>
+  );
+}
+
+/** A centred title between two ticked hairlines. */
+function CentreTitle({ id, children }: { id: string; children: React.ReactNode }) {
+  return (
+    <div className="hx-rule hx-centre-head">
+      <h2 id={id} className="hx-h2">
+        {children}
+      </h2>
     </div>
   );
 }
+
 export default async function AfterHours() {
   const steam = await getSteamStats();
+
+  const gilang: Character = {
+    id: "gilang",
+    name: "Gilang",
+    image: "/offline/moonwake/concept/life-archmagus.webp",
+    bio: [`${sheet("Title")}. ${sheet("Class")}.`, `${sheet("Focus")}. ${sheet("Plays")}, with a dragon for a familiar.`],
+    cells: [
+      { label: "Main roles", value: sheet("Main roles") },
+      { label: "Home", value: sheet("Home") },
+      { label: "Languages", value: sheet("Languages") },
+      { label: "Familiar", value: sheet("Familiar") },
+    ],
+  };
+
+  const playing = nowPlaying.flatMap((n) =>
+    n.titles.map((t) => ({
+      ...t,
+      medium: n.medium,
+      verb: n.verb,
+      art: t.steamAppId ? steamArt(t.steamAppId) : t.poster ? { poster: t.poster } : undefined,
+      hours: t.steamAppId ? steam?.mostPlayed.find((g) => g.appid === t.steamAppId)?.hours : undefined,
+    })),
+  );
+  const library = favourites.flatMap((c) => c.items.map((it) => ({ ...it, category: c.label })));
+  const ledger = steam ? [...steam.mostPlayed.slice(0, 3)] : [];
+  const recentHours = steam?.recent.reduce((s, g) => s + g.hours, 0) ?? 0;
+
   return (
     <>
       <PosterHover />
+      <div aria-hidden className="hx-progress">
+        <span />
+      </div>
+      <Arrival />
 
-      <div>
-        <main id="main">
-          <Arrival />
+      <main id="main">
+        {/* The saga line: a title and a large grey paragraph. */}
+        <section className="hx-intro hx-rule" aria-labelledby="intro-title">
+          <h2 id="intro-title" className="hx-intro-title">
+            The {house.name} saga
+          </h2>
+          <p className="hx-lede">
+            {house.intro} A cliff-city over deep water, one bridge in and one bridge out. {house.motto}
+          </p>
+        </section>
 
-          <div>
-            <Chapter id="dossier" title="The Archmagus" lead="Gilang Maulana, away from the desk." image="/offline/moonwake-courtyard.webp">
-              <div className="ah-grid ah-grid-7-5">
-                <Panel label="Character">
-                  <dl className="ah-rows">
-                    {characterSheet.map((row) => (
-                      <div key={row.label}>
-                        <dt className="ah-label">{row.label}</dt>
-                        <dd className="text-[16px] text-[var(--bone)]">{row.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </Panel>
+        <Feature
+          id="feature-codex"
+          image="/offline/moonwake-courtyard.webp"
+          title="The Codex"
+          text="The land, the magic, the people and the lore of Moonwake, with the concept art of the city, its people and the Moonwatch."
+          href="/offline/moonwake"
+          cta="Open the Codex"
+        />
+        <Feature
+          id="feature-archmagus"
+          image="/offline/moonwake/concept/env-hall.webp"
+          title="The Archmagus"
+          text="Gilang Maulana, away from the desk. An all-rounder mage who keeps people standing, with a dragon asleep under the table."
+          href="#dossier"
+          cta="Meet the Archmagus"
+        />
 
-                <section id="now" aria-labelledby="now-title" className="scroll-mt-6">
-                  <h2 id="now-title" className="sr-only">
-                    Now playing
-                  </h2>
-                  <Panel label="Now playing" className="h-full">
-                    <ul className="ah-rows">
-                      {nowPlaying.map((n) => (
-                        <li key={n.medium}>
-                          <span className="ah-label">{n.verb}</span>
-                          <span>
-                            {n.titles.map((t) => (
-                              <span
-                                key={t.title}
-                                className="ah-fav block text-[19px] leading-snug text-[var(--bone)]"
-                                {...posterProps({
-                                  title: t.title,
-                                  meta: n.verb,
-                                  ...(t.steamAppId ? steamArt(t.steamAppId) : { poster: t.poster }),
-                                })}
-                              >
-                                {t.title}
-                              </span>
-                            ))}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Panel>
-                </section>
-              </div>
-            </Chapter>
-
-            <Chapter id="records" title="The Ledger" lead="Where the hours went." image="/offline/moonwake-hall.webp">
-              <div className="ah-grid ah-grid-3 mb-5">
-                {[
-                  { label: "Hours on Steam", value: steam ? steam.totalHours.toLocaleString("en-US") : "—" },
-                  { label: "Games in library", value: steam ? steam.gameCount.toLocaleString("en-US") : "—" },
-                  { label: "Playlists", value: String(playlists.length) },
-                ].map((t) => (
-                  <div key={t.label} className="ah-block">
-                    <p className="ah-stat">{t.value}</p>
-                    <p className="ah-label mt-2">{t.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="ah-grid ah-grid-7-5">
-                <Panel
-                  label="Most played games"
-                  meta={
-                    steam && (
-                      <>
-                        Updated <time dateTime={steam.fetchedAt}>{wib(steam.fetchedAt)} WIB</time>
-                      </>
-                    )
-                  }
-                >
-                  {steam ? (
-                    <ol className="ah-ranked">
-                      {steam.mostPlayed.map((g, i) => (
-                        <li key={g.appid} className="ah-fav" {...posterProps({ title: g.name, meta: "Steam", ...steamArt(g.appid) })}>
-                          <span className="ah-num text-[var(--ash)]">{i + 1}</span>
-                          <span>{g.name}</span>
-                          <span className="ah-num text-[var(--ash)]">{g.hours.toLocaleString("en-US")} h</span>
-                        </li>
-                      ))}
-                    </ol>
-                  ) : (
-                    <p className="text-[var(--ash)]">Steam stats aren&apos;t available right now. They refresh once a day.</p>
-                  )}
-                </Panel>
-                <Panel label="Last two weeks">
-                  {steam?.recent.length ? (
-                    <ol className="ah-ranked">
-                      {steam.recent.map((g) => (
-                        <li key={g.appid} className="ah-fav !grid-cols-[1fr_auto]" {...posterProps({ title: g.name, meta: "Steam", ...steamArt(g.appid) })}>
-                          <span>{g.name}</span>
-                          <span className="ah-num text-[var(--ash)]">{g.hours} h</span>
-                        </li>
-                      ))}
-                    </ol>
-                  ) : (
-                    <p className="text-[var(--ash)]">{steam ? "Nothing played on Steam in the last two weeks." : "No recent games to show."}</p>
-                  )}
-                </Panel>
-              </div>
-              <div className="mt-5">
-                <Panel label="Playlists" meta="On Spotify">
-                  <ul className="ah-ranked">
-                    {playlists.map((p) => (
-                      <li key={p.label} className="!grid-cols-[44px_1fr_auto]">
-                        <span className="ah-label text-[var(--cream)]">{p.label}</span>
-                        <span>{p.language}</span>
-                        <a href={p.href} target="_blank" rel="noopener noreferrer" className="ah-label ah-link">
-                          Listen
-                          <span className="sr-only"> to the {p.language} playlist on Spotify (opens in a new tab)</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </Panel>
-              </div>
-            </Chapter>
-
-            <Chapter id="favourites" title="The Library" lead="Games, films and anime worth keeping." image="/offline/moonwake/codex-lore.webp">
-              <Favourites categories={favourites} />
-            </Chapter>
-
-            <div>
-              <Chapter id="play" title="The Long Bridge" lead="One way in. This is how to reach me." image="/offline/moonwake/codex-land.webp">
-                <Panel label="Accounts" meta={playHours.zone}>
-                  <p className="mb-5 text-[17px] text-[var(--bone)]">{playHours.when}.</p>
-                  <ul className="ah-rows">
-                    {accounts.map((a) => (
-                      <li key={a.service} className="!grid-cols-[110px_1fr_auto] !items-center max-[599px]:!grid-cols-[1fr_auto]">
-                        <span className="ah-label max-[599px]:col-span-2">{a.service}</span>
-                        {a.href ? (
-                          <a href={a.href} target="_blank" rel="noopener noreferrer" className="ah-link text-[17px] [overflow-wrap:anywhere]">
-                            {a.handle}
-                            <span className="sr-only"> (opens {a.service} in a new tab)</span>
-                          </a>
-                        ) : (
-                          <span className="text-[17px] [overflow-wrap:anywhere]">{a.handle}</span>
-                        )}
-                        <CopyButton value={a.copy ?? a.handle} label={a.copy ? `${a.service} link` : `${a.service} handle`} />
-                      </li>
-                    ))}
-                  </ul>
-                </Panel>
-              </Chapter>
-            </div>
-
-            <Chapter id="guestbook" title="The Long Table" lead="Everyone eats together. Leave a note." image="/offline/moonwake/codex-people.webp">
-              <div className="ah-grid ah-grid-7-5">
-                <Panel label="Notes">
-                  <ul className="space-y-6">
-                    {guestbook.map((g) => (
-                      <li key={g.name + g.date}>
-                        <p className="max-w-[60ch] leading-relaxed text-[var(--bone)]">{g.message}</p>
-                        {g.recommendation && <p className="mt-1 text-[var(--cream)]">Recommends {g.recommendation}</p>}
-                        <p className="mt-1 text-[14px] text-[var(--ash)]">
-                          {g.name}, <time dateTime={g.date}>{wib(g.date, false)}</time>
-                          {g.example && <span className="ah-label ml-3">Example note</span>}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </Panel>
-                <Panel label="Leave a note">
-                  <GuestbookForm />
-                </Panel>
-              </div>
-            </Chapter>
-          </div>
-        </main>
-
-        <footer className="ah-wrap py-[clamp(64px,10vh,112px)]">
-          <div className="flex flex-col gap-6 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="ah-label">House Maulana</p>
-            <div className="flex flex-wrap gap-x-8 gap-y-3">
-              <Link href="/" transitionTypes={["world-out"]} className="ah-label ah-link">
-                Back to the portfolio
-              </Link>
-              <a href="#arrival" className="ah-label ah-link">
-                Back to top
-              </a>
-            </div>
-          </div>
-          {/* Required by Riot Games' fan content policy ("Legal Jibber Jabber"). Keep it verbatim, and keep this page free. */}
-          <div className="mt-8 flex items-end justify-between gap-8">
-            <p className="max-w-[90ch] text-[13px] leading-relaxed text-[var(--ash)]">
-              House Maulana isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or
-              anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated
-              properties are trademarks or registered trademarks of Riot Games, Inc.
+        {/* Story: a centred block over a full-bleed painting, with a line running down from it. */}
+        <section className="hx-story" aria-labelledby="story-title">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/offline/moonwake/codex-land.webp" alt="" loading="lazy" className="hx-bleed-img hx-drift" />
+          <Corners />
+          <div className="hx-story-copy">
+            <h2 id="story-title" className="hx-h1">
+              Story
+            </h2>
+            <span aria-hidden className="hx-dot-mark mx-auto mt-4" />
+            <p className="hx-small-white mt-5">
+              Moonwake is built in terraces down a sea cliff, curved like a crescent, with the keep carved straight from the rock.
+              Mist sits on the water most mornings and nobody stumbles in. Under the city lies a still well of red-violet magic,
+              and once a year, in the Quiet Hour, the whole city falls silent while it is fed...
             </p>
-            {/* The familiar, asleep in the corner. */}
+            <Link href="/offline/moonwake#lore" className="hx-bracket mt-5">
+              Discover more
+            </Link>
+          </div>
+          <span aria-hidden className="hx-story-line" />
+        </section>
+
+        {/* Characters: a framed profile and a strip of thumbnails. */}
+        <section id="dossier" aria-labelledby="dossier-title" className="hx-section">
+          <CentreTitle id="dossier-title">Characters</CentreTitle>
+          <div className="hx-pad">
+            <CharacterPanel characters={[gilang, ...characters]} />
+          </div>
+        </section>
+
+        <QuoteReel />
+
+        {/* The Library: a list like a press list. */}
+        <section id="favourites" aria-labelledby="favourites-title" className="hx-section hx-pad hx-split">
+          <h2 id="favourites-title" className="hx-h2 hx-split-title">
+            The Library
+          </h2>
+          <ul className="hx-list">
+            {library.map((r) => (
+              <li key={r.title} {...posterProps({ title: r.title, poster: r.poster, clip: r.clip, meta: `${r.category}, ${r.year}` })}>
+                <span aria-hidden className="hx-list-dot" />
+                <span className="hx-list-key">{r.category}</span>
+                <span className="hx-list-val">{r.title}</span>
+                <span className="hx-list-end">{r.year}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* The Ledger: big numbers like an events list. */}
+        <section id="records" aria-labelledby="records-title" className="hx-section hx-pad hx-split">
+          <h2 id="records-title" className="hx-h2 hx-split-title">
+            The Ledger
+          </h2>
+          <div>
+            {steam ? (
+              <ul className="hx-events">
+                {ledger.map((g) => (
+                  <li key={g.appid} {...posterProps({ title: g.name, meta: "Steam", ...steamArt(g.appid) })}>
+                    <span className="hx-event-num">
+                      {g.hours.toLocaleString("en-US")}
+                      <span className="hx-event-unit">H</span>
+                    </span>
+                    <span className="hx-small">
+                      <span className="hx-small-white">{g.name}.</span> Hours on Steam, all time.
+                    </span>
+                  </li>
+                ))}
+                {steam.recent.map((g) => (
+                  <li key={`recent-${g.appid}`} {...posterProps({ title: g.name, meta: "Steam, last two weeks", ...steamArt(g.appid) })}>
+                    <span className="hx-event-num">
+                      {g.hours}
+                      <span className="hx-event-unit">H</span>
+                    </span>
+                    <span className="hx-small">
+                      <span className="hx-small-white">{g.name}.</span> Played in the last two weeks.
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="hx-small">Steam stats aren&apos;t available right now. They refresh once a day.</p>
+            )}
+            {steam && (
+              <p className="hx-small mt-5">
+                Updated <time dateTime={steam.fetchedAt}>{wib(steam.fetchedAt)} WIB</time>
+              </p>
+            )}
+          </div>
+        </section>
+
+        {/* Stats: four framed columns. */}
+        <section aria-labelledby="stats-title" className="hx-section">
+          <CentreTitle id="stats-title">Stats</CentreTitle>
+          <div className="hx-pad">
+            <ul className="hx-stats">
+              {[
+                {
+                  n: steam ? `${steam.totalHours.toLocaleString("en-US")}+` : "—",
+                  label: "Hours",
+                  text: "Played on Steam across the whole library, counted by Steam itself and refreshed once a day.",
+                },
+                { n: steam ? String(steam.gameCount) : "—", label: "Games", text: "In the Steam library, played or still waiting for their turn." },
+                {
+                  n: `${recentHours}H`,
+                  label: "Fortnight",
+                  text: steam?.recent.length ? `The last two weeks: ${steam.recent.map((g) => g.name).join(", ")}.` : "Nothing on Steam in the last two weeks.",
+                },
+                { n: String(playlists.length), label: "Playlists", text: "Indonesian, English and Japanese, all on Spotify. One for each language." },
+              ].map((s) => (
+                <li key={s.label}>
+                  <p className="hx-stat">
+                    <span>{s.n}</span>
+                  </p>
+                  <p className="hx-h3 mt-auto">{s.label}</p>
+                  <p className="hx-small mt-3">{s.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Now playing: a parallax painting, then cards like a shop row. */}
+        <section aria-labelledby="now-title" className="hx-section">
+          <div className="hx-story hx-story-short">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/offline/moonwake/concept/life-festival.webp" alt="" loading="lazy" className="hx-bleed-img hx-drift" />
+            <Corners />
+            <div className="hx-story-copy">
+              <h2 id="now-title" className="hx-h1">
+                Now playing
+              </h2>
+              <span aria-hidden className="hx-dot-mark mx-auto mt-4" />
+              <p className="hx-small-white mt-5">What is on the table this season: the games being played and the shows being watched.</p>
+            </div>
+            <span aria-hidden className="hx-story-line" />
+          </div>
+          <ul className="hx-pad hx-cards">
+            {playing.map((t) => (
+              <li key={t.title} className="hx-card" {...posterProps({ title: t.title, meta: t.verb, ...(t.art ?? {}) })}>
+                <p className="hx-card-meta">
+                  <span>Medium</span>
+                  <span aria-hidden>/</span>
+                  <span className="hx-small-white">{t.medium}</span>
+                </p>
+                <div className="hx-card-art">
+                  {t.art?.poster ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={t.art.poster} alt="" loading="lazy" />
+                  ) : (
+                    <span className="hx-card-blank hx-h2">{t.title}</span>
+                  )}
+                </div>
+                <h3 className="hx-h3">{t.title}</h3>
+                <p className="hx-small hx-card-desc">{t.verb} now.</p>
+                <p className="hx-card-meta hx-card-foot">
+                  <span>{t.hours ? "Hours" : "Status"}</span>
+                  <span aria-hidden>/</span>
+                  <span className="hx-small-white">{t.hours ? t.hours.toLocaleString("en-US") : t.verb}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* The Long Bridge: accounts and playlists as a press list with actions. */}
+        <section id="play" aria-labelledby="play-title" className="hx-section hx-pad hx-split">
+          <div className="hx-split-title">
+            <h2 id="play-title" className="hx-h2">
+              The Long Bridge
+            </h2>
+            <p className="hx-small mt-4">
+              {playHours.when}, {playHours.zone}.
+            </p>
+          </div>
+          <ul className="hx-list">
+            {accounts.map((a) => (
+              <li key={a.service}>
+                <span aria-hidden className="hx-list-dot" />
+                <span className="hx-list-key">{a.service}</span>
+                <span className="hx-list-val [overflow-wrap:anywhere]">{a.handle}</span>
+                <span className="hx-list-end hx-list-actions">
+                  {a.href && (
+                    <a href={a.href} target="_blank" rel="noopener noreferrer" className="ah-button">
+                      Visit<span className="sr-only"> {a.service} (opens in a new tab)</span>
+                    </a>
+                  )}
+                  <CopyButton value={a.copy ?? a.handle} label={a.copy ? `${a.service} link` : `${a.service} handle`} />
+                </span>
+              </li>
+            ))}
+            {playlists.map((p) => (
+              <li key={p.label}>
+                <span aria-hidden className="hx-list-dot" />
+                <span className="hx-list-key">Playlist {p.label}</span>
+                <span className="hx-list-val">{p.language}</span>
+                <span className="hx-list-end hx-list-actions">
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="ah-button">
+                    Listen<span className="sr-only"> to the {p.language} playlist on Spotify (opens in a new tab)</span>
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* The Long Table: notes as a list, and the form. */}
+        <section id="guestbook" aria-labelledby="guestbook-title" className="hx-section hx-pad hx-split">
+          <div className="hx-split-title">
+            <h2 id="guestbook-title" className="hx-h2">
+              The Long Table
+            </h2>
+            <p className="hx-small mt-4">Leave a note. Notes appear once approved.</p>
+          </div>
+          <div className="grid gap-14">
+            <ul className="hx-list">
+              {guestbook.map((g) => (
+                <li key={g.name + g.date} className="hx-list-note">
+                  <span aria-hidden className="hx-list-dot" />
+                  <span className="hx-list-key">
+                    {g.name}
+                    <span className="hx-small block">
+                      <time dateTime={g.date}>{wib(g.date, false)}</time>
+                      {g.example && " · Example"}
+                    </span>
+                  </span>
+                  <span className="hx-list-val normal-case">
+                    {g.message}
+                    {g.recommendation && <span className="hx-small mt-2 block">Recommends {g.recommendation}</span>}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <GuestbookForm />
+          </div>
+        </section>
+      </main>
+
+      {/* The end: a last painting with a framed quote, the name across the page, and the footer. */}
+      <footer className="hx-end">
+        <div className="hx-prefoot">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/offline/moonwake-harbour.webp" alt="" loading="lazy" className="hx-bleed-img" />
+          <figure className="hx-prefoot-quote">
+            <blockquote className="hx-quote-text hx-quote-small">&ldquo;The pool is fed before the table.&rdquo;</blockquote>
+            <span aria-hidden className="hx-dot-mark mx-auto mt-3" />
+            <figcaption className="hx-small-white mt-3">The house code</figcaption>
+          </figure>
+        </div>
+        <p className="hx-mark hx-mark-end" aria-hidden>
+          {house.seat.split("").map((ch, k) => (
+            <span key={k}>{ch}</span>
+          ))}
+        </p>
+        <div className="hx-rule hx-foot">
+          <nav aria-label="Explore" className="hx-foot-col">
+            <p className="hx-small">Explore</p>
+            {sections.map((s) => (
+              <a key={s.id} href={`#${s.id}`} className="hx-footlink">
+                {s.short}
+              </a>
+            ))}
+          </nav>
+          <div className="hx-foot-col">
+            <p className="hx-small">Moonwake</p>
+            <Link href="/offline/moonwake" className="hx-footlink">
+              The Codex
+            </Link>
+            <Link href="/offline/moonwake#environments" className="hx-footlink">
+              Concept art
+            </Link>
+          </div>
+          <div className="hx-foot-col">
+            <p className="hx-small">House</p>
+            <Link href="/" transitionTypes={["world-out"]} className="hx-footlink">
+              Portfolio
+            </Link>
+            <a href="#arrival" className="hx-footlink">
+              Back to top
+            </a>
+          </div>
+          <div className="hx-foot-col">
+            <p className="hx-small">Social</p>
+            {accounts
+              .filter((a) => a.href)
+              .map((a) => (
+                <a key={a.service} href={a.href} target="_blank" rel="noopener noreferrer" className="hx-footlink">
+                  {a.service}
+                </a>
+              ))}
+          </div>
+          <div className="hx-foot-familiar">
+            <p className="hx-small">The familiar, asleep</p>
+            {/* Waking it opens the Map of Moonwake. */}
             <Dragon />
           </div>
-        </footer>
-      </div>
+        </div>
+        <div className="hx-rule hx-foot-bar">
+          <p className="hx-small">© {new Date().getFullYear()} {house.name}. All quiet.</p>
+          {/* Required by Riot Games' fan content policy ("Legal Jibber Jabber"). Keep it verbatim, and keep this page free. */}
+          <p className="hx-legal">
+            House Maulana isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone
+            officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are
+            trademarks or registered trademarks of Riot Games, Inc.
+          </p>
+        </div>
+      </footer>
     </>
   );
 }

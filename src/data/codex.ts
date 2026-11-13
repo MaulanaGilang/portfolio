@@ -168,3 +168,51 @@ export const ranks = {
     "Archmagus of the Coast",
   ],
 };
+
+/** One concept-art tile: a span of 2 makes it double width in the mosaic. */
+export type ConceptTile = { src: string; title: string; text: string; span?: 2 };
+
+/**
+ * Concept art for the Moonwake page, shown as mosaics under divider labels in the
+ * manner of a region page. New pieces were generated with FLUX.2; the rest reuse the
+ * scenes and chapter images.
+ */
+export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[] }[] = [
+  {
+    id: "environments",
+    label: "Environments",
+    tiles: [
+      { src: "/offline/moonwake/concept/env-city.webp", span: 2, title: "Moonwake at dawn", text: "Terraces of pale stone stepping down the cliff to the crescent harbour." },
+      { src: "/offline/moonwake/concept/env-hall.webp", span: 2, title: "The long table", text: "The great hall of the keep, carved from the rock, with one table for everyone." },
+      { src: "/offline/moonwake/concept/env-market.webp", title: "Lantern stairs", text: "The market streets are stairs. The lamps on them are never allowed to go out." },
+      { src: "/offline/moonwake/concept/env-tower.webp", title: "The watchtower", text: "Storm nights on the cliff, under the red-violet aurora." },
+      { src: "/offline/moonwake/concept/env-pool.webp", title: "The Moonwell", text: "The still reservoir under the city. What is drawn must be returned." },
+      { src: "/offline/moonwake-courtyard.webp", title: "The Still Pool", text: "A courtyard pool that never ripples, whatever the weather." },
+      { src: "/offline/moonwake-harbour.webp", span: 2, title: "The harbour", text: "Fishing boats home before the mist rolls in." },
+      { src: "/offline/moonwake-bridge.webp", span: 2, title: "The Long Bridge", text: "One way in, one way out, and nowhere to hide on it." },
+    ],
+  },
+  {
+    id: "life",
+    label: "Life in Moonwake",
+    tiles: [
+      { src: "/offline/moonwake/concept/life-townsfolk.webp", span: 2, title: "Townsfolk", text: "Fisherfolk, smiths, scribes and elders. A few thousand souls who greet each other with \"We're here\"." },
+      { src: "/offline/moonwake/concept/life-archmagus.webp", title: "The Archmagus", text: "Robes in wine and black with silver thread, and the crescent staff that carries the Lamp." },
+      { src: "/offline/moonwake/concept/life-library.webp", title: "The library", text: "The crest-cats go wherever they like. The scribes have stopped arguing." },
+      { src: "/offline/moonwake/concept/life-festival.webp", span: 2, title: "Moonwake Night", text: "Every 24 March: lanterns on the terraces, strings and gongs, and glowing petals on the water." },
+      { src: "/offline/moonwake-hall.webp", span: 2, title: "The Hall of Names", text: "Every Maulana, carved in silver, read aloud on the Day of Names." },
+    ],
+  },
+  {
+    id: "military",
+    label: "The Moonwatch",
+    tiles: [
+      { src: "/offline/moonwake/concept/watch-soldiers.webp", span: 2, title: "The Moonwatch", text: "Light silver-plated armour over wine-red cloth. Patient, defensive, impossible to hurry." },
+      { src: "/offline/moonwake/concept/watch-still.webp", title: "The Still", text: "Twelve guards who never speak. Nobody has heard them, and nobody asks." },
+      { src: "/offline/moonwake/concept/watch-weapons.webp", title: "Arms", text: "The crescent staff, the curved sword, the long spear and the crescent shield." },
+      { src: "/offline/moonwake/concept/watch-armour.webp", title: "Plate", text: "Light enough to hold the bridge all night, bright enough to be seen doing it." },
+      { src: "/offline/moonwake/codex-moonwatch.webp", span: 2, title: "The Bridge Stand", text: "The battle cry is one word: \"Quiet.\"" },
+      { src: "/offline/moonwake/codex-regalia.webp", title: "Regalia", text: "The crescent-over-pool ring, moonvine thread and sea-leather." },
+    ],
+  },
+];

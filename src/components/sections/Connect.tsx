@@ -65,7 +65,7 @@ export function Connect() {
           <p>Designed and built with Next.js and WebGL</p>
           <div className="flex items-center gap-6">
             <Link href="/offline" transitionTypes={["world-in"]} className="hover:text-fg">
-              After Hours
+              After Hours?
             </Link>
             <a href="#top" className="hover:text-fg">
               Back to top ↑
