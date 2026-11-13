@@ -155,3 +155,7 @@ Each phase is checked in the browser on desktop and phone before the next.
 ## 8. Open items
 
 - Optional: real names for the Codex characters beyond Gilang Maulana I and Yuki.
+
+## 9. Military look: the Stillstone Order
+
+Chosen November 2026 over Trench Crusade, Lantern Watch, Tide Knights and other directions. The bed of the Moonwell yields **stillstone**, pale stone that soaks up magic, stores it and glows red-violet as it fills (Moonwake's own material, deliberately different from Demacia's petricite: it gives magic back). The Moonwatch are knights in dark plate set with stillstone panels, wine surcoats, one crescent (horns down) on the chest. The armoury is knightly steel plus discharge weapons with stillstone cores. Each of the Still carries one stillstone relic with a different stored spell (roster: `stillRoster` in `src/data/codex.ts`). Art: `public/offline/moonwake/concept/` (`watch-soldier`, `arms-steel`, `arms-stillstone`, `still-1`, `still-2`), generated with GPT Image through Figma (file: Moonwake concept art).

@@ -155,7 +155,7 @@ export const characters: Character[] = [
     name: "The Moonwatch",
     image: "/offline/moonwake/concept/watch-soldier.webp",
     bio: [
-      "The city's guard: wine greatcoats over plate, mist-masks for the fog, and rifles with long bayonets fed by Moonwell water. They fight patiently and defensively, and their most famous battle is one they never had to start: the Bridge Stand.",
+      "The city's guard, knights of the Stillstone Order: dark plate set with pale stillstone that drinks the spells thrown at it, wine surcoats, and rifles that fire that magic back. They fight patiently and defensively, and their most famous battle is one they never had to start: the Bridge Stand.",
       "Their battle cry is a single word. \"Quiet.\"",
     ],
     cells: [
@@ -168,11 +168,11 @@ export const characters: Character[] = [
     name: "The Still",
     image: "/offline/moonwake/concept/still-1.webp",
     bio: [
-      "Twelve who never speak, numbered First to Twelfth. They share one black hooded cloak with silver trim and nothing else: each has a weapon and a way of fighting all their own, from the First's greatsword that is never drawn to the Twelfth's censer of mist.",
+      "Twelve who never speak, numbered First to Twelfth. They share one black hooded cloak with silver trim and nothing else: each carries one stillstone relic holding a different stored spell, from the First's greatsword that is never drawn to the Twelfth's censer of mist.",
     ],
     cells: [
       { label: "Class", value: "Silent guard, ranked I to XII" },
-      { label: "Arms", value: "Twelve, one each" },
+      { label: "Relics", value: "Twelve stillstone relics, one each" },
     ],
   },
   {
