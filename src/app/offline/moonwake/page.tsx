@@ -3,7 +3,7 @@ import { ConceptGallery } from "@/components/offline/ConceptGallery";
 import { SagaFooter } from "@/components/offline/SagaFooter";
 import { SagaPage } from "@/components/offline/SagaPage";
 import { TopBar, Wordmark } from "@/components/offline/TopBar";
-import { codex, codexImages, conceptGalleries, moonwakeIntro, ranks } from "@/data/codex";
+import { codex, codexImages, conceptGalleries, moonwakeIntro, ranks, stillRoster } from "@/data/codex";
 import { house } from "@/data/offline";
 
 export const metadata: Metadata = {
@@ -119,6 +119,25 @@ export default function MoonwakePage() {
                     <li key={r} data-house={k >= ranks.shared.length ? "" : undefined}>
                       <span className="hx-small">{pad(k + 1)}</span>
                       <span className="hx-small-white">{r}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {t.id === "moonwatch" && (
+              <div className="hx-split hx-ranks-wrap">
+                <div className="hx-split-title">
+                  <h3 className="hx-h2">The Still</h3>
+                  <p className="hx-small mt-4">Twelve who never speak, ranked First to Twelfth. One cloak; every weapon and style their own.</p>
+                </div>
+                <ol className="hx-list hx-roster">
+                  {stillRoster.map((s) => (
+                    <li key={s.n}>
+                      <span aria-hidden className="hx-list-dot" />
+                      <span className="hx-list-key">{s.n}</span>
+                      <span className="hx-list-val hx-small-white">{s.weapon}</span>
+                      <span className="hx-list-val">{s.style}</span>
                     </li>
                   ))}
                 </ol>

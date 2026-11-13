@@ -2113,7 +2113,7 @@
 .cg-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: clamp(160px, 17vw, 300px);
+  grid-auto-rows: clamp(170px, 21vw, 340px);
   gap: 10px;
 }
 .cg-tile {
@@ -2222,4 +2222,25 @@
   .cg-caption-title {
     font-size: 17px;
   }
+}
+
+/* The Still roster: number, weapon, style. */
+.hx-roster > li {
+  grid-template-columns: 10px 56px minmax(0, 1fr) minmax(0, 1.2fr);
+}
+.hx-ranks-wrap + .hx-ranks-wrap {
+  padding-top: 56px;
+}
+@media (max-width: 639px) {
+  .hx-roster > li {
+    grid-template-columns: 10px 1fr;
+  }
+}
+
+/* Concept sheets on white show whole, on a white tile. */
+.cg-tile[data-sheet] .cg-link {
+  background: #fff;
+}
+.cg-tile[data-sheet] .cg-link img {
+  object-fit: contain;
 }

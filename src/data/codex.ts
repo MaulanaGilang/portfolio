@@ -109,6 +109,8 @@ export const codex: CodexTab[] = [
       { label: "Elite unit", value: "The Still: twelve who never speak in combat" },
       { label: "Battle cry", value: "\"Quiet.\" That's the whole cry" },
       { label: "Famous victory", value: "The Bridge Stand: outnumbered ten to one, the bridge held all night" },
+      { label: "Arms", value: "Steel from the sea and the knights (Dane axe, longsword, poleaxe) and well-craft: rifles and guns fed by Moonwell water" },
+      { label: "Rarest unit", value: "The Wyrmwatch: riders on armoured war wyverns" },
     ],
   },
   {
@@ -169,8 +171,11 @@ export const ranks = {
   ],
 };
 
-/** One concept-art tile: a span of 2 makes it double width in the mosaic. */
-export type ConceptTile = { src: string; title: string; text: string; span?: 2 };
+/**
+ * One concept-art tile: a span of 2 makes it double width in the mosaic. Sheets on
+ * white set `sheet` so the whole sheet shows on a white tile instead of being cropped.
+ */
+export type ConceptTile = { src: string; title: string; text: string; span?: 2; sheet?: true };
 
 /**
  * Concept art for the Moonwake page, shown as mosaics under divider labels in the
@@ -207,12 +212,33 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
     id: "military",
     label: "The Moonwatch",
     tiles: [
-      { src: "/offline/moonwake/concept/watch-soldiers.webp", span: 2, title: "The Moonwatch", text: "Light silver-plated armour over wine-red cloth. Patient, defensive, impossible to hurry." },
-      { src: "/offline/moonwake/concept/watch-still.webp", title: "The Still", text: "Twelve guards who never speak. Nobody has heard them, and nobody asks." },
-      { src: "/offline/moonwake/concept/watch-weapons.webp", title: "Arms", text: "The crescent staff, the curved sword, the long spear and the crescent shield." },
-      { src: "/offline/moonwake/concept/watch-armour.webp", title: "Plate", text: "Light enough to hold the bridge all night, bright enough to be seen doing it." },
+      { src: "/offline/moonwake/concept/watch-soldier.webp", span: 2, sheet: true, title: "The Moonwatch", text: "Wine greatcoats over plate, mist-masks for the fog, rifles with long bayonets. Patient, defensive, impossible to hurry." },
+      { src: "/offline/moonwake/concept/arms-steel.webp", span: 2, sheet: true, title: "The armoury: steel", text: "Dane axes and seax from the sea, longswords, poleaxes and flails from the knights, and trench clubs for the bridge." },
+      { src: "/offline/moonwake/concept/arms-wellcraft.webp", span: 2, sheet: true, title: "The armoury: well-craft", text: "Rifles, pistols, harpoon guns, arbalests and piston hammers, all fed by vials of Moonwell water." },
+      { src: "/offline/moonwake/concept/still-1.webp", span: 2, sheet: true, title: "The Still", text: "Twelve who never speak, each with a weapon and a way of fighting all their own. One cloak, twelve styles." },
+      { src: "/offline/moonwake/concept/still-2.webp", span: 2, sheet: true, title: "The Still, continued", text: "The gate-breaker, the mage-swordsman, the privateer, the arbalest and the censer." },
+      { src: "/offline/moonwake/concept/wyvern.webp", span: 2, sheet: true, title: "War wyvern", text: "Two legs, wings for arms. Plate barding over wine-red quilting, and a saddle for one." },
+      { src: "/offline/moonwake/concept/wyrmwatch.webp", span: 2, title: "The Wyrmwatch", text: "The Moonwatch's rarest unit: wyvern riders who patrol the cliffs and the sea lanes with lance and rifle." },
       { src: "/offline/moonwake/codex-moonwatch.webp", span: 2, title: "The Bridge Stand", text: "The battle cry is one word: \"Quiet.\"" },
-      { src: "/offline/moonwake/codex-regalia.webp", title: "Regalia", text: "The crescent-over-pool ring, moonvine thread and sea-leather." },
     ],
   },
+];
+
+/**
+ * The Still: twelve who never speak, numbered like a ranking. One black hooded
+ * cloak with silver trim for all; everything else is their own.
+ */
+export const stillRoster: { n: string; weapon: string; style: string }[] = [
+  { n: "I", weapon: "A greatsword, never drawn", style: "The First. Ends fights without unsheathing" },
+  { n: "II", weapon: "Twin seax", style: "Ambush in the fog" },
+  { n: "III", weapon: "Long well-rifle", style: "The watchtower marksman" },
+  { n: "IV", weapon: "Poleaxe", style: "The formal duellist" },
+  { n: "V", weapon: "Flail and tower shield", style: "Holds the line alone" },
+  { n: "VI", weapon: "Harpoon gun and chain", style: "Drags enemies off the bridge" },
+  { n: "VII", weapon: "Piston hammer", style: "Breaks gates" },
+  { n: "VIII", weapon: "A curved blade that carries well-water", style: "The mage-swordsman" },
+  { n: "IX", weapon: "Flintlocks and a sabre", style: "The former privateer" },
+  { n: "X", weapon: "Steel gauntlets", style: "Grappler. Brings nothing else" },
+  { n: "XI", weapon: "Repeating arbalest", style: "Siege and alchemical bolts" },
+  { n: "XII", weapon: "A censer of mist", style: "Blinds the whole field" },
 ];

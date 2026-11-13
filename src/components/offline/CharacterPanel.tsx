@@ -17,7 +17,7 @@ export function CharacterPanel({ characters }: { characters: Character[] }) {
       <article className="hx-char" aria-live="polite">
         <div className="hx-char-media">
           {/* eslint-disable-next-line @next/next/no-img-element -- concept art, already sized */}
-          <img key={c.id} src={c.image} alt="" />
+          <img key={c.id} src={c.image} alt="" style={c.focus ? { objectPosition: c.focus } : undefined} />
         </div>
         <div className="hx-char-name">
           <h3 className="hx-h1">{c.name}</h3>
@@ -53,7 +53,7 @@ export function CharacterPanel({ characters }: { characters: Character[] }) {
             <li key={x.id}>
               <button type="button" className="hx-thumb" aria-current={k === i ? "true" : undefined} onClick={() => setI(k)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={x.image} alt="" loading="lazy" />
+                <img src={x.image} alt="" loading="lazy" style={x.focus ? { objectPosition: x.focus } : undefined} />
                 <span className="hx-small-white truncate">{x.name.replace(/^The /, "")}</span>
               </button>
             </li>

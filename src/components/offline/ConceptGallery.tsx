@@ -16,7 +16,7 @@ export function ConceptGallery({ id, label, tiles }: { id: string; label: string
       </div>
       <ul className="cg-grid hx-pad">
         {tiles.map((t, k) => (
-          <li key={t.src} className="cg-tile" data-span={t.span}>
+          <li key={t.src} className="cg-tile" data-span={t.span} data-sheet={t.sheet ? "" : undefined}>
             <a href={t.src} target="_blank" rel="noopener noreferrer" className="cg-link">
               {/* eslint-disable-next-line @next/next/no-img-element -- concept art, already sized */}
               <img src={t.src} alt="" loading="lazy" />

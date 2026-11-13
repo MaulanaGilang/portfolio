@@ -139,15 +139,23 @@ export const guestbook: { name: string; message: string; recommendation?: string
 ];
 
 /** One person (or animal) of Moonwake for the character panel. Gilang is added first by the page, from characterSheet. */
-export type Character = { id: string; name: string; image: string; bio: string[]; cells: { label: string; value: string }[] };
+export type Character = {
+  id: string;
+  name: string;
+  image: string;
+  /** Which part of the image to keep when the portrait frame crops it (CSS object-position). */
+  focus?: string;
+  bio: string[];
+  cells: { label: string; value: string }[];
+};
 
 export const characters: Character[] = [
   {
     id: "moonwatch",
     name: "The Moonwatch",
-    image: "/offline/moonwake/concept/watch-soldiers.webp",
+    image: "/offline/moonwake/concept/watch-soldier.webp",
     bio: [
-      "The city's guard, in light silver-plated armour over wine-red cloth. They fight patiently and defensively, and their most famous battle is one they never had to start: the Bridge Stand.",
+      "The city's guard: wine greatcoats over plate, mist-masks for the fog, and rifles with long bayonets fed by Moonwell water. They fight patiently and defensively, and their most famous battle is one they never had to start: the Bridge Stand.",
       "Their battle cry is a single word. \"Quiet.\"",
     ],
     cells: [
@@ -158,11 +166,24 @@ export const characters: Character[] = [
   {
     id: "still",
     name: "The Still",
-    image: "/offline/moonwake/concept/watch-still.webp",
-    bio: ["Twelve guards in black hooded cloaks who never speak. They stand where the Archmagus stands, and nobody in Moonwake has heard any of them say a word."],
+    image: "/offline/moonwake/concept/still-1.webp",
+    bio: [
+      "Twelve who never speak, numbered First to Twelfth. They share one black hooded cloak with silver trim and nothing else: each has a weapon and a way of fighting all their own, from the First's greatsword that is never drawn to the Twelfth's censer of mist.",
+    ],
     cells: [
-      { label: "Class", value: "Silent guard" },
-      { label: "Number", value: "Always twelve" },
+      { label: "Class", value: "Silent guard, ranked I to XII" },
+      { label: "Arms", value: "Twelve, one each" },
+    ],
+  },
+  {
+    id: "wyrmwatch",
+    name: "The Wyrmwatch",
+    image: "/offline/moonwake/concept/wyrmwatch.webp",
+    focus: "56% center",
+    bio: ["The Moonwatch's rarest unit: riders on armoured war wyverns, two-legged with wings for arms. They patrol the cliffs and the sea lanes with lance and rifle, and are the first thing an invading fleet sees."],
+    cells: [
+      { label: "Class", value: "Wyvern riders" },
+      { label: "Mount", value: "War wyvern in plate barding" },
     ],
   },
   {
