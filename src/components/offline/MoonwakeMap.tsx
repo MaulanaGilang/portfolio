@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { codex, codexImages, moonwakeIntro } from "@/data/codex";
+import { SAGA } from "./SagaPage";
 
 // The coast map (public/offline/moonwake/map.webp, 16:9). Moonwake sits at this point on it.
 const MOONWAKE = { x: 0.704, y: 0.5 };
@@ -29,9 +30,9 @@ const FEATURED = ["people", "moonwatch", "magic", "nature"];
 type View = "world" | "city";
 
 /**
- * The Map of Moonwake: an easter egg opened by waking the dragon. A painted coast
- * that can be dragged and zoomed; selecting Moonwake glides the camera in, swaps to
- * the close-up of the city and opens a side panel with a link to the full Codex.
+ * The Map of Moonwake (/offline/map, reached from the Story block's "Discover more").
+ * A painted coast that can be dragged and zoomed; selecting Moonwake cuts through
+ * black to the close-up of the city and opens a side panel with a link to the Codex.
  */
 export function MoonwakeMap({ onClose }: { onClose: () => void }) {
   const [view, setView] = useState<View>("world");
@@ -39,7 +40,7 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
   const [dragging, setDragging] = useState(false);
   const drag = useRef<{ px: number; py: number; cx: number; cy: number } | null>(null);
   const stage = useRef<HTMLDivElement>(null);
-  const dialog = useRef<HTMLDivElement>(null);
+  const dialog = useRef<HTMLElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
 
   // Keep the camera inside the map at the current zoom.
@@ -102,7 +103,10 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div ref={dialog} role="dialog" aria-modal="true" aria-label="Map of Moonwake" className="ah-map">
+    <main id="main" ref={dialog} aria-labelledby="map-title" className="ah-map">
+      <h1 id="map-title" className="sr-only">
+        Map of Moonwake
+      </h1>
       <div
         ref={stage}
         className="ah-map-stage"
@@ -167,6 +171,8 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
         </div>
       </div>
 
+      <div key={view} aria-hidden className="ah-map-cut" />
+
       <div className="ah-map-chrome">
         <p className="hx-small-white">
           <span aria-hidden className="hx-navdot mr-2 inline-block align-middle" />
@@ -193,7 +199,7 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
         <div className="ah-map-body">
           <p className="hx-small-white">Quiet, eternal, and ours.</p>
           <p className="hx-small mt-4">{moonwakeIntro}</p>
-          <Link href="/offline/moonwake" className="hx-bracket mt-5" tabIndex={view === "city" ? 0 : -1}>
+          <Link href="/offline/moonwake" transitionTypes={SAGA} className="hx-bracket mt-5" tabIndex={view === "city" ? 0 : -1}>
             Learn more
           </Link>
         </div>
@@ -204,7 +210,7 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
               const c = codex.find((x) => x.id === id)!;
               return (
                 <li key={id}>
-                  <Link href={`/offline/moonwake#${id}`} className="ah-map-card" tabIndex={view === "city" ? 0 : -1}>
+                  <Link href={`/offline/moonwake#${id}`} transitionTypes={SAGA} className="ah-map-card" tabIndex={view === "city" ? 0 : -1}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={codexImages[id]} alt="" loading="lazy" />
                     <span className="ah-map-card-text">
@@ -218,6 +224,6 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
           </ul>
         </div>
       </aside>
-    </div>
+    </main>
   );
 }

@@ -664,10 +664,6 @@
   position: absolute;
   inset: 0;
   transform-origin: 0 0;
-  transition: transform 1600ms var(--ease-slow);
-}
-.ah-map-stage[data-dragging] .ah-map-layer {
-  transition: none;
 }
 .ah-map-img {
   width: 100%;
@@ -680,11 +676,25 @@
   object-fit: cover;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 900ms var(--ease-slow);
 }
 .ah-map-stage[data-view="city"] .ah-map-closeup {
   opacity: 1;
-  transition-delay: 1100ms;
+}
+.ah-map-cut {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #05080a;
+  pointer-events: none;
+  animation: ah-map-cut 700ms var(--ease-slow) both;
+}
+@keyframes ah-map-cut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 .ah-map-label,
 .ah-map-place {
@@ -717,7 +727,7 @@
   padding: 1px 3px;
   background: rgb(10 8 9 / 0.55);
   opacity: 0;
-  animation: ah-place-in 900ms var(--ease-slow) 1700ms forwards;
+  animation: ah-place-in 700ms var(--ease-slow) 450ms forwards;
 }
 @keyframes ah-place-in {
   to {
@@ -818,7 +828,7 @@
   background: var(--hx-panel);
   border-left: 1px solid var(--hx-border);
   translate: 100% 0;
-  transition: translate 1100ms var(--ease-slow) 900ms;
+  transition: translate 800ms var(--ease-slow) 250ms;
 }
 .ah-map-panel[data-open] {
   translate: 0 0;
@@ -887,14 +897,13 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .ah-map,
-  .ah-map-layer,
-  .ah-map-closeup,
+  .ah-map-cut,
   .ah-map-panel {
     animation: none;
     transition: none;
   }
-  .ah-map-stage[data-view="city"] .ah-map-closeup {
-    transition-delay: 0s;
+  .ah-map-cut {
+    opacity: 0;
   }
   .ah-map-place {
     animation: none;

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { accounts, house } from "@/data/offline";
 import { Dragon } from "./Dragon";
+import { SAGA } from "./SagaPage";
 import { sections } from "./sections";
 import { Wordmark } from "./TopBar";
 
@@ -38,7 +39,7 @@ export function SagaFooter({
           <p className="hx-small">After Hours</p>
           {sections.map((s) =>
             base ? (
-              <Link key={s.id} href={`${base}#${s.id}`} className="hx-footlink">
+              <Link key={s.id} href={`${base}#${s.id}`} transitionTypes={SAGA} className="hx-footlink">
                 {s.short}
               </Link>
             ) : (
@@ -50,11 +51,14 @@ export function SagaFooter({
         </nav>
         <div className="hx-foot-col">
           <p className="hx-small">Moonwake</p>
-          <Link href="/offline/moonwake" className="hx-footlink">
+          <Link href="/offline/moonwake" transitionTypes={SAGA} className="hx-footlink">
             The Codex
           </Link>
-          <Link href="/offline/moonwake#concept" className="hx-footlink">
+          <Link href="/offline/moonwake#concept" transitionTypes={SAGA} className="hx-footlink">
             Concept art
+          </Link>
+          <Link href="/offline/map" transitionTypes={SAGA} className="hx-footlink">
+            The map
           </Link>
         </div>
         <div className="hx-foot-col">
@@ -78,7 +82,6 @@ export function SagaFooter({
         </div>
         <div className="hx-foot-familiar">
           <p className="hx-small">The familiar, asleep</p>
-          {/* Waking it opens the Map of Moonwake. */}
           <Dragon />
         </div>
       </div>

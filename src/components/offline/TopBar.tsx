@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { house } from "@/data/offline";
 import { Crest } from "./Crest";
+import { SAGA } from "./SagaPage";
 
 /**
  * The saga top bar, shared by After Hours and the Moonwake page: section links on
@@ -12,7 +13,7 @@ export function TopBar({ links, brandHref }: { links: { href: string; label: str
       <nav aria-label="Sections" className="hx-nav-links">
         {links.map((l, i) =>
           l.href.startsWith("/") ? (
-            <Link key={l.href} href={l.href} className="hx-navlink">
+            <Link key={l.href} href={l.href} transitionTypes={SAGA} className="hx-navlink">
               {i === 0 && <span aria-hidden className="hx-navdot" />}
               {l.label}
             </Link>

@@ -196,6 +196,36 @@ html:active-view-transition-type(world-in)::view-transition-old(site-header) {
     translate: 0 32px;
   }
 }
+/* Between the saga pages (After Hours, the Moonwake Codex, the map): the old page
+   closes into black, then the new one opens from the middle like a shutter. */
+html:active-view-transition-type(saga)::view-transition {
+  background: #0a0809;
+}
+::view-transition-old(.saga-exit) {
+  animation: 380ms cubic-bezier(0.4, 0, 1, 1) both saga-close;
+}
+::view-transition-new(.saga-enter) {
+  animation: 900ms cubic-bezier(0.22, 1, 0.36, 1) 320ms both saga-open;
+}
+@keyframes saga-close {
+  to {
+    opacity: 0;
+    clip-path: inset(18% 0 18% 0);
+  }
+}
+@keyframes saga-open {
+  from {
+    opacity: 0.2;
+    clip-path: inset(50% 0 50% 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.saga-exit),
+  ::view-transition-new(.saga-enter) {
+    animation-duration: 1ms;
+    animation-delay: 0s;
+  }
+}
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 300ms;

@@ -7,6 +7,7 @@ import { posterProps, steamArt } from "@/components/offline/poster";
 import { PosterHover } from "@/components/offline/PosterHover";
 import { QuoteReel } from "@/components/offline/QuoteReel";
 import { SagaFooter } from "@/components/offline/SagaFooter";
+import { SAGA, SagaPage } from "@/components/offline/SagaPage";
 import {
   accounts,
   characters,
@@ -61,7 +62,7 @@ function Feature({ id, image, title, text, href, cta }: { id: string; image: str
         </h2>
         <p className="hx-small-white mt-4 max-w-[46ch]">{text}</p>
         {href.startsWith("/") ? (
-          <Link href={href} className="hx-bracket mt-5">
+          <Link href={href} transitionTypes={SAGA} className="hx-bracket mt-5">
             {cta}
           </Link>
         ) : (
@@ -115,7 +116,7 @@ export default async function AfterHours() {
   const recentHours = steam?.recent.reduce((s, g) => s + g.hours, 0) ?? 0;
 
   return (
-    <>
+    <SagaPage>
       <PosterHover />
       <div aria-hidden className="hx-progress">
         <span />
@@ -165,8 +166,8 @@ export default async function AfterHours() {
               Mist sits on the water most mornings and nobody stumbles in. Under the city lies a still well of red-violet magic,
               and once a year, in the Quiet Hour, the whole city falls silent while it is fed...
             </p>
-            <Link href="/offline/moonwake#lore" className="hx-bracket mt-5">
-              Discover more
+            <Link href="/offline/map" transitionTypes={SAGA} className="hx-bracket mt-5">
+              Discover more<span className="sr-only">: open the Map of Moonwake</span>
             </Link>
           </div>
           <span aria-hidden className="hx-story-line" />
@@ -389,6 +390,6 @@ export default async function AfterHours() {
       </main>
 
       <SagaFooter image="/offline/moonwake-harbour.webp" quote="The pool is fed before the table." by="The house code" />
-    </>
+    </SagaPage>
   );
 }

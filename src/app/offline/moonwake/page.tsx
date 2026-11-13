@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ConceptGallery } from "@/components/offline/ConceptGallery";
 import { SagaFooter } from "@/components/offline/SagaFooter";
+import { SagaPage } from "@/components/offline/SagaPage";
 import { TopBar, Wordmark } from "@/components/offline/TopBar";
 import { codex, codexImages, conceptGalleries, moonwakeIntro, ranks } from "@/data/codex";
 import { house } from "@/data/offline";
@@ -19,7 +20,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
  */
 export default function MoonwakePage() {
   return (
-    <>
+    <SagaPage>
       <TopBar
         brandHref="#"
         links={[
@@ -27,6 +28,7 @@ export default function MoonwakePage() {
           { href: "#chapters", label: "Chapters" },
           { href: "#moonwatch", label: "Moonwatch" },
           { href: "#concept", label: "Concept art" },
+          { href: "/offline/map", label: "Map" },
         ]}
       />
 
@@ -134,6 +136,6 @@ export default function MoonwakePage() {
       </main>
 
       <SagaFooter base="/offline" image="/offline/moonwake/concept/env-city.webp" quote="Quiet." by="The battle cry of the Moonwatch" />
-    </>
+    </SagaPage>
   );
 }

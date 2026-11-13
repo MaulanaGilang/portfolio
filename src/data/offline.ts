@@ -36,8 +36,8 @@ export const nowPlaying: { medium: Medium; verb: string; titles: { title: string
     medium: "game",
     verb: "Playing",
     titles: [
-      // No portrait key art found publicly; shows the placeholder card.
-      { title: "League of Legends" },
+      // Poster made from the League logo (public/offline/posters).
+      { title: "League of Legends", poster: "/offline/posters/league-of-legends.webp" },
       { title: "Albion Online", steamAppId: 761890 },
     ],
   },
@@ -176,10 +176,10 @@ export const characters: Character[] = [
     ],
   },
   {
-    id: "calico",
-    name: "The Calico",
+    id: "cat",
+    name: "The Cat",
     image: "/offline/moonwake/concept/life-library.webp",
-    bio: ["The sacred animal of Moonwake. The crest-cats are treated like minor nobility, go wherever they like, and are especially fond of the library windowsills."],
+    bio: ["The sacred animal of Moonwake. The house cats are treated like minor nobility, go wherever they like, and are especially fond of the library windowsills."],
     cells: [
       { label: "Class", value: "Sacred animal" },
       { label: "Rank", value: "Minor nobility, unofficially" },
