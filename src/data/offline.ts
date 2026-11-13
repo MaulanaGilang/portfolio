@@ -207,3 +207,19 @@ export const characters: Character[] = [
     ],
   },
 ];
+
+const sheet = (label: string) => characterSheet.find((r) => r.label === label)?.value ?? "";
+
+/** Gilang as a character card, built from the character sheet; shown first in the Characters panel. */
+export const archmagus: Character = {
+  id: "gilang",
+  name: "Gilang",
+  image: "/offline/moonwake/concept/life-archmagus.webp",
+  bio: [`${sheet("Title")}. ${sheet("Class")}.`, `${sheet("Focus")}. ${sheet("Plays")}, with a wyvern for a familiar.`],
+  cells: [
+    { label: "Main roles", value: sheet("Main roles") },
+    { label: "Home", value: sheet("Home") },
+    { label: "Languages", value: sheet("Languages") },
+    { label: "Familiar", value: sheet("Familiar") },
+  ],
+};

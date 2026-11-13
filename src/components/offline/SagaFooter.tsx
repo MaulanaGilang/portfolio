@@ -54,6 +54,9 @@ export function SagaFooter({
           <Link href="/offline/moonwake" transitionTypes={SAGA} className="hx-footlink">
             The Codex
           </Link>
+          <Link href="/offline/moonwake#characters" transitionTypes={SAGA} className="hx-footlink">
+            Characters
+          </Link>
           <Link href="/offline/moonwake#concept" transitionTypes={SAGA} className="hx-footlink">
             Concept art
           </Link>

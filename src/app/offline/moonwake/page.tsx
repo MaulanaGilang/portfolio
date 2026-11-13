@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { CharacterPanel } from "@/components/offline/CharacterPanel";
 import { ConceptGallery } from "@/components/offline/ConceptGallery";
+import { QuoteReel } from "@/components/offline/QuoteReel";
+import { CentreTitle, StoryBlock } from "@/components/offline/SagaBlocks";
 import { SagaFooter } from "@/components/offline/SagaFooter";
 import { SagaPage } from "@/components/offline/SagaPage";
 import { TopBar, Wordmark } from "@/components/offline/TopBar";
 import { codex, codexImages, conceptGalleries, moonwakeIntro, ranks, stillRoster } from "@/data/codex";
-import { house } from "@/data/offline";
+import { archmagus, characters, house } from "@/data/offline";
 
 export const metadata: Metadata = {
   title: "Moonwake",
@@ -14,9 +17,10 @@ export const metadata: Metadata = {
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * The Moonwake region page, reached from the map's "Learn more" and the After Hours
- * Codex block. Same saga layout as After Hours: the name across a painting, a saga
- * line, an index of chapters, each chapter as a framed entry, then concept-art mosaics.
+ * The Moonwake region page, reached from the After Hours Codex and Archmagus blocks.
+ * Same saga layout as After Hours: the name across a painting, a saga line, the Story,
+ * the Characters, the house's sayings, an index of chapters, each chapter as a framed
+ * entry, then concept-art mosaics.
  */
 export default function MoonwakePage() {
   return (
@@ -25,8 +29,9 @@ export default function MoonwakePage() {
         brandHref="#"
         links={[
           { href: "/offline", label: "After Hours" },
+          { href: "#story", label: "Story" },
+          { href: "#characters", label: "Characters" },
           { href: "#chapters", label: "Chapters" },
-          { href: "#moonwatch", label: "Moonwatch" },
           { href: "#concept", label: "Concept art" },
         ]}
       />
@@ -53,8 +58,31 @@ export default function MoonwakePage() {
           </p>
         </section>
 
+        {/* Story: a centred block over a full-bleed painting, leading into the chapters. */}
+        <StoryBlock id="story" title="Story" image="/offline/moonwake/codex-land.webp">
+          <p className="hx-small-white mt-5">
+            Moonwake is built in terraces down a sea cliff, curved like a crescent, with the keep carved straight from the rock.
+            Mist sits on the water most mornings and nobody stumbles in. Under the city lies a still well of red-violet magic,
+            and once a year, in the Quiet Hour, the whole city falls silent while it is fed...
+          </p>
+          <a href="#chapters" className="hx-bracket mt-5">
+            Read the chapters
+          </a>
+        </StoryBlock>
+
+        {/* Characters: a framed profile and a strip of thumbnails. */}
+        <section id="characters" aria-labelledby="characters-title" className="hx-section">
+          <CentreTitle id="characters-title">Characters</CentreTitle>
+          <div className="hx-pad">
+            <CharacterPanel characters={[archmagus, ...characters]} />
+          </div>
+        </section>
+
+        {/* The house's sayings, one at a time over a painting. */}
+        <QuoteReel />
+
         {/* An index of the chapters, set like a press list. */}
-        <section id="chapters" aria-labelledby="chapters-title" className="hx-pad hx-split hx-index">
+        <section id="chapters" aria-labelledby="chapters-title" className="hx-section hx-pad hx-split hx-index">
           <h2 id="chapters-title" className="hx-h2 hx-split-title">
             Chapters
           </h2>
