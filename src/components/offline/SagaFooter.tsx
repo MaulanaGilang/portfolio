@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { accounts, house } from "@/data/offline";
-import { Dragon } from "./Dragon";
+import { Wyvern } from "./Wyvern";
 import { SAGA } from "./SagaPage";
 import { sections } from "./sections";
 import { Wordmark } from "./TopBar";
@@ -57,9 +57,6 @@ export function SagaFooter({
           <Link href="/offline/moonwake#concept" transitionTypes={SAGA} className="hx-footlink">
             Concept art
           </Link>
-          <Link href="/offline/map" transitionTypes={SAGA} className="hx-footlink">
-            The map
-          </Link>
         </div>
         <div className="hx-foot-col">
           <p className="hx-small">House</p>
@@ -82,7 +79,7 @@ export function SagaFooter({
         </div>
         <div className="hx-foot-familiar">
           <p className="hx-small">The familiar, asleep</p>
-          <Dragon />
+          <Wyvern />
         </div>
       </div>
       <div className="hx-rule hx-foot-bar">

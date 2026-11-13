@@ -1,10 +1,10 @@
 import { ViewTransition } from "react";
 
-/** The transition type set on links between the saga pages (After Hours, the Codex, the map). */
+/** The transition type set on links between the saga pages (After Hours and the Codex). */
 export const SAGA = ["saga"];
 
 /**
- * Wraps one saga page so that moving between After Hours, the Codex and the map
+ * Wraps one saga page so that moving between After Hours and the Codex
  * closes the old page into black and opens the new one like a shutter
  * (see the "saga" rules in globals.css).
  */

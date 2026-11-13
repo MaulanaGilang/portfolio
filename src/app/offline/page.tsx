@@ -93,7 +93,7 @@ export default async function AfterHours() {
     id: "gilang",
     name: "Gilang",
     image: "/offline/moonwake/concept/life-archmagus.webp",
-    bio: [`${sheet("Title")}. ${sheet("Class")}.`, `${sheet("Focus")}. ${sheet("Plays")}, with a dragon for a familiar.`],
+    bio: [`${sheet("Title")}. ${sheet("Class")}.`, `${sheet("Focus")}. ${sheet("Plays")}, with a wyvern for a familiar.`],
     cells: [
       { label: "Main roles", value: sheet("Main roles") },
       { label: "Home", value: sheet("Home") },
@@ -146,7 +146,7 @@ export default async function AfterHours() {
           id="feature-archmagus"
           image="/offline/moonwake/concept/env-hall.webp"
           title="The Archmagus"
-          text="Gilang Maulana, away from the desk. An all-rounder mage who keeps people standing, with a dragon asleep under the table."
+          text="Gilang Maulana, away from the desk. An all-rounder mage who keeps people standing, with a wyvern asleep under the table."
           href="#dossier"
           cta="Meet the Archmagus"
         />
@@ -166,8 +166,8 @@ export default async function AfterHours() {
               Mist sits on the water most mornings and nobody stumbles in. Under the city lies a still well of red-violet magic,
               and once a year, in the Quiet Hour, the whole city falls silent while it is fed...
             </p>
-            <Link href="/offline/map" transitionTypes={SAGA} className="hx-bracket mt-5">
-              Discover more<span className="sr-only">: open the Map of Moonwake</span>
+            <Link href="/offline/moonwake" transitionTypes={SAGA} className="hx-bracket mt-5">
+              Discover more<span className="sr-only"> about Moonwake</span>
             </Link>
           </div>
           <span aria-hidden className="hx-story-line" />

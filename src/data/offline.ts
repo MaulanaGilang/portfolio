@@ -18,7 +18,7 @@ export const characterSheet: { label: string; value: string }[] = [
   { label: "Title", value: "Archmagus of the Coast, ruler of Moonwake" },
   { label: "Class", value: "All-rounder mage. By day a data person, by night a chill gamer" },
   { label: "Main roles", value: "Mage, Support" },
-  { label: "Familiar", value: "A dragon" },
+  { label: "Familiar", value: "A wyvern" },
   { label: "Focus", value: "A black staff with a crescent head and a red-violet light: the Lamp, carried into the world" },
   { label: "Home", value: "Tuban, East Java" },
   { label: "Plays", value: "For fun, not for rank" },
@@ -178,8 +178,8 @@ export const characters: Character[] = [
   {
     id: "wyrmwatch",
     name: "The Wyrmwatch",
-    image: "/offline/moonwake/concept/wyrmwatch.webp",
-    focus: "56% center",
+    image: "/offline/moonwake/concept/wyvern.webp",
+    focus: "40% center",
     bio: ["The Moonwatch's rarest unit: riders on armoured war wyverns, two-legged with wings for arms. They patrol the cliffs and the sea lanes with lance and rifle, and are the first thing an invading fleet sees."],
     cells: [
       { label: "Class", value: "Wyvern riders" },

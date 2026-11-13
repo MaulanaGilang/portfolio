@@ -1,8 +1,8 @@
 # Moonwake: rework plan
 
-Status: **built** (all six phases, November 2026), then reworked twice. `/offline` now follows the structure of a saga site (huxleysaga.com, structure and layout only): a black top bar, the city's name across a full-screen painting, a saga line, two feature images that open out as they scroll in, a Story block, a framed character panel with a thumbnail strip, a quote carousel, list sections (Library, Long Bridge, Long Table), big-number Ledger rows, four framed stats, Now Playing cards, and a footer with the wordmark across the page. Type is Arcane Nine (wordmark and titles, `src/fonts/ArcaneNine.otf`) and Geist Mono (everything else). The Moonwell rail, fixed scenes and on-page Codex described below were removed; the Codex lives at `/offline/moonwake`, reached through the map that opens when the dragon in the footer is woken, and ends with concept-art mosaics (Environments, Life in Moonwake, The Moonwatch) in `public/offline/moonwake/concept/`, listed in `conceptGalleries` in `src/data/codex.ts`. This is the current design for `/offline` and replaces the Dune direction in [design.md](design.md). Content, live Steam stats, posters, guestbook and the portfolio link all carried over.
+Status: **built** (all six phases, November 2026), then reworked twice. `/offline` now follows the structure of a saga site (huxleysaga.com, structure and layout only): a black top bar, the city's name across a full-screen painting, a saga line, two feature images that open out as they scroll in, a Story block, a framed character panel with a thumbnail strip, a quote carousel, list sections (Library, Long Bridge, Long Table), big-number Ledger rows, four framed stats, Now Playing cards, and a footer with the wordmark across the page. Type is Arcane Nine (wordmark and titles, `src/fonts/ArcaneNine.otf`) and Geist Mono (everything else). The Moonwell rail, fixed scenes and on-page Codex described below were removed; the Codex lives at `/offline/moonwake`, reached from "Open the Codex", "Discover more" and the top bar (the map and the dragon easter egg were removed), and ends with concept-art mosaics (Environments, Life in Moonwake, The Moonwatch) in `public/offline/moonwake/concept/`, listed in `conceptGalleries` in `src/data/codex.ts`. This is the current design for `/offline` and replaces the Dune direction in [design.md](design.md). Content, live Steam stats, posters, guestbook and the portfolio link all carried over.
 
-Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moonwake/crest.svg`), Codex text `src/data/codex.ts`, page content `src/data/offline.ts`, rail `Moonwell.tsx`, cursor light and mist `Lamp.tsx`, familiar `Dragon.tsx`, scenes `public/offline/moonwake-*.webp`, styles `src/app/offline/offline.css`.
+Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moonwake/crest.svg`), Codex text `src/data/codex.ts`, page content `src/data/offline.ts`, rail `Moonwell.tsx`, cursor light and mist `Lamp.tsx`, familiar `Wyvern.tsx`, scenes `public/offline/moonwake-*.webp`, styles `src/app/offline/offline.css`.
 
 ## 1. Decisions
 
@@ -19,7 +19,7 @@ Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moon
 
 ## 2. Design system (current: the saga system)
 
-One system for all three surfaces: After Hours (`/offline`), the Moonwake page (`/offline/moonwake`) and the Map of Moonwake. Structure and layout follow a saga site (huxleysaga.com); no assets, text or fonts were taken from it. Styles: the "After Hours: a saga site" block of `src/app/offline/offline.css`, plus the map, chapter and concept-art blocks after it.
+One system for both pages: After Hours (`/offline`) and the Moonwake page (`/offline/moonwake`), joined by the "saga" view transition (`SagaPage`, rules in `globals.css`). Structure and layout follow a saga site (huxleysaga.com); no assets, text or fonts were taken from it. Styles: the "After Hours: a saga site" block of `src/app/offline/offline.css`, plus the map, chapter and concept-art blocks after it.
 
 ### Colour
 
@@ -30,7 +30,7 @@ One system for all three surfaces: After Hours (`/offline`), the Moonwake page (
 | `--hx-border` | bone at 12% | Every hairline and frame |
 | `--bone` | `#ECE7E1` | Primary text, titles, marks |
 | `--hx-grey` | `#9A9294` | Secondary text, labels |
-| `--lamp` | `#B8306E` | Red-violet: light only (glows, link hover, the map marker) |
+| `--lamp` | `#B8306E` | Red-violet: light only (glows, link hover) |
 | `--house` | `#5A0F1E` | Wine: active button fill, blank poster cards |
 
 ### Type
@@ -50,7 +50,7 @@ One system for all three surfaces: After Hours (`/offline`), the Moonwake page (
 - **Crosshairs** (`.hx-plus-*`): small + marks in the corners of full-bleed paintings.
 - **Dot mark** (`.hx-dot-mark`): a 4px square under titles and inside captions.
 - **Bracket link** (`.hx-bracket`): `[ Learn more ]`.
-- **Square dot** in the top bar before the first link, and before map labels.
+- **Square dot** in the top bar before the first link.
 
 ### Components
 
@@ -67,13 +67,12 @@ One system for all three surfaces: After Hours (`/offline`), the Moonwake page (
 | Rank grid (`.hx-ranks`): three columns; Moonwake's own nine highlighted | The Moonwatch chapter |
 | Concept mosaic (`ConceptGallery`): 4-column grid, double-width tiles, lift and frame on hover with a mono caption; titles kept on touch | Moonwake page |
 | Footer (`SagaFooter`): painting with a framed quote, wordmark across the page, link columns, the familiar, Riot's disclaimer | Both pages |
-| Map: same top bar, mono labels, a square marker in a sight ring, framed side panel with list cards | The map |
 
 ### Motion
 
 - Wordmark letters flicker in one by one on load.
 - Feature images open from an inset frame, story paintings drift, and the right-edge scroll bar fills (CSS scroll-driven animations; static where unsupported).
-- Map: the camera glides in, the close-up fades in, then the panel slides in.
+- Page to page: the old page closes into black, the new one opens from the middle like a shutter.
 - Reduced motion: all of it is off and everything shows complete.
 
 ## 3. Signature pieces (original plan, partly superseded)
@@ -84,7 +83,7 @@ One system for all three surfaces: After Hours (`/offline`), the Moonwake page (
 | **Lamp in the fog** | A soft red-violet light follows the cursor through slow drifting mist, faintly lighting silver details. Mouse only |
 | **Intro** | The crest's crescent rises over still water; the well fills to the brim as the page settles. Replaces the grain effect |
 | **Quiet Hour transition** | Crossing to or from the portfolio: fade to silence (black), then the moon rises |
-| **Dragon familiar** | A small dragon curled asleep in a corner; hover and it opens one eye |
+| **Wyvern familiar** | A small wyvern (two legs, two wings) asleep in the footer; hover and it opens one eye. Decoration only |
 | **Scenes** | Four new backgrounds, crossfading as you scroll: the Long Bridge in mist, the Moonwell courtyard, the Hall of Names, the harbour under the red-violet aurora |
 
 ## 4. The Moonwatch ranks
@@ -111,7 +110,7 @@ Moonwake's own:
 |---|---|---|---|
 | 1 | **Moonwake** | Crest, house name, motto, one line of intro | Long Bridge |
 | 2 | **Codex** | Tabs: Land, Nature, Magic, People, Regalia, The Keep, The Moonwatch, Rule, Lore. Each tab: a short paragraph and a few facts | Long Bridge |
-| 3 | **The Archmagus** | Gilang Maulana, Archmagus of the Coast; all-rounder mage; dragon familiar; languages; Now playing (with posters) | Moonwell courtyard |
+| 3 | **The Archmagus** | Gilang Maulana, Archmagus of the Coast; all-rounder mage; wyvern familiar; languages; Now playing (with posters) | Moonwell courtyard |
 | 4 | **The Ledger** | Live Steam stats, most played, last two weeks, playlists | Hall of Names |
 | 5 | **The Library** | Favourites: games, movies, anime (with posters) | Hall of Names |
 | 6 | **The Long Bridge** | Accounts and play hours | Harbour |
@@ -137,7 +136,7 @@ Moonwake's own:
 |---|---|---|
 | Crest | Done (vector) | Free |
 | Four scenes | FLUX.2 on Higgsfield, recoloured to the palette | About 4 credits |
-| Dragon familiar | Small vector drawing | Free |
+| Wyvern familiar | Mask image (`public/offline/wyvern.png`) | Free |
 | Fonts | Google Fonts through `next/font` | Free |
 
 ## 7. Build phases
@@ -149,7 +148,7 @@ Moonwake's own:
 | 3 | The Moonwell rail and the lamp cursor |
 | 4 | Codex section with tabs and content |
 | 5 | Rename and restyle the other sections; four new scenes |
-| 6 | Dragon easter egg, polish, accessibility and reduced-motion pass |
+| 6 | Familiar, polish, accessibility and reduced-motion pass |
 
 Each phase is checked in the browser on desktop and phone before the next.
 

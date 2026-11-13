@@ -28,7 +28,6 @@ export default function MoonwakePage() {
           { href: "#chapters", label: "Chapters" },
           { href: "#moonwatch", label: "Moonwatch" },
           { href: "#concept", label: "Concept art" },
-          { href: "/offline/map", label: "Map" },
         ]}
       />
 

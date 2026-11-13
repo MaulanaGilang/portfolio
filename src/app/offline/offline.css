@@ -587,7 +587,7 @@
 /* ---------------- the familiar ----------------
    A silver wyvern silhouette (mask). On hover or focus its red-violet eye
    opens (the eye sits at 76.1% / 45.9% of the image); selecting it opens the map. */
-.ah-dragon {
+.ah-wyvern {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
@@ -599,16 +599,16 @@
   cursor: pointer;
   outline-offset: 6px;
 }
-.ah-dragon-shape {
+.ah-wyvern-shape {
   position: absolute;
   inset: 0;
   background: var(--silver);
-  -webkit-mask: url(/offline/dragon.png) center / contain no-repeat;
-  mask: url(/offline/dragon.png) center / contain no-repeat;
+  -webkit-mask: url(/offline/wyvern.png) center / contain no-repeat;
+  mask: url(/offline/wyvern.png) center / contain no-repeat;
   opacity: 0.8;
   transition: opacity 900ms var(--ease-slow);
 }
-.ah-dragon-eye {
+.ah-wyvern-eye {
   position: absolute;
   left: 76.1%;
   top: 45.9%;
@@ -621,293 +621,19 @@
   opacity: 0;
   transition: opacity 900ms var(--ease-slow) 150ms;
 }
-.ah-dragon:hover .ah-dragon-shape,
-.ah-dragon:focus-visible .ah-dragon-shape {
+.ah-wyvern:hover .ah-wyvern-shape,
+.ah-wyvern:focus-visible .ah-wyvern-shape {
   opacity: 1;
 }
-.ah-dragon:hover .ah-dragon-eye,
-.ah-dragon:focus-visible .ah-dragon-eye {
+.ah-wyvern:hover .ah-wyvern-eye,
+.ah-wyvern:focus-visible .ah-wyvern-eye {
   opacity: 1;
 }
 
-/* ---------------- the Map of Moonwake ----------------
-   Same system as the saga pages: a 40px top bar on a hairline, mono labels,
-   square markers, and a framed side panel. */
-.ah-map {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  background: #05080a;
-  animation: ah-map-in 900ms var(--ease-slow);
-}
-@keyframes ah-map-in {
-  from {
-    opacity: 0;
-  }
-}
+/* ---------------- hero zoom ---------------- */
 @keyframes ah-slow-zoom {
   from {
     scale: 1.08;
-  }
-}
-.ah-map-stage {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  cursor: grab;
-  touch-action: none;
-}
-.ah-map-stage[data-view="city"] {
-  cursor: default;
-}
-.ah-map-layer {
-  position: absolute;
-  inset: 0;
-  transform-origin: 0 0;
-}
-.ah-map-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  user-select: none;
-}
-.ah-map-closeup {
-  position: absolute;
-  object-fit: cover;
-  opacity: 0;
-  pointer-events: none;
-}
-.ah-map-stage[data-view="city"] .ah-map-closeup {
-  opacity: 1;
-}
-.ah-map-cut {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: #05080a;
-  pointer-events: none;
-  animation: ah-map-cut 700ms var(--ease-slow) both;
-}
-@keyframes ah-map-cut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-.ah-map-label,
-.ah-map-place {
-  position: absolute;
-  translate: -50% -50%;
-  white-space: nowrap;
-  font-family: var(--font-hx), ui-monospace, monospace;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--bone);
-  text-shadow: 0 1px 6px rgb(0 0 0 / 0.95);
-  pointer-events: none;
-}
-.ah-map-label {
-  font-size: 12px;
-}
-.ah-map-label::before {
-  content: "";
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  margin-right: 8px;
-  background: var(--bone);
-  vertical-align: middle;
-}
-/* Places on the close-up are drawn inside the zoomed layer, so they scale with it. */
-.ah-map-place {
-  font-size: 4.6px;
-  padding: 1px 3px;
-  background: rgb(10 8 9 / 0.55);
-  opacity: 0;
-  animation: ah-place-in 700ms var(--ease-slow) 450ms forwards;
-}
-@keyframes ah-place-in {
-  to {
-    opacity: 1;
-  }
-}
-.ah-map-pin {
-  position: absolute;
-  translate: -50% -50%;
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  color: var(--bone);
-}
-/* A square marker inside a sight ring, lit red-violet. */
-.ah-map-star {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgb(236 231 225 / 0.7);
-  border-radius: 50%;
-  box-shadow: 0 0 24px 2px rgb(184 48 110 / 0.5);
-  transition:
-    box-shadow 700ms var(--ease-slow),
-    transform 700ms var(--ease-slow);
-}
-.ah-map-star::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: var(--bone);
-}
-.ah-map-star::after {
-  content: "";
-  position: absolute;
-  inset: -9px;
-  background:
-    linear-gradient(var(--bone), var(--bone)) top center / 1px 6px no-repeat,
-    linear-gradient(var(--bone), var(--bone)) bottom center / 1px 6px no-repeat,
-    linear-gradient(var(--bone), var(--bone)) left center / 6px 1px no-repeat,
-    linear-gradient(var(--bone), var(--bone)) right center / 6px 1px no-repeat;
-  opacity: 0.8;
-}
-.ah-map-pin:hover .ah-map-star,
-.ah-map-pin:focus-visible .ah-map-star {
-  transform: scale(1.12);
-  box-shadow: 0 0 34px 8px rgb(184 48 110 / 0.7);
-}
-.ah-map-pin-name {
-  font-family: var(--font-arcane), var(--font-cinzel), serif;
-  font-size: clamp(22px, 2.4vw, 32px);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 12px rgb(0 0 0 / 0.95);
-}
-.ah-map-chrome {
-  position: absolute;
-  inset: 0 0 auto 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 48px;
-  padding: 6px var(--hx-pad);
-  background: linear-gradient(rgb(10 8 9 / 0.92), rgb(10 8 9 / 0.75));
-  border-bottom: 1px solid var(--hx-border);
-}
-.ah-map-chrome .ah-button {
-  min-height: 32px;
-  padding: 4px 12px;
-  background: rgb(10 8 9 / 0.6);
-}
-.ah-map-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 20px;
-  translate: -50% 0;
-  padding: 8px 14px;
-  border: 1px solid var(--hx-border);
-  background: rgb(10 8 9 / 0.7);
-  white-space: nowrap;
-}
-.ah-map-panel {
-  position: absolute;
-  top: 48px;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  width: min(460px, 100%);
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: var(--hx-panel);
-  border-left: 1px solid var(--hx-border);
-  translate: 100% 0;
-  transition: translate 800ms var(--ease-slow) 250ms;
-}
-.ah-map-panel[data-open] {
-  translate: 0 0;
-}
-.ah-map-head {
-  padding: 28px 24px 24px;
-  border-bottom: 1px solid var(--hx-border);
-}
-.ah-map-title {
-  font-size: clamp(44px, 4.4vw, 64px);
-}
-.ah-map-body {
-  padding: 24px 24px 32px;
-}
-.ah-map-featured {
-  padding: 22px 24px 32px;
-}
-.ah-map-card {
-  display: grid;
-  grid-template-columns: 112px 1fr;
-  border: 1px solid var(--hx-border);
-  background: var(--basalt);
-  text-decoration: none;
-  transition: border-color 0.3s;
-}
-.ah-map-card img {
-  width: 112px;
-  height: 100%;
-  min-height: 92px;
-  object-fit: cover;
-  filter: grayscale(0.4) brightness(0.8);
-  transition: filter 0.4s;
-}
-.ah-map-card:hover,
-.ah-map-card:focus-visible {
-  border-color: rgb(236 231 225 / 0.6);
-}
-.ah-map-card:hover img,
-.ah-map-card:focus-visible img {
-  filter: none;
-}
-.ah-map-card-text {
-  display: grid;
-  align-content: center;
-  gap: 6px;
-  padding: 12px 14px;
-}
-.ah-map-card-text .hx-small {
-  font-size: 11.5px;
-}
-@media (max-width: 899px) {
-  .ah-map-panel {
-    top: auto;
-    width: 100%;
-    max-height: 62dvh;
-    border-left: 0;
-    border-top: 1px solid var(--hx-border);
-    translate: 0 100%;
-  }
-  .ah-map-panel[data-open] {
-    translate: 0 0;
-  }
-  .ah-map-chrome {
-    flex-wrap: wrap;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ah-map,
-  .ah-map-cut,
-  .ah-map-panel {
-    animation: none;
-    transition: none;
-  }
-  .ah-map-cut {
-    opacity: 0;
-  }
-  .ah-map-place {
-    animation: none;
-    opacity: 1;
   }
 }
 
