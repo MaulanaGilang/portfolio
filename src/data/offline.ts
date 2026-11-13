@@ -178,8 +178,8 @@ export const characters: Character[] = [
   {
     id: "wyrmwatch",
     name: "The Wyrmwatch",
-    image: "/offline/moonwake/concept/wyvern.webp",
-    focus: "40% center",
+    image: "/offline/moonwake/concept/wyrmwatch.webp",
+    focus: "44% center",
     bio: ["The Moonwatch's rarest unit: riders on armoured war wyverns, two-legged with wings for arms. They patrol the cliffs and the sea lanes with lance and rifle, and are the first thing an invading fleet sees."],
     cells: [
       { label: "Class", value: "Wyvern riders" },
