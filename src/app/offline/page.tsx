@@ -2,12 +2,11 @@ import Link from "next/link";
 import { Arrival } from "@/components/offline/Arrival";
 import { CharacterPanel } from "@/components/offline/CharacterPanel";
 import { CopyButton } from "@/components/offline/CopyButton";
-import { Dragon } from "@/components/offline/Dragon";
 import { GuestbookForm } from "@/components/offline/GuestbookForm";
 import { posterProps, steamArt } from "@/components/offline/poster";
 import { PosterHover } from "@/components/offline/PosterHover";
 import { QuoteReel } from "@/components/offline/QuoteReel";
-import { sections } from "@/components/offline/sections";
+import { SagaFooter } from "@/components/offline/SagaFooter";
 import {
   accounts,
   characters,
@@ -389,75 +388,7 @@ export default async function AfterHours() {
         </section>
       </main>
 
-      {/* The end: a last painting with a framed quote, the name across the page, and the footer. */}
-      <footer className="hx-end">
-        <div className="hx-prefoot">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/offline/moonwake-harbour.webp" alt="" loading="lazy" className="hx-bleed-img" />
-          <figure className="hx-prefoot-quote">
-            <blockquote className="hx-quote-text hx-quote-small">&ldquo;The pool is fed before the table.&rdquo;</blockquote>
-            <span aria-hidden className="hx-dot-mark mx-auto mt-3" />
-            <figcaption className="hx-small-white mt-3">The house code</figcaption>
-          </figure>
-        </div>
-        <p className="hx-mark hx-mark-end" aria-hidden>
-          {house.seat.split("").map((ch, k) => (
-            <span key={k}>{ch}</span>
-          ))}
-        </p>
-        <div className="hx-rule hx-foot">
-          <nav aria-label="Explore" className="hx-foot-col">
-            <p className="hx-small">Explore</p>
-            {sections.map((s) => (
-              <a key={s.id} href={`#${s.id}`} className="hx-footlink">
-                {s.short}
-              </a>
-            ))}
-          </nav>
-          <div className="hx-foot-col">
-            <p className="hx-small">Moonwake</p>
-            <Link href="/offline/moonwake" className="hx-footlink">
-              The Codex
-            </Link>
-            <Link href="/offline/moonwake#environments" className="hx-footlink">
-              Concept art
-            </Link>
-          </div>
-          <div className="hx-foot-col">
-            <p className="hx-small">House</p>
-            <Link href="/" transitionTypes={["world-out"]} className="hx-footlink">
-              Portfolio
-            </Link>
-            <a href="#arrival" className="hx-footlink">
-              Back to top
-            </a>
-          </div>
-          <div className="hx-foot-col">
-            <p className="hx-small">Social</p>
-            {accounts
-              .filter((a) => a.href)
-              .map((a) => (
-                <a key={a.service} href={a.href} target="_blank" rel="noopener noreferrer" className="hx-footlink">
-                  {a.service}
-                </a>
-              ))}
-          </div>
-          <div className="hx-foot-familiar">
-            <p className="hx-small">The familiar, asleep</p>
-            {/* Waking it opens the Map of Moonwake. */}
-            <Dragon />
-          </div>
-        </div>
-        <div className="hx-rule hx-foot-bar">
-          <p className="hx-small">© {new Date().getFullYear()} {house.name}. All quiet.</p>
-          {/* Required by Riot Games' fan content policy ("Legal Jibber Jabber"). Keep it verbatim, and keep this page free. */}
-          <p className="hx-legal">
-            House Maulana isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone
-            officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are
-            trademarks or registered trademarks of Riot Games, Inc.
-          </p>
-        </div>
-      </footer>
+      <SagaFooter image="/offline/moonwake-harbour.webp" quote="The pool is fed before the table." by="The house code" />
     </>
   );
 }

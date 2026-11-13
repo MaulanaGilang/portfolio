@@ -12,48 +12,71 @@ Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moon
 | Mood | Quiet, deep, held. Candle and moonlight, mist off the water, a slow heartbeat underneath |
 | Crest | Wine-red circle, thin black border, silver crescent with horns down, centred: [assets/moonwake/crest.svg](assets/moonwake/crest.svg) |
 | Motto | *Quiet, eternal, and ours.* |
-| Fonts | **Cinzel Decorative** for "Moonwake" only; **Cinzel** for titles; **Cormorant SC** for labels; **Cormorant Garamond italic** for the motto; **Satoshi** for body. All open licence |
+| Fonts | **Arcane Nine** (Chequered Ink, supplied by Gilang; check its licence) for the wordmark and titles, **Geist Mono** (SIL OFL) for everything else on the saga pages. Cinzel stays loaded only as the fallback while Arcane Nine loads |
 | Ranks | Albion's shared twelve, then Moonwake's own nine (section 4) |
 | Place names on the page | Riot's regions as written: Ionian spirit-villages, the Noxian outpost, Piltover-style trade cities |
 | Disclaimer | Required by Riot's fan content policy. Shown in the After Hours footer, verbatim: "House Maulana isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc." The page stays free: no ads, no sales |
 
-## 2. Design system
+## 2. Design system (current: the saga system)
+
+One system for all three surfaces: After Hours (`/offline`), the Moonwake page (`/offline/moonwake`) and the Map of Moonwake. Structure and layout follow a saga site (huxleysaga.com); no assets, text or fonts were taken from it. Styles: the "After Hours: a saga site" block of `src/app/offline/offline.css`, plus the map, chapter and concept-art blocks after it.
 
 ### Colour
 
-| Token | Hex | Role |
+| Token | Value | Role |
 |---|---|---|
-| Night | `#0A0809` | Page |
-| Wine | `#5A0F1E` | House colour: crest, active states, large surfaces |
-| Moon | `#C9CDD3` | Silver: inlay lines, titles, icons |
-| Cream | `#F0E8D6` | Body text, cloth |
-| Lamp | `#B8306E` | Red-violet magic. **Light only**: glows, halos, the lit marker. Never a flat fill, never text |
-| Abyss | `#16303A` | The well's depth: scene tints and shadows only |
+| `--basalt` | `#0A0809` | Page |
+| `--hx-panel` / `--hx-panel-2` | `#0D0B0C` / `#141113` | Framed panels, list rows; the second for hover and highlight |
+| `--hx-border` | bone at 12% | Every hairline and frame |
+| `--bone` | `#ECE7E1` | Primary text, titles, marks |
+| `--hx-grey` | `#9A9294` | Secondary text, labels |
+| `--lamp` | `#B8306E` | Red-violet: light only (glows, link hover, the map marker) |
+| `--house` | `#5A0F1E` | Wine: active button fill, blank poster cards |
 
-### Type scale
+### Type
 
 | Role | Face | Size |
 |---|---|---|
-| House name | Cinzel Decorative | `clamp(48px, 8vw, 128px)` |
-| Section title | Cinzel | 32 to 44px, tracked 0.08em |
-| Label | Cormorant SC | 14 to 15px, tracked 0.12em |
-| Motto, quotes | Cormorant Garamond italic | 22 to 28px |
-| Body | Satoshi | 16 to 18px |
+| Wordmark (MOONWAKE) | Arcane Nine, one span per letter, spread edge to edge | `15.4vw` |
+| Titles (`.hx-h1`, `.hx-h2`) | Arcane Nine | `clamp(44px, 5.6vw, 84px)`, `clamp(30px, 2.6vw, 40px)` |
+| Card and cell titles (`.hx-h3`) | Geist Mono, uppercase | 17 to 21px |
+| Text (`.hx-small`, `.hx-small-white`) | Geist Mono, uppercase, tracked 0.1em | 13px |
+| Lede and quotes | Geist Mono, uppercase | `clamp(22px, 2.2vw, 32px)`; quotes up to 76px |
+| Big numbers | Geist Mono 300 | up to 92px |
+
+### Marks
+
+- **Ticked hairline** (`.hx-rule`): a 1px line with brighter 8px ticks at both ends. Opens every section.
+- **Crosshairs** (`.hx-plus-*`): small + marks in the corners of full-bleed paintings.
+- **Dot mark** (`.hx-dot-mark`): a 4px square under titles and inside captions.
+- **Bracket link** (`.hx-bracket`): `[ Learn more ]`.
+- **Square dot** in the top bar before the first link, and before map labels.
 
 ### Components
 
-- **Panel:** carved stone with silver inlay. Dark fill, thin double silver line, small crescent notches at two corners. No glass blur.
-- **Divider:** one flat silver line (the pool surface) with a tiny crescent at its centre.
-- **Button:** wine fill, silver hairline. On hover a red-violet glow rises from below, slowly.
-- **Link:** cream; on hover a silver underline draws in from the left.
+| Component | Where |
+|---|---|
+| Top bar (`TopBar`): links left, crest and house centre, "Back to the portfolio" right, 40px on a hairline | Both pages |
+| Hero: painting with the wordmark across the top, two corner captions | Both pages |
+| Saga line (`.hx-intro`): title plus large grey lede | Both pages |
+| Feature block: inset image that opens to full width on scroll, title bottom left | After Hours |
+| Story block: centred over a full-bleed painting, line running down | After Hours |
+| Framed entry (`.hx-char`): image cell, name cell, text cell, two-column fact cells | Characters; every Codex chapter (alternating sides) |
+| List (`.hx-list`): dot, key, value, end column on panel rows | Library, Long Bridge, Long Table, chapter index |
+| Big-number rows (`.hx-events`), framed stats (`.hx-stats`), cards (`.hx-card`) | Ledger, Stats, Now Playing |
+| Rank grid (`.hx-ranks`): three columns; Moonwake's own nine highlighted | The Moonwatch chapter |
+| Concept mosaic (`ConceptGallery`): 4-column grid, double-width tiles, lift and frame on hover with a mono caption; titles kept on touch | Moonwake page |
+| Footer (`SagaFooter`): painting with a framed quote, wordmark across the page, link columns, the familiar, Riot's disclaimer | Both pages |
+| Map: same top bar, mono labels, a square marker in a sight ring, framed side panel with list cards | The map |
 
 ### Motion
 
-- Slow and weighted: 0.8 to 1.5 s, long ease-out. Nothing snaps.
-- One heartbeat: the crest and lamp glows breathe every ~4 s, very faintly.
-- Reduced motion: everything is still and complete; the well shows its level without animating.
+- Wordmark letters flicker in one by one on load.
+- Feature images open from an inset frame, story paintings drift, and the right-edge scroll bar fills (CSS scroll-driven animations; static where unsupported).
+- Map: the camera glides in, the close-up fades in, then the panel slides in.
+- Reduced motion: all of it is off and everything shows complete.
 
-## 3. Signature pieces
+## 3. Signature pieces (original plan, partly superseded)
 
 | Piece | What it does |
 |---|---|

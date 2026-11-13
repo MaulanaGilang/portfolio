@@ -146,9 +146,7 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
               style={{ left: `${MOONWAKE.x * 100}%`, top: `${MOONWAKE.y * 100}%` }}
               onClick={() => go("city")}
             >
-              <span className="ah-map-star" aria-hidden>
-                ★
-              </span>
+              <span className="ah-map-star" aria-hidden />
               <span className="ah-map-pin-name">Moonwake</span>
             </button>
           )}
@@ -170,7 +168,10 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
       </div>
 
       <div className="ah-map-chrome">
-        <p className="ah-label">{view === "world" ? "The coast of Moonwake" : "House Maulana"}</p>
+        <p className="hx-small-white">
+          <span aria-hidden className="hx-navdot mr-2 inline-block align-middle" />
+          {view === "world" ? "Map / The coast of Moonwake" : "Map / Moonwake"}
+        </p>
         <div className="flex gap-3">
           {view === "city" && (
             <button type="button" className="ah-button" onClick={() => go("world")}>
@@ -182,34 +183,40 @@ export function MoonwakeMap({ onClose }: { onClose: () => void }) {
           </button>
         </div>
       </div>
-      {view === "world" && <p className="ah-map-hint ah-label">Drag to look around. Select Moonwake.</p>}
+      {view === "world" && <p className="ah-map-hint hx-small-white">Drag to look around. Select Moonwake.</p>}
 
       <aside className="ah-map-panel" data-open={view === "city" ? "" : undefined} aria-hidden={view !== "city"}>
-        <h2 className="ah-name ah-map-title">Moonwake</h2>
-        <p className="ah-motto mt-2">Quiet, eternal, and ours.</p>
-        <p className="mt-5 text-[15.5px] leading-relaxed text-[var(--bone)]">{moonwakeIntro}</p>
-        <Link href="/offline/moonwake" className="ah-label ah-link mt-5 inline-block text-[var(--cream)]" tabIndex={view === "city" ? 0 : -1}>
-          Learn more about Moonwake
-        </Link>
-        <div className="ah-divider my-7" />
-        <h3 className="ah-label mb-4">Featured in Moonwake</h3>
-        <ul className="grid gap-3">
-          {FEATURED.map((id) => {
-            const t = codex.find((c) => c.id === id)!;
-            return (
-              <li key={id}>
-                <Link href={`/offline/moonwake#${id}`} className="ah-map-card" tabIndex={view === "city" ? 0 : -1}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={codexImages[id]} alt="" loading="lazy" />
-                  <span className="ah-map-card-text">
-                    <span className="ah-wide text-[17px] text-[var(--cream)]">{t.label}</span>
-                    <span className="ah-label text-[12px]">{t.lead}</span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="ah-map-head">
+          <p className="hx-small">Region / House Maulana</p>
+          <h2 className="hx-h1 ah-map-title mt-3">Moonwake</h2>
+        </div>
+        <div className="ah-map-body">
+          <p className="hx-small-white">Quiet, eternal, and ours.</p>
+          <p className="hx-small mt-4">{moonwakeIntro}</p>
+          <Link href="/offline/moonwake" className="hx-bracket mt-5" tabIndex={view === "city" ? 0 : -1}>
+            Learn more
+          </Link>
+        </div>
+        <div className="hx-rule ah-map-featured">
+          <h3 className="hx-small">Featured in Moonwake</h3>
+          <ul className="mt-4 grid gap-2.5">
+            {FEATURED.map((id) => {
+              const c = codex.find((x) => x.id === id)!;
+              return (
+                <li key={id}>
+                  <Link href={`/offline/moonwake#${id}`} className="ah-map-card" tabIndex={view === "city" ? 0 : -1}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={codexImages[id]} alt="" loading="lazy" />
+                    <span className="ah-map-card-text">
+                      <span className="hx-h3">{c.label}</span>
+                      <span className="hx-small">{c.lead}</span>
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </aside>
     </div>
   );

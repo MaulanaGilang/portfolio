@@ -1,21 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Cinzel_Decorative, Cormorant_Garamond, Cormorant_SC, Geist_Mono } from "next/font/google";
+import { Cinzel, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { ViewTransition } from "react";
 import { Lamp } from "@/components/offline/Lamp";
 import "./offline.css";
 
-// Moonwake type (all SIL Open Font License, served from this site by next/font):
-// Cinzel Decorative for the house name only, Cinzel for titles, Cormorant SC for labels,
-// Cormorant Garamond italic for the motto. Body text inherits Satoshi from the root layout.
-const cinzel = Cinzel({ weight: ["400", "500"], subsets: ["latin"], variable: "--font-cinzel", display: "swap" });
-const cinzelDecorative = Cinzel_Decorative({ weight: "400", subsets: ["latin"], variable: "--font-cinzel-deco", display: "swap" });
-const cormorantSC = Cormorant_SC({ weight: ["500", "600"], subsets: ["latin"], variable: "--font-cormorant-sc", display: "swap" });
-// Arcane Nine by Chequered Ink, supplied by Gilang: the wordmark and titles.
+// Moonwake type, the saga system (docs/offline/moonwake.md, section 2):
+// Arcane Nine by Chequered Ink, supplied by Gilang, for the wordmark and titles;
+// Geist Mono (SIL OFL) for all other text, quotes and numbers;
+// Cinzel (SIL OFL) only as the fallback while Arcane Nine loads.
 const arcane = localFont({ src: "../../fonts/ArcaneNine.otf", variable: "--font-arcane", display: "swap" });
-// Geist Mono (SIL OFL): the tracked uppercase text, quotes and numbers.
 const mono = Geist_Mono({ weight: ["300", "400", "500"], subsets: ["latin"], variable: "--font-hx", display: "swap" });
-const cormorant = Cormorant_Garamond({ weight: "400", style: "italic", subsets: ["latin"], variable: "--font-cormorant", display: "swap" });
+const cinzel = Cinzel({ weight: ["400"], subsets: ["latin"], variable: "--font-cinzel", display: "swap" });
 
 export const metadata: Metadata = {
   title: "After Hours",
@@ -36,10 +32,7 @@ export default function OfflineLayout({ children }: { children: React.ReactNode 
   return (
     // Crossing from or to the portfolio: this world sinks or rises (see globals.css).
     <ViewTransition enter={{ "world-in": "world-enter", default: "none" }} exit={{ "world-out": "world-exit", default: "none" }} default="none">
-      <div
-        data-world="offline"
-        className={`${cinzel.variable} ${cinzelDecorative.variable} ${cormorantSC.variable} ${cormorant.variable} ${arcane.variable} ${mono.variable}`}
-      >
+      <div data-world="offline" className={`${arcane.variable} ${mono.variable} ${cinzel.variable}`}>
         <Lamp />
         {children}
       </div>

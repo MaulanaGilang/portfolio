@@ -82,8 +82,8 @@ export function PosterHover() {
       ) : (
         // No artwork: a placeholder card in the house style.
         <div className="ah-preview-blank">
-          <span className="ah-label">{shown.meta ?? ""}</span>
-          <span className="ah-wide text-[17px] leading-tight text-[var(--cream)]">{shown.title}</span>
+          <span className="hx-small">{shown.meta ?? ""}</span>
+          <span className="hx-h3 leading-tight">{shown.title}</span>
           <span />
         </div>
       )}
