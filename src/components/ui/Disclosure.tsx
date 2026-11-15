@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useId, useState } from "react";
-import { Plus } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
 import { play } from "@/lib/sound";
 
@@ -32,7 +31,7 @@ export function ExpandAll({ className }: { className?: string }) {
         group.set(!allOpen);
       }}
       className={cn(
-        "inline-flex h-10 items-center gap-2 rounded-full bg-surface px-5 label text-fg shadow-[var(--shadow-whisper)] transition-transform active:scale-[0.97]",
+        "inline-flex h-10 items-center rounded-full border border-rule-strong px-4 text-[14px] font-medium text-fg transition-colors hover:border-fg active:translate-y-px",
         className,
       )}
     >
@@ -72,15 +71,21 @@ export function Disclosure({
         className={cn("group/d flex w-full items-start gap-4 text-left", buttonClassName)}
       >
         <span className="min-w-0 flex-1">{summary}</span>
+        {/* A round toggle; its plus turns into a minus. */}
         <span
           aria-hidden
           className={cn(
-            // Centred on the title's first line (17px, snug leading), not the row's top edge.
-            "-my-1.5 grid size-9 shrink-0 place-items-center rounded-full bg-haze text-fg transition-[transform,background-color,color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/d:scale-110",
-            open && "rotate-45 bg-accent-solid text-on-accent",
+            "relative mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-rule-strong transition-[background-color,border-color] duration-300 group-hover/d:border-fg",
+            open && "border-fg bg-fg",
           )}
         >
-          <Plus size={14} weight="bold" />
+          <span className={cn("absolute h-px w-3 bg-fg transition-colors duration-300", open && "bg-bg")} />
+          <span
+            className={cn(
+              "absolute h-3 w-px bg-fg transition-[scale,background-color] duration-300",
+              open && "scale-y-0 bg-bg",
+            )}
+          />
         </span>
       </button>
       <div

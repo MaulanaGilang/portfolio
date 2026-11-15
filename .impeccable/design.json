@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T03:30:00Z",
+  "title": "Design System: Dune Day",
+  "extensions": {
+    "colorMeta": {
+      "mist": { "role": "neutral", "displayName": "Mist (Part One sky)" },
+      "sand": { "role": "neutral", "displayName": "Sand" },
+      "ink": { "role": "neutral", "displayName": "Ink" },
+      "caladan-teal": { "role": "secondary", "displayName": "Caladan Teal" },
+      "spice": { "role": "primary", "displayName": "Spice" },
+      "spice-fill": { "role": "primary", "displayName": "Spice Fill" },
+      "night": { "role": "neutral", "displayName": "Part Two Night" },
+      "sun": { "role": "primary", "displayName": "Sun" },
+      "pale-gold": { "role": "tertiary", "displayName": "Pale Gold" }
+    },
+    "typographyMeta": {
+      "wordmark": { "displayName": "Dune Rise wordmark", "purpose": "The name and the closing words only." },
+      "heading": { "displayName": "Section heading", "purpose": "One per section, no eyebrow." },
+      "label": { "displayName": "Data label", "purpose": "Dates, coordinates, categories, IDs." }
+    },
+    "shadows": [
+      { "name": "sun-glow", "value": "0 0 120px 40px rgb(234 125 12 / 0.28)", "purpose": "The setting sun in the dusk band; the only glow on the page." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveals, cover cross-fades, the wordmark rise." },
+      { "name": "hero-pipeline", "value": "continuous clock, up to 2.1x when scrolling, eased over ~0.5s", "purpose": "Raw blocks rise from the sand, are sorted in spice and ride away as teal batches." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink pill with a round arrow badge; the résumé and case-study links.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Résumé <span class=\"ds-btn-badge\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 256 256\"><path d=\"M200 64v104a8 8 0 0 1-16 0V83.3L69.7 197.7a8 8 0 0 1-11.4-11.4L172.7 72H88a8 8 0 0 1 0-16h104a8 8 0 0 1 8 8Z\" fill=\"currentColor\"/></svg></span></a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 16px 0 20px; border-radius: 9999px; background: #221e1d; color: #f4f7f6; font: 500 15px Satoshi, sans-serif; text-decoration: none; transition: background-color .3s, color .3s; } .ds-btn:hover { background: #d35c11; color: #fff6ec; } .ds-btn:focus-visible { outline: 2px solid #d35c11; outline-offset: 3px; } .ds-btn-badge { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9999px; background: rgb(244 247 246 / .12); transition: transform .3s; } .ds-btn:hover .ds-btn-badge { transform: translateY(-2px); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Hairline pill for secondary links.",
+      "html": "<a class=\"ds-ghost\" href=\"#\">All work</a>",
+      "css": ".ds-ghost { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 9999px; border: 1px solid rgb(34 30 29 / .32); color: #221e1d; font: 500 15px Satoshi, sans-serif; text-decoration: none; transition: border-color .3s; } .ds-ghost:hover { border-color: #221e1d; } .ds-ghost:focus-visible { outline: 2px solid #d35c11; outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link-active",
+      "description": "Pill links; the active section is an ink pill.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"is-active\">About</a><a href=\"#\">Projects</a><a href=\"#\">Experience</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 4px; } .ds-nav a { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 9999px; color: #221e1d; font: 500 15px Satoshi, sans-serif; text-decoration: none; transition: background-color .3s, color .3s; } .ds-nav a:hover { background: rgb(34 30 29 / .08); } .ds-nav a.is-active { background: #221e1d; color: #e6edeb; }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Tool names under a role or certificate.",
+      "html": "<span class=\"ds-tag\">Power BI</span>",
+      "css": ".ds-tag { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 9999px; background: #d3e0dd; color: #4f5a55; font: 400 12px 'Geist Mono', monospace; }"
+    },
+    {
+      "name": "Ledger Row",
+      "kind": "custom",
+      "description": "Collapsible role row with a round plus toggle.",
+      "html": "<button class=\"ds-row\"><span><b>IT & Maintenance Analyst</b><small>May 2026 - Jul 2026, 3 mos</small></span><i></i></button>",
+      "css": ".ds-row { display: flex; width: 100%; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border: 0; border-top: 1px solid rgb(34 30 29 / .14); background: none; text-align: left; font: 500 17px Satoshi, sans-serif; color: #221e1d; cursor: pointer; } .ds-row small { display: block; font: 400 12px 'Geist Mono', monospace; color: #5b6762; } .ds-row i { width: 32px; height: 32px; border-radius: 9999px; border: 1px solid rgb(34 30 29 / .32); background: linear-gradient(#221e1d,#221e1d) center/12px 1px no-repeat, linear-gradient(#221e1d,#221e1d) center/1px 12px no-repeat; } .ds-row:hover i { border-color: #221e1d; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "One day over a dune field",
+    "overview": "The portfolio opens at dawn in Dune Part One's mist, where buried data blocks rise and file into a stack as you scroll, and ends in Part Two's spice dusk and night. In between it is calm and light: Satoshi headings, hairline ledgers, real covers.",
+    "keyCharacteristics": ["Procedural WebGL dune field as the hero", "Full-width Dune Rise wordmark", "Mist canvas with one spice accent", "Pill controls and 4px media", "Dusk band into a night footer"],
+    "rules": [
+      { "name": "One accent per tone", "body": "Spice by day, sun by night; no other hue.", "section": "colors" },
+      { "name": "The turn happens once", "body": "Mist becomes night only through the dusk band.", "section": "colors" },
+      { "name": "Dune Rise is for names", "body": "The name and the closing words only; never body.", "section": "typography" }
+    ],
+    "dos": ["Do keep readouts plain: coordinates and local time.", "Do use real covers and outcomes."],
+    "donts": ["Don't add eyebrows, section numbers or brackets.", "Don't add a second accent or a custom cursor.", "Don't use em or en dashes in copy."]
+  }
+}

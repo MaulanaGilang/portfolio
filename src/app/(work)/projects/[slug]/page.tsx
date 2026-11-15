@@ -46,21 +46,26 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               href="/#projects"
               transitionTypes={["nav-back"]}
               data-sound="click"
-              className="inline-flex h-11 items-center gap-2.5 rounded-full bg-surface px-5 text-sm font-medium tracking-normal uppercase shadow-[var(--shadow-whisper)]"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-rule-strong pr-5 pl-4 text-[15px] font-medium transition-colors hover:border-fg active:translate-y-px"
             >
-              <ArrowLeft size={16} weight="bold" /> Back
+              <ArrowLeft size={15} weight="bold" />
+              All work
             </Link>
 
-            <p className="mt-8 label text-accent">
-              {p.category} <span className="mx-1.5 text-fg">•</span>
-              <span className="text-fg">{p.year}</span>
+            <p className="mt-10 flex gap-6 label text-fg-3">
+              <span>{p.category}</span>
+              <span>{p.year}</span>
             </p>
-            <SplitReveal as="h1" text={p.title} className="mt-3 display text-[clamp(2.6rem,4.6vw,5.5rem)]" />
+            <SplitReveal
+              as="h1"
+              text={p.title}
+              className="mt-3 text-[clamp(2.4rem,4.4vw,4.75rem)] leading-[0.98] font-medium tracking-[-0.04em]"
+            />
             <p className="mt-6 max-w-[52ch] text-[16px] leading-relaxed text-fg-2">{p.overview}</p>
 
             <div className="mt-8 grid grid-cols-2 gap-6">
               <div>
-                <h2 className="label text-accent">Tools</h2>
+                <h2 className="label text-fg-3">Tools</h2>
                 <ul className="mt-2 space-y-1 text-[15px]">
                   {p.tools.map((t) => (
                     <li key={t}>{t}</li>
@@ -68,14 +73,14 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                 </ul>
               </div>
               <div>
-                <h2 className="label text-accent">Context</h2>
+                <h2 className="label text-fg-3">Context</h2>
                 <p className="mt-2 text-[15px]">{p.context}</p>
               </div>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
               {p.links.map((l, n) => (
-                <PillButton key={l.href} href={l.href} external variant={n === 0 ? "dark" : "light"}>
+                <PillButton key={l.href} href={l.href} external variant={n === 0 ? "solid" : "ghost"}>
                   {l.label}
                 </PillButton>
               ))}
@@ -84,7 +89,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
           <div className="md:col-span-7">
             <ViewTransition name={`cover-${p.slug}`} share="morph" default="none">
-              <div className="relative aspect-[4/3] max-h-[74dvh] w-full overflow-hidden rounded-frame bg-haze">
+              <div className="relative aspect-[4/3] max-h-[74dvh] w-full overflow-hidden rounded-card bg-haze">
                 <Image src={p.cover} alt="" fill priority sizes="(min-width: 768px) 58vw, 100vw" className="object-cover" />
               </div>
             </ViewTransition>
@@ -95,12 +100,12 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         <section className="container-site grid gap-10 py-[clamp(56px,6vw,96px)] md:grid-cols-12 md:gap-12">
           <div className="space-y-10 md:col-span-7">
             <Reveal>
-              <h2 className="label text-accent">The problem</h2>
+              <h2 className="text-[22px] font-medium tracking-[-0.02em]">The problem</h2>
               <p className="mt-3 max-w-[62ch] text-[clamp(1.1rem,1.4vw,1.35rem)] leading-snug">{p.problem}</p>
             </Reveal>
             <Reveal>
-              <h2 className="label text-accent">Approach</h2>
-              <ol className="mt-4 divide-y divide-line border-y border-line">
+              <h2 className="text-[22px] font-medium tracking-[-0.02em]">Approach</h2>
+              <ol className="mt-4 divide-y divide-line border-t border-rule-strong">
                 {p.approach.map((step, n) => (
                   <li key={step.slice(0, 30)} className="grid grid-cols-[2.5rem_1fr] gap-2 py-4">
                     <span className="label pt-1 text-fg-3 tabular-nums">{String(n + 1).padStart(2, "0")}</span>
@@ -111,8 +116,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             </Reveal>
           </div>
           <aside className="md:col-span-5">
-            <Reveal className="rounded-card bg-surface p-6 shadow-[var(--shadow-whisper)] md:sticky md:top-28 md:p-7">
-              <h2 className="label text-accent">Result</h2>
+            <Reveal className="rounded-card bg-sand p-6 md:sticky md:top-28 md:p-8">
+              <h2 className="text-[22px] font-medium tracking-[-0.02em]">Result</h2>
               <p className="mt-3 text-[clamp(1.15rem,1.5vw,1.4rem)] leading-snug">{p.result}</p>
             </Reveal>
           </aside>
@@ -120,7 +125,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
         {p.lineage && (
           <Reveal className="container-site pb-[clamp(56px,6vw,96px)]">
-            <h2 className="label text-accent">Data lineage</h2>
+            <h2 className="text-[22px] font-medium tracking-[-0.02em]">Data lineage</h2>
             <p className="mt-3 max-w-[60ch] text-fg-2">
               Six source tables from CRM and ERP are loaded as-is into Bronze, cleaned one-to-one in Silver, then
               integrated into a star schema in Gold.
@@ -140,7 +145,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           </Reveal>
         ))}
 
-        {/* Next project: a dark rounded card, like the home page's closing card. */}
+        {/* Next project: night, like the home page's footer. */}
         <section data-tone="ink" className="mt-[clamp(24px,4vw,64px)]">
           <Link
             href={`/projects/${next.slug}`}
@@ -150,7 +155,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           >
             <span className="label text-fg-3">Next project</span>
             <span className="mt-4 flex items-end justify-between gap-6">
-              <span className="display text-[clamp(2.6rem,6.5vw,7rem)] transition-colors duration-500 group-hover/next:text-accent">
+              <span className="text-[clamp(2.2rem,5.4vw,5.5rem)] leading-[0.98] font-medium tracking-[-0.04em] transition-colors duration-500 group-hover/next:text-accent">
                 {next.title}
               </span>
               <ArrowRight

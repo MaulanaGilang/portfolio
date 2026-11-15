@@ -1,12 +1,11 @@
 import type { Viewport } from "next";
-import { FluidCursor } from "@/components/FluidCursor";
 import { Nav } from "@/components/Nav";
 import { Preloader } from "@/components/Preloader";
 import { SoundBridge } from "@/components/providers/SoundBridge";
 import { profile } from "@/data/content";
 
 export const viewport: Viewport = {
-  themeColor: "#f0f1fa",
+  themeColor: "#e6edeb",
 };
 
 const jsonLd = {
@@ -30,7 +29,6 @@ export default function WorkLayout({ children }: { children: React.ReactNode }) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <FluidCursor />
       <Preloader />
       <Nav />
       {children}

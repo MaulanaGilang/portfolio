@@ -2,41 +2,51 @@
 @import "tailwindcss" source("..");
 
 /* ------------------------------------------------------------------
-   v6: Lusion-style gallery. One lavender canvas for the whole page; the
-   only dark area is the Let's Connect footer, reached through a long
-   gradient. Tokens are scoped to [data-tone] so the footer (and the nav
-   while it floats over the footer) can flip to "ink".
+   v8: Dune Day (DESIGN.md). One day over a dune field. The page is
+   Dune Part One's misty dawn (mist, haze, sand, ink, Caladan teal) with
+   one spice accent, and it ends in Part Two's burning dusk at the footer.
+   Tokens are scoped to [data-tone]: "paper" is the day, "ink" is night.
 ------------------------------------------------------------------- */
 :root,
 [data-tone="paper"] {
-  --bg: #f0f1fa; /* lavender mist canvas */
-  --fg: #000000; /* ink */
-  --fg-2: #3a3d4a; /* secondary copy */
-  --fg-3: #5d6070; /* meta, AA on canvas and white */
-  --line: #d8dae6; /* hairlines */
-  --surface: #ffffff; /* cards */
-  --haze: #e4e6ef; /* quiet fills */
-  --accent: #1a2ffb; /* electric indigo */
-  --accent-solid: #1a2ffb;
-  --on-accent: #ffffff;
-  --pill: #2b2e3a; /* graphite action pill */
-  --on-pill: #ffffff;
+  --bg: #e6edeb; /* mist */
+  --fg: #221e1d; /* ink */
+  --fg-2: #4f5a55; /* stone, 6.0:1 on mist */
+  --fg-3: #5b6762; /* meta, 5.0:1 on mist (not for haze fills) */
+  --line: rgb(34 30 29 / 0.14);
+  --rule-strong: rgb(34 30 29 / 0.32);
+  --surface: #f4f7f6; /* frost: raised panels */
+  --haze: #d3e0dd; /* quiet fills, image wells */
+  --sand: #e7dccb; /* warm fills */
+  --teal: #5e8b8b; /* Caladan teal: marks, lines, large type only */
+  --teal-ink: #3f6b6b; /* teal as text, 5.0:1 */
+  --accent: #a8360e; /* spice as text and lines, 5.5:1 */
+  --accent-solid: #d35c11; /* spice fills and marks */
+  --on-accent: #fff6ec;
+  --signal: #3f6b6b;
+  --pill: #221e1d;
+  --on-pill: #f4f7f6;
   color-scheme: light;
 }
 
 [data-tone="ink"] {
-  --bg: #0b0c10;
-  --fg: #f0f1fa;
-  --fg-2: #b9bbc9;
-  --fg-3: #8e91a2;
-  --line: #262833;
-  --surface: #15161c;
-  --haze: #1d1f27;
-  --accent: #8b97ff;
-  --accent-solid: #1a2ffb;
-  --on-accent: #ffffff;
-  --pill: #f0f1fa;
-  --on-pill: #0b0c10;
+  --bg: #170504; /* Part Two night */
+  --fg: #efe6d8;
+  --fg-2: #c9a98c;
+  --fg-3: #a88a72;
+  --line: rgb(239 230 216 / 0.14);
+  --rule-strong: rgb(239 230 216 / 0.32);
+  --surface: #2a0a06; /* ember */
+  --haze: #421009;
+  --sand: #421009;
+  --teal: #94b1ab;
+  --teal-ink: #a6c7c5;
+  --accent: #ea7d0c; /* sun, 7.0:1 */
+  --accent-solid: #ea7d0c;
+  --on-accent: #170504;
+  --signal: #efc650; /* pale gold */
+  --pill: #efe6d8;
+  --on-pill: #170504;
   color-scheme: dark;
 }
 
@@ -48,23 +58,29 @@
   --color-line: var(--line);
   --color-surface: var(--surface);
   --color-haze: var(--haze);
+  --color-sand: var(--sand);
+  --color-teal: var(--teal);
+  --color-teal-ink: var(--teal-ink);
   --color-accent: var(--accent);
   --color-accent-solid: var(--accent-solid);
   --color-on-accent: var(--on-accent);
   --color-pill: var(--pill);
   --color-on-pill: var(--on-pill);
-  --color-lime: #c1ff00;
-  --color-graphite: #2b2e3a;
+  --color-rule-strong: var(--rule-strong);
+  --color-signal: var(--signal);
 
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-dune: var(--font-dune-rise), var(--font-satoshi), ui-sans-serif, sans-serif;
 
-  --radius-card: 15px;
-  --radius-frame: 24px;
-  --radius-tile: 10px;
+  /* Shape: media and panels 4px, controls are pills. */
+  --radius-card: 4px;
+  --radius-frame: 4px;
+  --radius-tile: 4px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-whisper: 0 6px 10px rgb(0 0 0 / 0.04), 0 2px 4px rgb(0 0 0 / 0.04);
+  --ease-dune: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-whisper: 0 18px 40px -24px rgb(34 30 29 / 0.28);
 }
 
 html {
@@ -72,14 +88,19 @@ html {
   color: var(--fg);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
+  scrollbar-color: color-mix(in srgb, var(--fg) 30%, transparent) transparent;
+  scrollbar-width: thin;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   font-family: var(--font-sans);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  caret-color: var(--accent-solid);
 }
 
-/* Only dark areas (the Let's Connect card, case "Next project") paint their own background. */
+/* Only dark areas (the dusk footer, case "Next project") paint their own background. */
 section[data-tone="ink"],
 footer[data-tone="ink"],
 [data-curtain][data-tone="ink"] {
@@ -88,10 +109,18 @@ footer[data-tone="ink"],
 }
 
 @layer base {
+  section[id],
+  footer[id] {
+    scroll-margin-top: 72px;
+  }
   *,
   *::before,
   *::after {
     border-color: var(--line);
+  }
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
   }
 }
 
@@ -101,9 +130,9 @@ footer[data-tone="ink"],
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-solid);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 /* Repeat visits: the head script marks <html data-preloaded> before paint. */
@@ -243,27 +272,42 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-/* Lusion type: regular weight, -0.02em tracking, display compressed to 0.9 leading. */
+
+/* Display: Dune Rise, capitals only, wide. A few words per page: the name and the closing line. */
 @utility display {
+  font-family: var(--font-dune);
   font-weight: 400;
-  letter-spacing: -0.035em;
+  letter-spacing: 0.02em;
   line-height: 0.9;
+  text-transform: uppercase;
 }
 
-/* Small uppercase labels ("DATA ENGINEERING • SQL • ETL"). */
+/* Data and readouts: Geist Mono, small, sentence case, tabular figures. */
 @utility label {
+  font-family: var(--font-mono);
   font-size: 12px;
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: 0;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section headings: one word each in Dune Rise (about 0.94em per letter, so keep them short). */
+@utility heading {
+  font-family: var(--font-dune);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.2vw, 4.25rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
+  padding-top: 0.08em;
 }
 
 @utility container-site {
   width: 100%;
   max-width: 1600px;
   margin-inline: auto;
-  padding-inline: clamp(16px, 5vw, 96px);
+  padding-inline: clamp(16px, 4.5vw, 80px);
 }
 
 /* Skill logos: monochrome masks that take the current text colour. */

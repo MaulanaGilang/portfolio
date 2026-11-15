@@ -6,7 +6,7 @@ import { finishIntro, settleIntro } from "@/lib/intro";
 import { PRELOADED_KEY as KEY } from "@/lib/preloader";
 
 /**
- * First visit per session: a black loader with a large "Ingesting" and a
+ * First visit per session: a night loader with a large "Ingesting" and a
  * counter, then it lifts off the page (Lusion-style curtain). Repeat
  * visits skip it (an inline script in <head> marks <html data-preloaded>).
  */
@@ -53,7 +53,7 @@ export function Preloader() {
     <motion.div
       data-preloader
       aria-hidden
-      className="fixed inset-0 z-[100] bg-black p-[clamp(16px,5vw,96px)] text-white"
+      className="fixed inset-0 z-[100] bg-[#170504] p-[clamp(16px,4.5vw,80px)] text-[#efe6d8]"
       initial={false}
       animate={phase === "exit" ? { y: "-100%" } : { y: "0%" }}
       transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
@@ -63,12 +63,12 @@ export function Preloader() {
         setPhase("gone");
       }}
     >
-      <p className="label text-white/60">Gilang Maulana</p>
+      <p className="label flex justify-between text-[#a88a72]"><span>Gilang Maulana</span><span>6.8975° S · 112.0640° E</span></p>
 
       {/* Baseline-aligned, and the mask's bottom padding stays inside the screen so the "g" descenders are never clipped. */}
-      <div className="absolute inset-x-[clamp(16px,5vw,96px)] bottom-[clamp(16px,3vw,40px)] flex items-baseline justify-between gap-6">
+      <div className="absolute inset-x-[clamp(16px,4.5vw,80px)] bottom-[clamp(16px,3vw,40px)] flex items-baseline justify-between gap-6">
         {/* Font size lives on the mask so its em padding matches the headline. */}
-        <div className="overflow-hidden pb-[0.2em] text-[clamp(3.5rem,11vw,10rem)]">
+        <div className="overflow-hidden text-[clamp(2.2rem,8vw,7.5rem)]">
           <motion.p
             className="display leading-[1.05]"
             initial={{ y: "100%" }}
@@ -78,7 +78,7 @@ export function Preloader() {
             Ingesting
           </motion.p>
         </div>
-        <span ref={count} className="display text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.05] text-[#8b97ff] tabular-nums">
+        <span ref={count} className="font-mono text-[clamp(2.2rem,6vw,5.5rem)] leading-[1.05] font-light text-[#ea7d0c] tabular-nums">
           000
         </span>
       </div>

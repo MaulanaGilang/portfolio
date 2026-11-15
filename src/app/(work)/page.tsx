@@ -1,15 +1,14 @@
 import { ViewTransition } from "react";
-import { Curtain } from "@/components/Curtain";
 import { About } from "@/components/sections/About";
 import { Connect } from "@/components/sections/Connect";
+import { Dusk } from "@/components/sections/Dusk";
 import { Education } from "@/components/sections/Education";
 import { Experience } from "@/components/sections/Experience";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
 import { Skills } from "@/components/sections/Skills";
 
-// One lavender canvas (Lusion-style). The page ends with the only card
-// transition: Skills pins and recedes while the dark Connect card slides over.
+// One day over a dune field: Part One's misty dawn at the top, Part Two's dusk at the end.
 export default function Home() {
   return (
     <ViewTransition
@@ -20,15 +19,12 @@ export default function Home() {
       <main id="main" className="relative">
         <Hero />
         <About />
+        <Projects />
         <Experience />
         <Education />
-        <Projects />
-        <Curtain index={0}>
-          <Skills />
-        </Curtain>
-        <Curtain index={1} tone="ink" last>
-          <Connect />
-        </Curtain>
+        <Skills />
+        <Dusk />
+        <Connect />
       </main>
     </ViewTransition>
   );

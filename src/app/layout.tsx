@@ -15,6 +15,24 @@ const satoshi = localFont({
   ],
 });
 
+// Dune Rise (Fontswan, a fan recreation of the Dune title): display only, capitals. See DESIGN.md.
+const duneRise = localFont({
+  variable: "--font-dune-rise",
+  display: "swap",
+  src: "../fonts/DuneRise.otf",
+});
+
+// Geist Mono (SIL OFL), self-hosted: instrument labels and readouts.
+const geistMono = localFont({
+  variable: "--font-geist-mono",
+  display: "swap",
+  src: [
+    { path: "../fonts/GeistMono-300.woff2", weight: "300", style: "normal" },
+    { path: "../fonts/GeistMono-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/GeistMono-500.woff2", weight: "500", style: "normal" },
+  ],
+});
+
 const title = profile.name;
 const description =
   "Data Analyst moving into Data Engineering, based in Tuban, East Java. SQL data warehousing, ETL pipelines, dashboards and cloud. Open to remote work and relocation.";
@@ -44,7 +62,7 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-tone="paper" className={`${satoshi.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" data-tone="paper" className={`${satoshi.variable} ${duneRise.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Before first paint. The root layout never re-renders on navigation, so this runs once per load. */}
         <script dangerouslySetInnerHTML={{ __html: preloaderScript }} />
@@ -52,7 +70,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-dvh overflow-x-clip">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-bg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:bg-fg focus:px-4 focus:py-2 focus:text-bg"
         >
           Skip to content
         </a>

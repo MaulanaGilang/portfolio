@@ -8,8 +8,12 @@ import { SpeakerSlash, Waveform } from "@phosphor-icons/react";
 import { nav, profile } from "@/data/content";
 import { play, setSound, useSound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
-import { Magnetic } from "./ui/Magnetic";
-import { Scramble } from "./ui/Scramble";
+
+/** The hero pins for longer than a screen; the nav name appears once its wordmark is gone. */
+function heroEnd() {
+  const top = document.getElementById("top");
+  return top ? top.offsetHeight - window.innerHeight * 0.5 : window.innerHeight * 0.6;
+}
 
 export function Nav() {
   const pathname = usePathname();
@@ -29,7 +33,7 @@ export function Nav() {
     const next = y > prev && y > 160;
     if (next !== hidden) setHidden(next);
     if (y > 24 !== scrolled) setScrolled(y > 24);
-    const past = y > window.innerHeight * 0.6;
+    const past = y > heroEnd();
     if (past !== pastHero) setPastHero(past);
   });
 
@@ -71,7 +75,7 @@ export function Nav() {
 
   // A reload lands mid-page without a scroll event.
   useEffect(() => {
-    const t = setTimeout(() => setPastHero(window.scrollY > window.innerHeight * 0.6), 0);
+    const t = setTimeout(() => setPastHero(window.scrollY > heroEnd()), 0);
     return () => clearTimeout(t);
   }, []);
 
@@ -80,17 +84,15 @@ export function Nav() {
   }, [open]);
 
   const toggleSound = (
-    <Magnetic strength={0.3}>
-      <button
-        type="button"
-        onClick={() => setSound(!sound)}
-        aria-pressed={sound}
-        aria-label={sound ? "Turn interface sound off" : "Turn interface sound on"}
-        className="grid size-11 place-items-center rounded-full bg-haze text-fg transition-transform active:scale-95"
-      >
-        {sound ? <Waveform size={18} weight="bold" /> : <SpeakerSlash size={17} weight="bold" />}
-      </button>
-    </Magnetic>
+    <button
+      type="button"
+      onClick={() => setSound(!sound)}
+      aria-pressed={sound}
+      aria-label={sound ? "Turn interface sound off" : "Turn interface sound on"}
+      className="grid size-11 place-items-center rounded-full border border-rule-strong text-fg transition-colors hover:border-fg hover:text-accent active:translate-y-px"
+    >
+      {sound ? <Waveform size={17} weight="bold" /> : <SpeakerSlash size={16} weight="bold" />}
+    </button>
   );
 
   return (
@@ -102,15 +104,15 @@ export function Nav() {
         data-tone={open ? "paper" : tone}
         style={{ viewTransitionName: "site-header" }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 text-fg transition-[background-color,color] duration-300",
-          scrolled && !open ? "bg-bg/88" : "bg-transparent",
+          "fixed inset-x-0 top-0 z-50 text-fg transition-[background-color,color,border-color] duration-300",
+          scrolled && !open ? "border-b border-line bg-bg/95" : "border-b border-transparent bg-transparent",
         )}
       >
-        <div className="container-site flex h-[76px] items-center justify-between gap-6 md:h-[92px]">
+        <div className="container-site flex h-[72px] items-center justify-between gap-6 md:h-[80px]">
           <Link
             href="/"
             className={cn(
-              "text-[15px] font-medium tracking-[0.01em] whitespace-nowrap uppercase transition-[opacity,translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-[19px]",
+              "display text-[15px] whitespace-nowrap transition-[opacity,translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-[18px]",
               !showName && "pointer-events-none -translate-y-2 opacity-0",
             )}
             onClick={() => setOpen(false)}
@@ -122,7 +124,7 @@ export function Nav() {
           </Link>
 
           <nav aria-label="Sections" className="hidden lg:block">
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center gap-1">
               {nav.map((n) => (
                 <NavLink key={n.id} id={n.id} label={n.label} active={active === n.id} />
               ))}
@@ -131,19 +133,16 @@ export function Nav() {
 
           <div className="flex items-center gap-2.5">
             {toggleSound}
-            <Magnetic strength={0.25} className="hidden sm:inline-block">
-              <Link
-                href="/#connect"
-                data-sound="click"
-                className="group/lt inline-flex h-11 items-center gap-3 rounded-full bg-pill px-6 text-sm font-medium tracking-normal text-on-pill uppercase transition-transform active:scale-[0.97]"
-              >
-                Let&apos;s talk
-                <span aria-hidden className="size-1.5 rounded-full bg-on-pill transition-transform duration-300 group-hover/lt:scale-[2.2]" />
-              </Link>
-            </Magnetic>
+            <Link
+              href="/#connect"
+              data-sound="click"
+              className="hidden h-11 items-center rounded-full bg-pill px-5 text-[15px] font-medium text-on-pill transition-colors duration-300 hover:bg-accent-solid hover:text-on-accent active:translate-y-px sm:inline-flex"
+            >
+              Let&apos;s talk
+            </Link>
             <button
               type="button"
-              className="inline-flex h-11 items-center gap-3 rounded-full bg-haze px-5 text-sm font-medium tracking-normal uppercase lg:hidden"
+              className="inline-flex h-11 items-center gap-3 rounded-full border border-rule-strong px-5 text-[15px] font-medium lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => {
@@ -152,10 +151,6 @@ export function Nav() {
               }}
             >
               {open ? "Close" : "Menu"}
-              <span aria-hidden className="flex gap-1">
-                <span className="size-1.5 rounded-full bg-fg" />
-                <span className="size-1.5 rounded-full bg-fg" />
-              </span>
             </button>
           </div>
         </div>
@@ -183,10 +178,9 @@ export function Nav() {
                       <Link
                         href={`/#${n.id}`}
                         onClick={() => setOpen(false)}
-                        className="flex items-baseline justify-between py-3 display text-[clamp(2.5rem,11vw,4.5rem)]"
+                        className="flex items-baseline justify-between py-4 text-[clamp(2rem,8vw,3.5rem)] leading-none font-medium tracking-[-0.035em]"
                       >
                         {n.label}
-                        <span className="label text-fg-3">0{i + 1}</span>
                       </Link>
                     </motion.div>
                   </li>
@@ -201,27 +195,18 @@ export function Nav() {
 }
 
 function NavLink({ id, label, active }: { id: string; label: string; active: boolean }) {
-  const [hover, setHover] = useState(0);
   return (
     <li>
       <Link
         href={`/#${id}`}
-        onPointerEnter={() => {
-          setHover((h) => h + 1);
-          play("hover");
-        }}
+        onPointerEnter={() => play("hover")}
         aria-current={active ? "true" : undefined}
-        className="relative inline-flex h-9 items-center text-sm font-medium tracking-normal uppercase"
-      >
-        {active && (
-          <motion.span
-            layoutId="nav-dot"
-            aria-hidden
-            className="absolute top-1/2 -left-3.5 size-1.5 -translate-y-1/2 rounded-full bg-accent-solid"
-            transition={{ type: "spring", stiffness: 380, damping: 32 }}
-          />
+        className={cn(
+          "inline-flex h-10 items-center rounded-full px-4 text-[15px] font-medium transition-colors duration-300",
+          active ? "bg-fg text-bg" : "text-fg hover:bg-fg/8",
         )}
-        <Scramble text={label} trigger={hover} delay={0} duration={380} />
+      >
+        {label}
       </Link>
     </li>
   );

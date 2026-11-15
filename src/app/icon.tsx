@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
 
-// Solid black circle with a white Satoshi "G", like GitHub's single-mark favicon.
+// An ink square with a sand Satoshi "G" (v7: square instrument, no circles).
 export default async function Icon() {
   const font = await readFile(join(process.cwd(), "src/fonts/Satoshi-700.ttf"));
   return new ImageResponse(
@@ -14,9 +14,9 @@ export default async function Icon() {
         style={{
           width: 64,
           height: 64,
-          borderRadius: 999,
-          background: "#000",
-          color: "#fff",
+          borderRadius: 0,
+          background: "#221e1d",
+          color: "#e6edeb",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

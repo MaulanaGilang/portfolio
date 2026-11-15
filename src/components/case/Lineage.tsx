@@ -23,7 +23,7 @@ export function Lineage() {
   return (
     <div className="mt-10">
       {/* Desktop: full diagram */}
-      <div className="hidden overflow-hidden rounded-card border border-line p-6 md:block">
+      <div className="hidden overflow-hidden rounded-card bg-surface p-6 md:block">
         <svg viewBox={`0 0 ${W} 420`} className="h-auto w-full" role="img" aria-labelledby="lineage-title">
           <title id="lineage-title">
             Data lineage: six CRM and ERP tables load into Bronze, are cleaned in Silver, and are integrated into
