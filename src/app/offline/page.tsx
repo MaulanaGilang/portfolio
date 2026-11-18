@@ -23,7 +23,7 @@ const wib = (iso: string, withTime = true) =>
   }).format(new Date(iso));
 
 /** A full-width image that opens out from an inset frame as it scrolls in, with its title over the lower left. */
-function Feature({ id, image, title, text, href, cta }: { id: string; image: string; title: string; text: string; href: string; cta: string }) {
+function Feature({ id, image, title, text, href, cta }: { id: string; image: string; title: string; text: string; href?: string; cta?: string }) {
   return (
     <article className="hx-feature" aria-labelledby={id}>
       <div className="hx-feature-media">
@@ -36,7 +36,7 @@ function Feature({ id, image, title, text, href, cta }: { id: string; image: str
           {title}
         </h2>
         <p className="hx-small-white mt-4 max-w-[46ch]">{text}</p>
-        {href.startsWith("/") ? (
+        {!href || !cta ? null : href.startsWith("/") ? (
           <Link href={href} transitionTypes={SAGA} className="hx-bracket mt-5">
             {cta}
           </Link>
@@ -98,8 +98,6 @@ export default async function AfterHours() {
           image="/offline/moonwake/concept/env-hall.webp"
           title="The Archmagus"
           text="Gilang Maulana, away from the desk. An all-rounder mage who keeps people standing, with a wyvern asleep under the table."
-          href="/offline/moonwake#characters"
-          cta="Meet the Archmagus"
         />
 
         {/* The Library: a list like a press list. */}
