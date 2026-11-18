@@ -10,7 +10,7 @@ Where things live: crest `src/components/offline/Crest.tsx` (source `assets/moon
 |---|---|
 | World | **Moonwake**, a coastal cliff-city of House Maulana in Runeterra, where the spirit world and arcane craft meet. Fan work under Riot's fan content policy: Riot's region names are used, Riot's art, logos and fonts are not |
 | Mood | Quiet, deep, held. Candle and moonlight, mist off the water, a slow heartbeat underneath |
-| Crest | Wine-red circle, thin black border, silver crescent with horns down, centred: [assets/moonwake/crest.svg](assets/moonwake/crest.svg) |
+| Crest | Wine-red circle, thin black border, and the crescent over the pool: a silver crescent with horns down arching over a full silver moon, centred: [assets/moonwake/crest.svg](assets/moonwake/crest.svg) |
 | Motto | *Quiet, eternal, and ours.* |
 | Fonts | **Arcane Nine** (Chequered Ink, supplied by Gilang; check its licence) for the wordmark and titles, **Geist Mono** (SIL OFL) for everything else on the saga pages. Cinzel stays loaded only as the fallback while Arcane Nine loads |
 | Ranks | Albion's shared twelve, then Moonwake's own nine (section 4) |

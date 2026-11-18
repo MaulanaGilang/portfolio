@@ -1,6 +1,7 @@
 /**
- * The House Maulana crest: a wine-red circle with a thin black border and a
- * silver crescent, horns down, centred (flat master: docs/offline/assets/moonwake/crest.svg).
+ * The House Maulana crest: a wine-red circle with a thin black border and the
+ * crescent over the pool: a silver crescent, horns down, arching over a full
+ * silver moon, centred (flat master: docs/offline/assets/moonwake/crest.svg).
  * On the page it sits in the scene rather than on it: the wine field is slightly
  * translucent so the mist shows through, it darkens a little towards its edge,
  * and a fine grain gives it a painted texture. With `rise`, the moon rises into place on load (CSS,
@@ -18,7 +19,7 @@ export function Crest({ rise = false, className = "", title }: { rise?: boolean;
       <defs>
         <mask id="ah-crest-cut" maskUnits="userSpaceOnUse">
           <rect width="400" height="400" fill="#fff" />
-          <circle cx="200" cy="203" r="80" fill="#000" />
+          <circle cx="200" cy="245" r="62" fill="#000" />
         </mask>
         <clipPath id="ah-crest-disc">
           <circle cx="200" cy="200" r="139" />
@@ -28,8 +29,8 @@ export function Crest({ rise = false, className = "", title }: { rise?: boolean;
           <stop offset="0" stopColor="#661425" stopOpacity="0.86" />
           <stop offset="1" stopColor="#3e0a15" stopOpacity="0.9" />
         </radialGradient>
-        {/* Moon silver: a little brighter on its upper curve. */}
-        <linearGradient id="ah-crest-moon" x1="0" y1="0" x2="0" y2="1">
+        {/* Moon silver, one light across the whole mark: brighter on the crescent's upper curve. */}
+        <linearGradient id="ah-crest-moon" gradientUnits="userSpaceOnUse" x1="0" y1="115" x2="0" y2="285">
           <stop offset="0" stopColor="#e9ebef" />
           <stop offset="1" stopColor="#bfc3cb" />
         </linearGradient>
@@ -44,11 +45,10 @@ export function Crest({ rise = false, className = "", title }: { rise?: boolean;
       <g clipPath="url(#ah-crest-disc)">
         {/* Painted grain over the field */}
         <rect className="ah-crest-field" x="59" y="59" width="282" height="282" fill="#000" filter="url(#ah-crest-grain)" />
-        {/* The moon, which rises inside the circle on load */}
+        {/* The crescent over the pool, which rises inside the circle on load */}
         <g className="ah-crest-moon">
-          <g transform="translate(0 55.6)">
-            <circle cx="200" cy="170" r="88" fill="url(#ah-crest-moon)" mask="url(#ah-crest-cut)" />
-          </g>
+          <circle cx="200" cy="205" r="90" fill="url(#ah-crest-moon)" mask="url(#ah-crest-cut)" />
+          <circle cx="200" cy="245" r="40" fill="url(#ah-crest-moon)" />
         </g>
       </g>
     </svg>
