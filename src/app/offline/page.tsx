@@ -8,10 +8,11 @@ import { CentreTitle, StoryBlock } from "@/components/offline/SagaBlocks";
 import { SagaFooter } from "@/components/offline/SagaFooter";
 import { SAGA, SagaPage } from "@/components/offline/SagaPage";
 import { accounts, favourites, guestbook, house, nowPlaying, playHours, playlists } from "@/data/offline";
+import { getListening } from "@/lib/listenbrainz";
 import { getSteamStats } from "@/lib/steam";
 
-// Rebuilt at most once a day, which is also how often Steam is asked for new numbers.
-export const revalidate = 86400;
+// Rebuilt at most once an hour for the listening data; Steam's own fetch stays cached for a day.
+export const revalidate = 3600;
 
 const wib = (iso: string, withTime = true) =>
   new Intl.DateTimeFormat("en-GB", {
@@ -51,7 +52,7 @@ function Feature({ id, image, title, text, href, cta }: { id: string; image: str
 }
 
 export default async function AfterHours() {
-  const steam = await getSteamStats();
+  const [steam, music] = await Promise.all([getSteamStats(), getListening()]);
 
   const playing = nowPlaying.flatMap((n) =>
     n.titles.map((t) => ({
@@ -155,6 +156,42 @@ export default async function AfterHours() {
               <p className="hx-small mt-5">
                 Updated <time dateTime={steam.fetchedAt}>{wib(steam.fetchedAt)} WIB</time>
               </p>
+            )}
+            {music && (
+              <ul className="hx-events mt-12" aria-label="Listening">
+                {music.last && (
+                  <li {...posterProps({ title: music.last.name, meta: music.last.artist, poster: music.last.cover })}>
+                    <span className="hx-event-num">
+                      Last
+                    </span>
+                    <span className="hx-small">
+                      <span className="hx-small-white">{music.last.name}.</span> {music.last.artist}, played {wib(music.last.at)} WIB.
+                    </span>
+                  </li>
+                )}
+                {music.topTracks.map((t) => (
+                  <li key={`track-${t.name}-${t.artist}`} {...posterProps({ title: t.name, meta: `${t.artist}, this month`, poster: t.cover })}>
+                    <span className="hx-event-num">
+                      {t.plays}
+                      <span className="hx-event-unit">×</span>
+                    </span>
+                    <span className="hx-small">
+                      <span className="hx-small-white">{t.name}.</span> {t.artist}, plays this month.
+                    </span>
+                  </li>
+                ))}
+                {music.topArtists.map((a) => (
+                  <li key={`artist-${a.name}`}>
+                    <span className="hx-event-num">
+                      {a.plays}
+                      <span className="hx-event-unit">×</span>
+                    </span>
+                    <span className="hx-small">
+                      <span className="hx-small-white">{a.name}.</span> Most played artist this month.
+                    </span>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
         </section>
