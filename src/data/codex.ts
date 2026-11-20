@@ -192,7 +192,7 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
     label: "The Moonwatch",
     tiles: [
       { src: "/offline/moonwake/concept/watch-soldier.webp", span: 2, sheet: true, title: "The Moonwatch", text: "Melee guards with the longsword, ranged guards with the stillstone rifle. Plain dark plate, wine tabards. Patient, defensive, impossible to hurry." },
-      { src: "/offline/moonwake/concept/still-1.webp", span: 2, sheet: true, title: "The Still, I to VI", text: "Twelve who never speak, led by the Archmagus himself. One cloak, twelve ways of fighting." },
+      { src: "/offline/moonwake/concept/still-1.webp", span: 2, sheet: true, title: "The Still, I to VI", text: "Twelve who never speak, with no leader among them: they answer to the Archmagus alone. One cloak, twelve ways of fighting." },
       { src: "/offline/moonwake/concept/still-2.webp", span: 2, sheet: true, title: "The Still, VII to XII", text: "The gate-breaker, the mage-swordsman, the privateer, the grappler, the crossbow and the censer." },
       { src: "/offline/moonwake/concept/ranks-1.webp", span: 2, sheet: true, title: "Ranks: the soldiers", text: "Recruit to Knight Commander: spear, sword and shield, rifle, halberd, longsword, greatsword." },
       { src: "/offline/moonwake/concept/ranks-2.webp", span: 2, sheet: true, title: "Ranks: the mage path", text: "Mistweaver to Archmagus: wand, glaive, lamp, ceremonial blade and the black polearm." },
@@ -208,7 +208,7 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
  * cloak with silver trim for all; everything else is their own.
  */
 export const stillRoster: { n: string; weapon: string; style: string }[] = [
-  { n: "I", weapon: "The Archmagus himself, with his black polearm", style: "The First. Leads the Still in person" },
+  { n: "I", weapon: "A huge two-handed greatsword", style: "The First. Ends fights by presence alone" },
   { n: "II", weapon: "Paired curved daggers", style: "Ambush in the fog" },
   { n: "III", weapon: "A long rifle with a glowing stillstone core", style: "The watchtower marksman" },
   { n: "IV", weapon: "A long spear with a pennant", style: "The duellist; holds stairs and gates" },

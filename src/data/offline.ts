@@ -168,11 +168,11 @@ export const characters: Character[] = [
     name: "The Still",
     image: "/offline/moonwake/concept/still-1.webp",
     bio: [
-      "Twelve who never speak, numbered First to Twelfth, and the First is the Archmagus himself. They share one black hooded cloak with silver trim and nothing else: each fights with a different weapon, from twin daggers and a harpoon to a war hammer and a censer of mist.",
+      "Twelve who never speak, numbered First to Twelfth. None of them leads; they answer to the Archmagus alone. They share one black hooded cloak with silver trim and nothing else: each fights with a different weapon, from the First's huge greatsword to twin daggers, a harpoon and a censer of mist.",
     ],
     cells: [
       { label: "Class", value: "Silent guard, ranked I to XII" },
-      { label: "Leader", value: "The Archmagus, as the First" },
+      { label: "Answers to", value: "The Archmagus alone" },
     ],
   },
   {

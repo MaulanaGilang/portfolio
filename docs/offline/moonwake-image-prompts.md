@@ -185,12 +185,12 @@ SUBJECT: The library of the Keep at night: tall dark wooden shelves full of book
 
 ## still-1 (The Still, I to VI)
 
-Aspect **16:9**. Attach: [archmagus], [guard]. Shows in: concept art and the Still character card.
+Aspect **16:9**. Attach: [guard]. Shows in: concept art and the Still character card.
 
 ```text
 STYLE: a frame from a high-budget animated fantasy series that blends 3D models with hand-painted textures. Clean, crisp painted detail, visible soft brushstrokes, clean graphic shapes. Colour palette: deep wine red (#5A0F1E), near-black, silver, warm cream, red-violet glow. No text, no letters, no logos, no watermark, no modern objects.
 
-SUBJECT: A character lineup design sheet on a plain warm-grey painted background: SIX members of the Still, silent elite guards, standing in a row, full body, front view, with clear empty space between them, nothing overlapping. Figures II to VI wear the same long black hooded cloak with silver trim, hoods up, faces hidden in shadow, dark plain steel armour under the cloak (no gems). Left to right: (I) the Archmagus from the first reference image, same face, middle-part black hair, wine-and-black robes with silver thread, holding his black polearm with the red-violet orb, no hood; (II) paired curved daggers, one in each hand; (III) a long marksman rifle with a glowing red-violet crystal core, like the rifle in the second reference image; (IV) a long spear with a small wine-red pennant; (V) a huge rectangular tower shield and a short sword; (VI) a harpoon with a coiled chain over the shoulder. Only the orb, the rifle core and nothing else glow. Fully clothed characters. No labels.
+SUBJECT: A character lineup design sheet on a plain warm-grey painted background: SIX members of the Still, silent elite guards, standing in a row, full body, front view, with clear empty space between them, nothing overlapping. All six wear the same long black hooded cloak with silver trim, hoods up, faces hidden in shadow, dark plain steel armour under the cloak like the reference image (no gems). Left to right: (I) a huge two-handed greatsword, sheathed on the back, the hilt rising above the shoulder; (II) paired curved daggers, one in each hand; (III) a long marksman rifle with a glowing red-violet crystal core, like the rifle in the reference image; (IV) a long spear with a small wine-red pennant; (V) a huge rectangular tower shield and a short sword; (VI) a harpoon with a coiled chain over the shoulder. Only III's rifle core glows; every other weapon is plain steel, wood or leather. Fully clothed characters. No labels.
 ```
 
 ## still-2 (The Still, VII to XII)
