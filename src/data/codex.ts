@@ -29,9 +29,9 @@ export const codex: CodexTab[] = [
     id: "land",
     label: "Land",
     lead: "A cliff-city over deep water, with one bridge in and one bridge out.",
-    body: "Moonwake is built in terraces of pale stone down a sea cliff, curved like a crescent, with the great keep carved straight from the rock. Mist sits on the water most mornings. The autumns are long and cool, the winters short and silver, and when storms come the sea throws itself at the cliffs and the city doesn't flinch. Nobody stumbles in.",
+    body: "Moonwake is a round fortress-city on a sheer-sided island just off the coast. One giant bridge on tall arches runs level from the mainland cliffs straight through its gate; the harbour sits far below at the waterline, linked to the streets by a cliff road and a cargo lift, and airships moor at the sky port on the wall. Rings of walls climb to the keep on the highest rock. Mist sits on the water most mornings. The autumns are long and cool, the winters short and silver, and when storms come the sea throws itself at the cliffs and the city doesn't flinch. Nobody stumbles in.",
     facts: [
-      { label: "Seat", value: "Moonwake, crescent-shaped, built into the cliff" },
+      { label: "Seat", value: "Moonwake, a round walled city on a cliff-sided island" },
       { label: "Climate", value: "Mist, long cool autumns, short silver winters, sea storms" },
       { label: "Landmarks", value: "The Long Bridge, where there is nowhere to hide. The Still Pool, a courtyard pool that never ripples. The Hall of Names, every Maulana carved in silver" },
       { label: "Neighbours", value: "Piltover-style trade cities inland, Ionian spirit-villages across the water, and one Noxian outpost that watches and pretends not to" },
@@ -110,8 +110,8 @@ export const codex: CodexTab[] = [
       { label: "Elite unit", value: "The Still: twelve who never speak in combat" },
       { label: "Battle cry", value: "\"Quiet.\" That's the whole cry" },
       { label: "Famous victory", value: "The Bridge Stand: outnumbered ten to one, the bridge held all night" },
-      { label: "Arms", value: "Knightly steel set with stillstone, and discharge weapons (rifles, pistols, maces, lanterns) that fire back the magic the stone has stored" },
-      { label: "Order", value: "The Stillstone Order: dark plate with pale stillstone panels that brighten after they block a spell" },
+      { label: "Arms", value: "Melee guards carry the longsword; ranged guards carry rifles with a glowing stillstone tube that fires back stored magic" },
+      { label: "Armour", value: "Plain dark steel plate, wine tabards, hooded cloaks. Stillstone goes in weapons, never in armour" },
       { label: "Rarest unit", value: "The Wyrmwatch: riders on armoured war wyverns" },
     ],
   },
@@ -144,33 +144,10 @@ export const codex: CodexTab[] = [
   },
 ];
 
-/** The Moonwatch ranks: twelve shared ranks, then Moonwake's own path. */
+/** The Moonwatch ranks: seven soldier ranks, then the five of the mage path. */
 export const ranks = {
-  shared: [
-    "Mercenary",
-    "Recruit",
-    "Scout",
-    "Guard",
-    "Footman",
-    "Skirmisher",
-    "Legionnaire",
-    "Man at Arms",
-    "Knight Errant",
-    "Knight Defender",
-    "Knight Champion",
-    "Knight Commander",
-  ],
-  moonwake: [
-    "Wellborn",
-    "Tidecaller",
-    "Mistweaver",
-    "Moonwarden",
-    "Lampbearer",
-    "Wellkeeper",
-    "Stormbinder",
-    "Warden of the Still Pool",
-    "Archmagus of the Coast",
-  ],
+  shared: ["Recruit", "Watchman", "Rifleman", "Sergeant", "Knight", "Knight Captain", "Knight Commander"],
+  moonwake: ["Mistweaver", "Moonwarden", "Lampbearer", "Warden of the Still Pool", "Archmagus of the Coast"],
 };
 
 /**
@@ -189,7 +166,7 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
     id: "environments",
     label: "Environments",
     tiles: [
-      { src: "/offline/moonwake/concept/env-city.webp", span: 2, title: "Moonwake at dawn", text: "Terraces of pale stone stepping down the cliff to the crescent harbour." },
+      { src: "/offline/moonwake/concept/env-city.webp", span: 2, title: "Moonwake at dawn", text: "The walled city on its island, the bridge running level into the gate." },
       { src: "/offline/moonwake/concept/env-hall.webp", span: 2, title: "The long table", text: "The great hall of the keep, carved from the rock, with one table for everyone." },
       { src: "/offline/moonwake/concept/env-market.webp", title: "Lantern stairs", text: "The market streets are stairs. The lamps on them are never allowed to go out." },
       { src: "/offline/moonwake/concept/env-tower.webp", title: "The watchtower", text: "Storm nights on the cliff, under the red-violet aurora." },
@@ -204,9 +181,9 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
     label: "Life in Moonwake",
     tiles: [
       { src: "/offline/moonwake/concept/life-townsfolk.webp", span: 2, title: "Townsfolk", text: "Fisherfolk, smiths, scribes and elders. A few thousand souls who greet each other with \"We're here\"." },
-      { src: "/offline/moonwake/concept/life-archmagus.webp", title: "The Archmagus", text: "Robes in wine and black with silver thread, and the crescent staff that carries the Lamp." },
+      { src: "/offline/moonwake/concept/life-archmagus.webp", title: "The Archmagus", text: "Robes in wine and black with silver thread, and the black polearm with the red-violet orb." },
       { src: "/offline/moonwake/concept/life-library.webp", title: "The library", text: "The crest-cats go wherever they like. The scribes have stopped arguing." },
-      { src: "/offline/moonwake/concept/life-festival.webp", span: 2, title: "Moonwake Night", text: "Every 24 March: lanterns on the terraces, strings and gongs, and glowing petals on the water." },
+      { src: "/offline/moonwake/concept/life-festival.webp", span: 2, title: "Moonwake Night", text: "Every 24 March: lanterns over the streets, strings and gongs, and glowing petals in the air." },
       { src: "/offline/moonwake-hall.webp", span: 2, title: "The Hall of Names", text: "Every Maulana, carved in silver, read aloud on the Day of Names." },
     ],
   },
@@ -214,11 +191,11 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
     id: "military",
     label: "The Moonwatch",
     tiles: [
-      { src: "/offline/moonwake/concept/watch-soldier.webp", span: 2, sheet: true, title: "The Moonwatch", text: "Knights of the Stillstone Order: dark plate with pale stillstone panels, wine surcoats, a stillstone-cored rifle on the back. Patient, defensive, impossible to hurry." },
-      { src: "/offline/moonwake/concept/arms-steel.webp", span: 2, sheet: true, title: "The armoury: steel", text: "Longswords, halberds, maces and war hammers for the Order, a Dane axe for the harbour militia. Stillstone in the pommels and the shield bosses." },
-      { src: "/offline/moonwake/concept/arms-stillstone.webp", span: 2, sheet: true, title: "The armoury: discharge", text: "Rifles, pistols, maces, grenades and lanterns built around stillstone cores. They fire back the magic the stone has drunk." },
-      { src: "/offline/moonwake/concept/still-1.webp", span: 2, sheet: true, title: "The Still, I to VI", text: "Twelve who never speak, each carrying one stillstone relic with a different stored spell. One cloak, twelve ways of fighting." },
-      { src: "/offline/moonwake/concept/still-2.webp", span: 2, sheet: true, title: "The Still, VII to XII", text: "The gate-breaker, the mage-swordsman, the privateer, the grappler, the arbalest and the censer." },
+      { src: "/offline/moonwake/concept/watch-soldier.webp", span: 2, sheet: true, title: "The Moonwatch", text: "Melee guards with the longsword, ranged guards with the stillstone rifle. Plain dark plate, wine tabards. Patient, defensive, impossible to hurry." },
+      { src: "/offline/moonwake/concept/still-1.webp", span: 2, sheet: true, title: "The Still, I to VI", text: "Twelve who never speak, led by the Archmagus himself. One cloak, twelve ways of fighting." },
+      { src: "/offline/moonwake/concept/still-2.webp", span: 2, sheet: true, title: "The Still, VII to XII", text: "The gate-breaker, the mage-swordsman, the privateer, the grappler, the crossbow and the censer." },
+      { src: "/offline/moonwake/concept/ranks-1.webp", span: 2, sheet: true, title: "Ranks: the soldiers", text: "Recruit to Knight Commander: spear, sword and shield, rifle, halberd, longsword, greatsword." },
+      { src: "/offline/moonwake/concept/ranks-2.webp", span: 2, sheet: true, title: "Ranks: the mage path", text: "Mistweaver to Archmagus: wand, glaive, lamp, ceremonial blade and the black polearm." },
       { src: "/offline/moonwake/concept/wyvern.webp", span: 2, sheet: true, title: "War wyvern", text: "Two legs, wings for arms. Plate barding over wine-red quilting, and a saddle for one." },
       { src: "/offline/moonwake/concept/wyrmwatch.webp", span: 2, title: "The Wyrmwatch", text: "The Moonwatch's rarest unit: wyvern riders who patrol the cliffs and the sea lanes." },
       { src: "/offline/moonwake/codex-moonwatch.webp", span: 2, title: "The Bridge Stand", text: "The battle cry is one word: \"Quiet.\"" },
@@ -231,16 +208,16 @@ export const conceptGalleries: { id: string; label: string; tiles: ConceptTile[]
  * cloak with silver trim for all; everything else is their own.
  */
 export const stillRoster: { n: string; weapon: string; style: string }[] = [
-  { n: "I", weapon: "A greatsword, never drawn; the stone glows through the scabbard", style: "The First. Ends fights without unsheathing" },
-  { n: "II", weapon: "Twin daggers with stillstone pommels", style: "Ambush in the fog" },
-  { n: "III", weapon: "A long stillstone-cored rifle", style: "The watchtower marksman" },
-  { n: "IV", weapon: "A poleaxe with a stillstone head", style: "The formal duellist" },
-  { n: "V", weapon: "A flail, and a tower shield cut from one slab of stillstone", style: "Holds the line alone; drinks every spell aimed at it" },
-  { n: "VI", weapon: "Harpoon gun and chain", style: "Drags enemies off the bridge" },
-  { n: "VII", weapon: "A piston hammer with a stillstone head", style: "Breaks gates" },
-  { n: "VIII", weapon: "A curved blade that trails well-water", style: "The mage-swordsman" },
-  { n: "IX", weapon: "Flintlocks with stillstone cylinders, and a sabre", style: "The former privateer" },
-  { n: "X", weapon: "Stillstone gauntlets", style: "Grappler. Brings nothing else" },
-  { n: "XI", weapon: "A repeating arbalest with stillstone bolts", style: "Siege" },
-  { n: "XII", weapon: "A stillstone censer that pours mist", style: "Blinds the whole field" },
+  { n: "I", weapon: "The Archmagus himself, with his black polearm", style: "The First. Leads the Still in person" },
+  { n: "II", weapon: "Paired curved daggers", style: "Ambush in the fog" },
+  { n: "III", weapon: "A long rifle with a glowing stillstone core", style: "The watchtower marksman" },
+  { n: "IV", weapon: "A long spear with a pennant", style: "The duellist; holds stairs and gates" },
+  { n: "V", weapon: "A great tower shield and a short sword", style: "Holds the line alone" },
+  { n: "VI", weapon: "A harpoon on a chain", style: "Drags enemies off the bridge and the walls" },
+  { n: "VII", weapon: "A two-handed war hammer", style: "Breaks gates" },
+  { n: "VIII", weapon: "A blade wreathed in glowing well-water", style: "The mage-swordsman" },
+  { n: "IX", weapon: "Two flintlock pistols and a cutlass", style: "The former privateer; fights on ships" },
+  { n: "X", weapon: "Armoured gauntlets, nothing else", style: "Grappler and breaker" },
+  { n: "XI", weapon: "A heavy crossbow", style: "Siege; bolts that pin" },
+  { n: "XII", weapon: "A lantern-censer on a chain that pours glowing mist", style: "Blinds the whole field" },
 ];

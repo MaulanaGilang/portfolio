@@ -47,3 +47,6 @@ next-env.d.ts
 /.claude/
 /graphify-out/
 /.mcp.json
+
+# Raw generated art waiting to be processed (never committed)
+art-inbox/

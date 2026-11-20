@@ -157,7 +157,18 @@ export default async function AfterHours() {
                 Updated <time dateTime={steam.fetchedAt}>{wib(steam.fetchedAt)} WIB</time>
               </p>
             )}
-            {music && (
+            {!music ? (
+              <ul className="hx-events mt-12" aria-label="Listening">
+                <li>
+                  <span className="hx-event-num">
+                    0<span className="hx-event-unit">×</span>
+                  </span>
+                  <span className="hx-small">
+                    <span className="hx-small-white">Listening.</span> Nothing recorded yet. Tracks from Spotify show up here, refreshed every hour.
+                  </span>
+                </li>
+              </ul>
+            ) : (
               <ul className="hx-events mt-12" aria-label="Listening">
                 {music.last && (
                   <li {...posterProps({ title: music.last.name, meta: music.last.artist, poster: music.last.cover })}>

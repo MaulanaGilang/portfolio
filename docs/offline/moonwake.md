@@ -88,21 +88,22 @@ One system for both pages: After Hours (`/offline`) and the Moonwake page (`/off
 
 ## 4. The Moonwatch ranks
 
-Shared (from Albion Online): Mercenary, Recruit, Scout, Guard, Footman, Skirmisher, Legionnaire, Man at Arms, Knight Errant, Knight Defender, Knight Champion, Knight Commander.
+Reworked November 2026: twelve ranks, seven soldiers then five on the mage path (data: `ranks` in `src/data/codex.ts`; art prompts: `moonwake-image-prompts.md`).
 
-Moonwake's own:
-
-| # | Rank | Meaning |
+| # | Rank | Look and weapon |
 |---|---|---|
-| 13 | Wellborn | First touched by the pool |
-| 14 | Tidecaller | Can draw water-magic |
-| 15 | Mistweaver | Shapes fog; the first real spells |
-| 16 | Moonwarden | Guards the city at night |
-| 17 | Lampbearer | Trusted to carry the red-violet light |
-| 18 | Wellkeeper | Feeds and refills the pool |
-| 19 | Stormbinder | Holds back the sea at the cliffs |
-| 20 | Warden of the Still Pool | Keeper of the house's magic |
-| 21 | Archmagus of the Coast | Rules the city and holds the well |
+| 1 | Recruit | Padded jacket, open cap; spear |
+| 2 | Watchman | Mail, round shield; arming sword |
+| 3 | Rifleman | Leather and mail; the crystal-tube rifle |
+| 4 | Sergeant | Half plate; halberd |
+| 5 | Knight | Full plate, great helm; longsword |
+| 6 | Knight Captain | Ornate plate, short cape; greatsword |
+| 7 | Knight Commander | Finest plate, long cloak; longsword and rifle |
+| 8 | Mistweaver | Robe over mail; wand and dagger |
+| 9 | Moonwarden | Armoured robe; glaive |
+| 10 | Lampbearer | Ceremonial robe; staff with the red-violet lamp |
+| 11 | Warden of the Still Pool | High robes; ceremonial blade |
+| 12 | Archmagus of the Coast | The black polearm with the orb |
 
 ## 5. Page structure
 

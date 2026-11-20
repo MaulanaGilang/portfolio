@@ -19,7 +19,7 @@ export const characterSheet: { label: string; value: string }[] = [
   { label: "Class", value: "All-rounder mage. By day a data person, by night a chill gamer" },
   { label: "Main roles", value: "Mage, Support" },
   { label: "Familiar", value: "A wyvern" },
-  { label: "Focus", value: "A black staff with a crescent head and a red-violet light: the Lamp, carried into the world" },
+  { label: "Focus", value: "A black polearm with a red-violet orb set in its blade: the Lamp, carried into the world" },
   { label: "Home", value: "Tuban, East Java" },
   { label: "Plays", value: "For fun, not for rank" },
   {
@@ -155,12 +155,12 @@ export const characters: Character[] = [
     name: "The Moonwatch",
     image: "/offline/moonwake/concept/watch-soldier.webp",
     bio: [
-      "The city's guard, knights of the Stillstone Order: dark plate set with pale stillstone that drinks the spells thrown at it, wine surcoats, and rifles that fire that magic back. They fight patiently and defensively, and their most famous battle is one they never had to start: the Bridge Stand.",
+      "The city's guard: knights in plain dark plate and wine tabards. Melee guards hold the line with the longsword; ranged guards stand behind them with rifles whose stillstone tubes fire back the magic thrown at the city. They fight patiently and defensively, and their most famous battle is one they never had to start: the Bridge Stand.",
       "Their battle cry is a single word. \"Quiet.\"",
     ],
     cells: [
       { label: "Class", value: "City guard" },
-      { label: "Ranks", value: "Twenty-one, Mercenary to Archmagus" },
+      { label: "Ranks", value: "Twelve, Recruit to Archmagus" },
     ],
   },
   {
@@ -168,11 +168,11 @@ export const characters: Character[] = [
     name: "The Still",
     image: "/offline/moonwake/concept/still-1.webp",
     bio: [
-      "Twelve who never speak, numbered First to Twelfth. They share one black hooded cloak with silver trim and nothing else: each carries one stillstone relic holding a different stored spell, from the First's greatsword that is never drawn to the Twelfth's censer of mist.",
+      "Twelve who never speak, numbered First to Twelfth, and the First is the Archmagus himself. They share one black hooded cloak with silver trim and nothing else: each fights with a different weapon, from twin daggers and a harpoon to a war hammer and a censer of mist.",
     ],
     cells: [
       { label: "Class", value: "Silent guard, ranked I to XII" },
-      { label: "Relics", value: "Twelve stillstone relics, one each" },
+      { label: "Leader", value: "The Archmagus, as the First" },
     ],
   },
   {

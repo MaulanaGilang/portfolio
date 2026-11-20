@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import { CharacterPanel } from "@/components/offline/CharacterPanel";
 import { ConceptGallery } from "@/components/offline/ConceptGallery";
@@ -61,7 +63,7 @@ export default function MoonwakePage() {
         {/* Story: a centred block over a full-bleed painting, leading into the chapters. */}
         <StoryBlock id="story" title="Story" image="/offline/moonwake/codex-land.webp">
           <p className="hx-small-white mt-5">
-            Moonwake is built in terraces down a sea cliff, curved like a crescent, with the keep carved straight from the rock.
+            Moonwake is a round walled city on a cliff-sided island, reached by one great bridge that runs level into its gate.
             Mist sits on the water most mornings and nobody stumbles in. Under the city lies a still well of red-violet magic,
             and once a year, in the Quiet Hour, the whole city falls silent while it is fed...
           </p>
@@ -139,7 +141,7 @@ export default function MoonwakePage() {
               <div className="hx-split hx-ranks-wrap">
                 <div className="hx-split-title">
                   <h3 className="hx-h2">Ranks</h3>
-                  <p className="hx-small mt-4">Lowest to highest. The first twelve are shared; the last nine are Moonwake&apos;s own path.</p>
+                  <p className="hx-small mt-4">Lowest to highest. Seven soldier ranks, then the five of the mage path.</p>
                 </div>
                 <ol className="hx-ranks">
                   {[...ranks.shared, ...ranks.moonwake].map((r, k) => (
@@ -156,7 +158,7 @@ export default function MoonwakePage() {
               <div className="hx-split hx-ranks-wrap">
                 <div className="hx-split-title">
                   <h3 className="hx-h2">The Still</h3>
-                  <p className="hx-small mt-4">Twelve who never speak, ranked First to Twelfth. One cloak; every weapon and style their own.</p>
+                  <p className="hx-small mt-4">Twelve who never speak, ranked First to Twelfth and led by the Archmagus. One cloak; every weapon and style their own.</p>
                 </div>
                 <ol className="hx-list hx-roster">
                   {stillRoster.map((s) => (
@@ -176,7 +178,8 @@ export default function MoonwakePage() {
         {/* Concept art: mosaics of the city, its people and the Moonwatch. */}
         <div id="concept" className="hx-concept">
           {conceptGalleries.map((g) => (
-            <ConceptGallery key={g.id} {...g} />
+            // Tiles whose image hasn't been generated yet are left out.
+            <ConceptGallery key={g.id} {...g} tiles={g.tiles.filter((t) => existsSync(join(process.cwd(), "public", t.src)))} />
           ))}
         </div>
       </main>
