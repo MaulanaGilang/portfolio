@@ -27,7 +27,10 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
   };
 }
 
-const directional = { "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" };
+const directional = { "nav-forward": "nav-forward", "nav-back": "nav-back" };
+// Going to a project's live dashboard and back (see the dash-* rules in globals.css).
+const enterTypes = { ...directional, "dash-out": "dash-enter", default: "none" };
+const exitTypes = { ...directional, "dash-in": "dash-exit", default: "none" };
 
 export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   const { slug } = await params;
@@ -37,7 +40,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   const next = projects[(i + 1) % projects.length];
 
   return (
-    <ViewTransition enter={directional} exit={directional} default="none">
+    <ViewTransition enter={enterTypes} exit={exitTypes} default="none">
       <main id="main" className="relative pt-[clamp(84px,10vh,104px)]">
         {/* First screen, Lusion project-page format: story on the left, the cover on the right. */}
         <section className="container-site grid min-h-[calc(100dvh-clamp(84px,10vh,104px))] items-center gap-10 pb-10 md:grid-cols-12 md:gap-12">
@@ -80,7 +83,13 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
             <div className="mt-8 flex flex-wrap gap-3">
               {p.links.map((l, n) => (
-                <PillButton key={l.href} href={l.href} external={l.href.startsWith("http")} variant={n === 0 ? "solid" : "ghost"}>
+                <PillButton
+                  key={l.href}
+                  href={l.href}
+                  external={l.href.startsWith("http")}
+                  transitionTypes={l.href.endsWith("/dashboard") ? ["dash-in"] : undefined}
+                  variant={n === 0 ? "solid" : "ghost"}
+                >
                   {l.label}
                 </PillButton>
               ))}

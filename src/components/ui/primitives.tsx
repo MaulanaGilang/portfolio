@@ -21,11 +21,13 @@ type ButtonProps = {
   /** solid: ink pill, the primary action. ghost: hairline pill. */
   variant?: "solid" | "ghost";
   external?: boolean;
+  /** View-transition types for internal links (see the page transitions in globals.css). */
+  transitionTypes?: string[];
   className?: string;
 };
 
 /** Pill controls: the only rounded shape on the page. The arrow lifts on hover. */
-export function PillButton({ href, children, variant = "solid", external, className }: ButtonProps) {
+export function PillButton({ href, children, variant = "solid", external, transitionTypes, className }: ButtonProps) {
   const cls = cn(
     "group/btn inline-flex h-12 items-center gap-2.5 rounded-full pr-4 pl-5 text-[15px] font-medium whitespace-nowrap transition-[background-color,color,border-color] duration-300 active:translate-y-px",
     variant === "solid"
@@ -52,7 +54,7 @@ export function PillButton({ href, children, variant = "solid", external, classN
       {inner}
     </a>
   ) : (
-    <Link href={href} className={cls} data-sound="click">
+    <Link href={href} transitionTypes={transitionTypes} className={cls} data-sound="click">
       {inner}
     </Link>
   );

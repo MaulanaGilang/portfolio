@@ -24,6 +24,7 @@ export function SiteNav({ preview }: { preview: boolean }) {
           ) : null}
           <Link
             href={site.caseStudyUrl}
+            transitionTypes={["dash-out"]}
             className="inline-flex items-center gap-2 whitespace-nowrap text-sm text-cs-ink-2 transition-colors hover:text-cs-ink"
           >
             <ArrowLeft size={16} weight="regular" aria-hidden />

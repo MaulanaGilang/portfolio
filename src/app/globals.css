@@ -246,6 +246,44 @@ html:active-view-transition-type(world-in)::view-transition-old(site-header) {
     translate: 0 32px;
   }
 }
+/* Into the clickstream dashboard and back: the light case study dims down to the
+   dashboard's night colour and the dashboard fades up out of it, like an instrument
+   panel switching on; going back, the night fades out to the day. Types are set on the links. */
+html:active-view-transition-type(dash-in)::view-transition {
+  background: #0f1217;
+}
+html:active-view-transition-type(dash-out)::view-transition {
+  background: #e6edeb;
+}
+html:active-view-transition-type(dash-in)::view-transition-old(site-header) {
+  animation: 480ms cubic-bezier(0.4, 0, 0.2, 1) both dash-dim;
+}
+::view-transition-old(.dash-exit) {
+  animation: 480ms cubic-bezier(0.4, 0, 0.2, 1) both dash-dim;
+}
+::view-transition-new(.dash-enter) {
+  animation: 760ms cubic-bezier(0.16, 1, 0.3, 1) 380ms both dash-up;
+}
+@keyframes dash-dim {
+  to {
+    opacity: 0;
+    scale: 0.985;
+  }
+}
+@keyframes dash-up {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.dash-exit),
+  ::view-transition-new(.dash-enter),
+  html:active-view-transition-type(dash-in)::view-transition-old(site-header) {
+    animation-duration: 1ms;
+    animation-delay: 0s;
+  }
+}
 /* Between the saga pages (After Hours, the Moonwake Codex, the map): the old page
    closes into black, then the new one opens from the middle like a shutter. */
 html:active-view-transition-type(saga)::view-transition {

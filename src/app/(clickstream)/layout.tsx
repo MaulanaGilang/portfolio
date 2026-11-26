@@ -1,5 +1,6 @@
 import type { Viewport } from "next";
 import localFont from "next/font/local";
+import { ViewTransition } from "react";
 import "@/clickstream/clickstream.css";
 
 // The dashboard's own type, self-hosted (SIL OFL): Geist for text, Space Grotesk for
@@ -17,11 +18,16 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-/** The clickstream dashboard has its own night theme; none of the portfolio's chrome loads here. */
+/**
+ * The clickstream dashboard has its own night theme; none of the portfolio's chrome loads here.
+ * Arriving from the case study it fades up out of the dark; leaving, it fades out (see globals.css).
+ */
 export default function ClickstreamLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div data-world="clickstream" className={`${geistSans.variable} ${spaceGrotesk.variable}`}>
-      {children}
-    </div>
+    <ViewTransition enter={{ "dash-in": "dash-enter", default: "none" }} exit={{ "dash-out": "dash-exit", default: "none" }} default="none">
+      <div data-world="clickstream" className={`${geistSans.variable} ${spaceGrotesk.variable}`}>
+        {children}
+      </div>
+    </ViewTransition>
   );
 }
