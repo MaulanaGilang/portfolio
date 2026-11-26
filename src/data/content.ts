@@ -431,11 +431,14 @@ export const projects: Project[] = [
 /** `level` marks a spoken language (LinkedIn proficiency scale); those pills show no icon. */
 export type Skill = { name: string; icon?: string; level?: string };
 
-// icon = file in /public/skills (simple-icons, monochrome). No icon = generic database glyph.
+// icon = file in /public/skills (simple-icons, monochrome; aws.svg is from Material Design Icons,
+// since simple-icons dropped it). No icon = generic database glyph.
 export const skills: { group: string; items: Skill[] }[] = [
   {
     group: "Data Engineering",
     items: [
+      { name: "Snowflake", icon: "snowflake" },
+      { name: "Airflow", icon: "airflow" },
       { name: "SQL Server", icon: "sqlserver" },
       { name: "BigQuery", icon: "bigquery" },
       { name: "PySpark", icon: "spark" },
@@ -459,6 +462,7 @@ export const skills: { group: string; items: Skill[] }[] = [
   {
     group: "Cloud & Backend",
     items: [
+      { name: "AWS", icon: "aws" },
       { name: "Google Cloud", icon: "gcp" },
       { name: "Firebase", icon: "firebase" },
       { name: "Azure", icon: "azure" },
