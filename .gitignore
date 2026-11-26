@@ -50,3 +50,6 @@ next-env.d.ts
 
 # Raw generated art waiting to be processed (never committed)
 art-inbox/
+
+# Source bundle handed over from the clickstream project session (reference only)
+/portfolio-handoff/

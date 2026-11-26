@@ -243,8 +243,8 @@ export const projects: Project[] = [
     title: "E-commerce Clickstream Pipeline",
     context: "Personal project · REES46 e-commerce data",
     year: "2026",
-    cover: "/projects/ecommerce-clickstream-photo.webp",
-    short: "An idempotent daily ELT pipeline that moves 110M shop events through S3, Snowflake and dbt, orchestrated by Airflow 3.",
+    cover: "/projects/sql-data-warehouse-photo.webp",
+    short: "Idempotent daily ELT for 110M e-commerce events on AWS S3, Snowflake, dbt and Airflow 3, with a Snowpipe add-on and a static dashboard.",
     overview:
       "An end-to-end ELT pipeline for two months of e-commerce clickstream data (110M events): daily Parquet partitions on AWS S3, loaded into Snowflake, modelled with dbt and orchestrated by Airflow 3, with a Snowpipe add-on for near-real-time loading and a static dashboard on top.",
     problem:
@@ -257,9 +257,9 @@ export const projects: Project[] = [
     ],
     result:
       "109,950,743 events loaded with every row accounted for (109,819,981 clean, 12 quarantined, 130,750 duplicates flagged), 8 dbt models and 15 tests passing on all 61 daily runs, for 2.67 Snowflake credits. The finding: only 10.1% of 23M sessions ever add to cart, but 61% of those go on to buy, so the leak is before the cart, not in it.",
-    tools: ["Snowflake", "dbt", "Airflow 3", "AWS S3", "Snowpipe", "Python", "Docker", "SQL", "Next.js"],
+    tools: ["AWS S3", "Snowflake", "Snowpipe", "dbt", "Airflow 3", "Docker", "Python", "DuckDB", "Next.js"],
     links: [
-      { label: "Live dashboard", href: "https://ecommerce-clickstream-snowflake.vercel.app/" },
+      { label: "Live dashboard", href: "/projects/ecommerce-clickstream/dashboard" },
       { label: "View on GitHub", href: "https://github.com/MaulanaGilang/ecommerce_clickstream_snowflake" },
     ],
     figures: [

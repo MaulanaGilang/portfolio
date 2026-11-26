@@ -73,6 +73,27 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-dune: var(--font-dune-rise), var(--font-satoshi), ui-sans-serif, sans-serif;
 
+  /* The clickstream dashboard's tokens (values scoped in src/clickstream/clickstream.css). */
+  --color-cs-paper: var(--cs-paper);
+  --color-cs-paper-2: var(--cs-paper-2);
+  --color-cs-paper-3: var(--cs-paper-3);
+  --color-cs-rule: var(--cs-rule);
+  --color-cs-rule-2: var(--cs-rule-2);
+  --color-cs-ink: var(--cs-ink);
+  --color-cs-ink-2: var(--cs-ink-2);
+  --color-cs-ink-3: var(--cs-ink-3);
+  --color-cs-accent: var(--cs-accent);
+  --color-cs-accent-ink: var(--cs-accent-ink);
+  --color-cs-accent-soft: var(--cs-accent-soft);
+  --color-cs-alert: var(--cs-alert);
+  --color-cs-data-kept: var(--cs-data-kept);
+  --color-cs-data-dup: var(--cs-data-dup);
+  --color-cs-data-bad: var(--cs-data-bad);
+  --color-cs-data-context: var(--cs-data-context);
+  --font-cs-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-cs-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-cs-mono: var(--font-geist-mono), ui-monospace, monospace;
+
   /* Shape: media and panels 4px, controls are pills. */
   --radius-card: 4px;
   --radius-frame: 4px;

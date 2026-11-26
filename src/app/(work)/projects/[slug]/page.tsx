@@ -80,7 +80,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
             <div className="mt-8 flex flex-wrap gap-3">
               {p.links.map((l, n) => (
-                <PillButton key={l.href} href={l.href} external variant={n === 0 ? "solid" : "ghost"}>
+                <PillButton key={l.href} href={l.href} external={l.href.startsWith("http")} variant={n === 0 ? "solid" : "ghost"}>
                   {l.label}
                 </PillButton>
               ))}

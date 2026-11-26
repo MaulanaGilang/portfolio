@@ -1,0 +1,131 @@
+/* The clickstream dashboard (/projects/ecommerce-clickstream/dashboard), moved in from
+   its own repo. Everything is scoped to [data-world="clickstream"] so none of it
+   reaches the portfolio, and the portfolio's tokens don't reach it. Its Tailwind
+   colours and fonts are the cs-* tokens registered in globals.css.
+   Original theme: "instrument panel at night, one signal" (lime). */
+
+[data-world="clickstream"] {
+  color-scheme: dark;
+
+  /* surfaces */
+  --cs-paper: oklch(15.5% 0.012 255);
+  --cs-paper-2: oklch(19% 0.014 255);
+  --cs-paper-3: oklch(23.5% 0.016 255);
+  --cs-rule: oklch(28% 0.014 255);
+  --cs-rule-2: oklch(36% 0.016 255);
+
+  /* text */
+  --cs-ink: oklch(96% 0.005 250);
+  --cs-ink-2: oklch(81% 0.01 250);
+  --cs-ink-3: oklch(66% 0.014 252);
+
+  /* the one signal */
+  --cs-accent: oklch(88% 0.18 128);
+  --cs-accent-ink: oklch(20% 0.04 128);
+  --cs-accent-soft: oklch(88% 0.18 128 / 0.12);
+
+  /* data roles (dark surface, CVD-safe pairs) */
+  --cs-data-kept: oklch(60% 0.11 240);
+  --cs-data-dup: oklch(66% 0.14 72);
+  --cs-data-bad: oklch(58% 0.18 27);
+  --cs-data-context: oklch(42% 0.014 252);
+  --cs-data-grid: oklch(24% 0.012 255);
+  --cs-alert: oklch(72% 0.15 27);
+
+  /* motion and shape */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--cs-paper);
+  color: var(--cs-ink-2);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The page behind it (overscroll, short screens) is night too. */
+html:has([data-world="clickstream"]),
+html:has([data-world="clickstream"]) body {
+  background: oklch(15.5% 0.012 255);
+}
+
+/* one fixed bloom behind the hero, never on scrolling content */
+[data-world="clickstream"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(60rem 36rem at 78% -8%, oklch(88% 0.18 128 / 0.07), transparent 70%);
+}
+[data-world="clickstream"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+[data-world="clickstream"] :is(h1, h2, h3) {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  color: var(--cs-ink);
+  font-style: normal;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+[data-world="clickstream"] p {
+  text-wrap: pretty;
+}
+
+[data-world="clickstream"] .num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+[data-world="clickstream"] :focus-visible {
+  outline: 2px solid var(--cs-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+[data-world="clickstream"] ::selection {
+  background: var(--cs-accent);
+  color: var(--cs-accent-ink);
+}
+
+/* data flowing along a connector */
+@keyframes flow-x {
+  from { transform: translateX(-8px); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  to { transform: translateX(var(--flow-len, 120px)); opacity: 0; }
+}
+@keyframes flow-y {
+  from { transform: translateY(-8px); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  to { transform: translateY(var(--flow-len, 48px)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-world="clickstream"] *,
+  [data-world="clickstream"] *::before,
+  [data-world="clickstream"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
