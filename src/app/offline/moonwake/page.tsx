@@ -158,7 +158,7 @@ export default function MoonwakePage() {
               <div className="hx-split hx-ranks-wrap">
                 <div className="hx-split-title">
                   <h3 className="hx-h2">The Still</h3>
-                  <p className="hx-small mt-4">Twelve who never speak, ranked First to Twelfth, with no leader among them: they answer to the Archmagus alone. One cloak; every weapon and style their own.</p>
+                  <p className="hx-small mt-4">Twelve who never speak, ranked First to Twelfth, with no leader among them: they answer to the Archmagus alone. Each from a different land of Runeterra; one cloak, every weapon their own.</p>
                 </div>
                 <ol className="hx-list hx-roster">
                   {stillRoster.map((s) => (

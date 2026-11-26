@@ -238,6 +238,62 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "ecommerce-clickstream",
+    category: "Data Engineering",
+    title: "E-commerce Clickstream Pipeline",
+    context: "Personal project · REES46 e-commerce data",
+    year: "2026",
+    cover: "/projects/ecommerce-clickstream-photo.webp",
+    short: "An idempotent daily ELT pipeline that moves 110M shop events through S3, Snowflake and dbt, orchestrated by Airflow 3.",
+    overview:
+      "An end-to-end ELT pipeline for two months of e-commerce clickstream data (110M events): daily Parquet partitions on AWS S3, loaded into Snowflake, modelled with dbt and orchestrated by Airflow 3, with a Snowpipe add-on for near-real-time loading and a static dashboard on top.",
+    problem:
+      "Where do shoppers drop off between viewing, adding to cart and buying, and which categories, brands and price ranges convert best? Answering it reliably meant loading 14.7 GB of raw events without losing or double-counting a single row, even when a run fails halfway.",
+    approach: [
+      "Split the two monthly CSVs into 61 daily Parquet folders on S3, so each Airflow run handles exactly one day, like a shop sending a new file each night; catchup replayed all 61 days in order.",
+      "Made every step idempotent: uploads overwrite the same keys, COPY INTO skips files already loaded, and dbt models use delete+insert or merge keyed on the day or session, so any task can be retried or a whole day rerun without duplicates.",
+      "Kept every RAW column as text so a bad value can never fail the load, then typed and labelled rows in dbt: clean rows flow on, bad ones go to a quarantine table, and a test fails the run if any RAW row goes missing.",
+      "Rebuilt sessions that cross midnight from all their events before merging, ran everything as a least-privilege key-pair service user, and added Snowpipe auto-ingest for live files with an 11-second median latency.",
+    ],
+    result:
+      "109,950,743 events loaded with every row accounted for (109,819,981 clean, 12 quarantined, 130,750 duplicates flagged), 8 dbt models and 15 tests passing on all 61 daily runs, for 2.67 Snowflake credits. The finding: only 10.1% of 23M sessions ever add to cart, but 61% of those go on to buy, so the leak is before the cart, not in it.",
+    tools: ["Snowflake", "dbt", "Airflow 3", "AWS S3", "Snowpipe", "Python", "Docker", "SQL", "Next.js"],
+    links: [
+      { label: "Live dashboard", href: "https://ecommerce-clickstream-snowflake.vercel.app/" },
+      { label: "View on GitHub", href: "https://github.com/MaulanaGilang/ecommerce_clickstream_snowflake" },
+    ],
+    figures: [
+      {
+        src: "/projects/ecommerce-clickstream/architecture.webp",
+        alt: "Architecture: raw CSVs split into daily Parquet on S3, loaded into Snowflake RAW, transformed by dbt into staging and marts and exported to a static website, orchestrated daily by Airflow 3, plus a Snowpipe add-on loading live files.",
+        caption: "Architecture, from the repository docs.",
+        width: 2000,
+        height: 745,
+      },
+      {
+        src: "/projects/ecommerce-clickstream/dbt-lineage.webp",
+        alt: "dbt lineage graph: raw.events to stg_events_checked, then stg_events, quarantine_events and the assert_no_rows_lost test, then the session, funnel and product marts.",
+        caption: "dbt lineage: typing and quarantine first, then the marts.",
+        width: 1846,
+        height: 820,
+      },
+      {
+        src: "/projects/ecommerce-clickstream/airflow-grid.webp",
+        alt: "Airflow calendar for 2019 with every day from 1 October to 30 November marked as a successful run.",
+        caption: "61 daily Airflow runs, all green.",
+        width: 1840,
+        height: 820,
+      },
+      {
+        src: "/projects/ecommerce-clickstream/quarantine.webp",
+        alt: "Reconciliation of RAW rows into clean, quarantined and duplicate rows, with duplicates flagged per day and quarantine counts by reason.",
+        caption: "Every row accounted for, from the live dashboard.",
+        width: 1530,
+        height: 870,
+      },
+    ],
+  },
+  {
     slug: "sql-data-warehouse",
     category: "Data Engineering",
     title: "SQL Data Warehouse",

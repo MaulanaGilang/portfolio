@@ -168,7 +168,7 @@ export const characters: Character[] = [
     name: "The Still",
     image: "/offline/moonwake/concept/still-1.webp",
     bio: [
-      "Twelve who never speak, numbered First to Twelfth. None of them leads; they answer to the Archmagus alone. They share one black hooded cloak with silver trim and nothing else: each fights with a different weapon, from the First's huge greatsword to twin daggers, a harpoon and a censer of mist.",
+      "Twelve who never speak, numbered First to Twelfth. None of them leads; they answer to the Archmagus alone. Each came from a different corner of Runeterra and fights with that land's weapon, from a Noxian executioner's axe and a Piltover hextech rifle to a Shadow Isles chain-sickle and a blade grown from the Void. The only thing they share is one black hooded cloak with silver trim.",
     ],
     cells: [
       { label: "Class", value: "Silent guard, ranked I to XII" },
