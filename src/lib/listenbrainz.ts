@@ -5,13 +5,29 @@ const USER = "maulll"; // public ListenBrainz username (not a secret)
 const API = `https://api.listenbrainz.org/1`;
 const HOUR = 60 * 60;
 
+type Track = { name: string; artist: string; cover?: string };
+
 export type Listening = {
+  /** The last few plays, newest first. */
+  recent: (Track & { at: string })[];
+  /** This week's most played track. */
+  onRepeat?: Track & { plays: number };
   topArtists: { name: string; plays: number }[];
-  topTracks: { name: string; artist: string; plays: number; cover?: string }[];
-  last?: { name: string; artist: string; at: string; cover?: string };
+  topTracks: (Track & { plays: number })[];
 };
 
-const cover = (mbid?: string | null) => (mbid ? `https://coverartarchive.org/release/${mbid}/front-500` : undefined);
+const coverUrl = (mbid?: string | null, size = 250) => (mbid ? `https://coverartarchive.org/release/${mbid}/front-${size}` : undefined);
+
+/** Not every release has art; keep the URL only if the Cover Art Archive actually serves it. */
+async function checked(url?: string) {
+  if (!url) return undefined;
+  try {
+    const res = await fetch(url, { method: "HEAD", next: { revalidate: HOUR } });
+    return res.ok ? url : undefined;
+  } catch {
+    return undefined;
+  }
+}
 
 async function get<T>(path: string): Promise<T | null> {
   try {
@@ -26,7 +42,7 @@ async function get<T>(path: string): Promise<T | null> {
 }
 
 type Artists = { payload?: { artists?: { artist_name: string; listen_count: number }[] } };
-type Tracks = {
+type Recordings = {
   payload?: { recordings?: { track_name: string; artist_name: string; listen_count: number; caa_release_mbid?: string | null }[] };
 };
 type Listens = {
@@ -38,28 +54,42 @@ type Listens = {
   };
 };
 
-/** Top artists and tracks this month, and the last track played. Null when there is nothing yet. */
+/** Recent plays, this week's top track, and this month's top tracks and artists. Null when there is nothing yet. */
 export async function getListening(): Promise<Listening | null> {
-  const [artists, tracks, listens] = await Promise.all([
+  const [artists, tracks, week, listens] = await Promise.all([
     get<Artists>(`/stats/user/${USER}/artists?range=month&count=3`),
-    get<Tracks>(`/stats/user/${USER}/recordings?range=month&count=3`),
-    get<Listens>(`/user/${USER}/listens?count=1`),
+    get<Recordings>(`/stats/user/${USER}/recordings?range=month&count=3`),
+    get<Recordings>(`/stats/user/${USER}/recordings?range=week&count=1`),
+    get<Listens>(`/user/${USER}/listens?count=5`),
   ]);
-  const l = listens?.payload?.listens?.[0];
+
+  const recent = await Promise.all(
+    (listens?.payload?.listens ?? []).map(async (l) => ({
+      name: l.track_metadata.track_name,
+      artist: l.track_metadata.artist_name,
+      at: new Date(l.listened_at * 1000).toISOString(),
+      cover: await checked(coverUrl(l.track_metadata.mbid_mapping?.caa_release_mbid)),
+    })),
+  );
+
+  const top = week?.payload?.recordings?.[0];
+  const onRepeat = top && {
+    name: top.track_name,
+    artist: top.artist_name,
+    plays: top.listen_count,
+    cover: await checked(coverUrl(top.caa_release_mbid, 500)),
+  };
+
   const data: Listening = {
+    recent,
+    onRepeat,
     topArtists: (artists?.payload?.artists ?? []).map((a) => ({ name: a.artist_name, plays: a.listen_count })),
     topTracks: (tracks?.payload?.recordings ?? []).map((t) => ({
       name: t.track_name,
       artist: t.artist_name,
       plays: t.listen_count,
-      cover: cover(t.caa_release_mbid),
+      cover: coverUrl(t.caa_release_mbid, 500),
     })),
-    last: l && {
-      name: l.track_metadata.track_name,
-      artist: l.track_metadata.artist_name,
-      at: new Date(l.listened_at * 1000).toISOString(),
-      cover: cover(l.track_metadata.mbid_mapping?.caa_release_mbid),
-    },
   };
-  return data.topArtists.length || data.topTracks.length || data.last ? data : null;
+  return data.recent.length || data.onRepeat || data.topArtists.length || data.topTracks.length ? data : null;
 }

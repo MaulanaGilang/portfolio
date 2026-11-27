@@ -1589,6 +1589,69 @@
   }
 }
 
+/* ---- the Ledger: recently played, a row of small album covers ---- */
+.hx-recent {
+  margin-top: 28px;
+}
+.hx-recent ol {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.hx-recent li {
+  min-width: 0;
+  padding: 10px 10px 12px;
+  border: 1px solid var(--hx-border);
+  background: var(--hx-panel);
+}
+.hx-recent li > p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hx-recent-art {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--house), #1a0a10);
+}
+.hx-recent-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-slow);
+}
+.hx-recent li:hover .hx-recent-art img {
+  transform: scale(1.04);
+}
+.hx-recent-art span {
+  font-family: var(--font-arcane), var(--font-cinzel), serif;
+  font-size: clamp(28px, 3vw, 44px);
+  color: var(--bone);
+  opacity: 0.6;
+}
+.hx-recent-time {
+  margin-top: 6px;
+  font-family: var(--font-hx), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hx-grey);
+}
+@media (max-width: 899px) {
+  .hx-recent ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 519px) {
+  .hx-recent ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* ---- stats: four framed columns ---- */
 .hx-stats {
   display: grid;

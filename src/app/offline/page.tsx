@@ -169,14 +169,16 @@ export default async function AfterHours() {
                 </li>
               </ul>
             ) : (
+              <>
               <ul className="hx-events mt-12" aria-label="Listening">
-                {music.last && (
-                  <li {...posterProps({ title: music.last.name, meta: music.last.artist, poster: music.last.cover })}>
+                {music.onRepeat && (
+                  <li {...posterProps({ title: music.onRepeat.name, meta: `${music.onRepeat.artist}, on repeat this week`, poster: music.onRepeat.cover })}>
                     <span className="hx-event-num">
-                      Last
+                      {music.onRepeat.plays}
+                      <span className="hx-event-unit">×</span>
                     </span>
                     <span className="hx-small">
-                      <span className="hx-small-white">{music.last.name}.</span> {music.last.artist}, played {wib(music.last.at)} WIB.
+                      <span className="hx-small-white">{music.onRepeat.name}.</span> {music.onRepeat.artist}, on repeat this week.
                     </span>
                   </li>
                 )}
@@ -203,6 +205,31 @@ export default async function AfterHours() {
                   </li>
                 ))}
               </ul>
+              {music.recent.length > 0 && (
+                <div className="hx-recent">
+                  <p className="hx-small">Recently played</p>
+                  <ol>
+                    {music.recent.map((t) => (
+                      <li key={`${t.at}-${t.name}`} {...posterProps({ title: t.name, meta: t.artist, poster: t.cover })}>
+                        <div className="hx-recent-art">
+                          {t.cover ? (
+                            // eslint-disable-next-line @next/next/no-img-element -- remote album art, small
+                            <img src={t.cover} alt="" loading="lazy" />
+                          ) : (
+                            <span aria-hidden>{t.name.charAt(0)}</span>
+                          )}
+                        </div>
+                        <p className="hx-small-white">{t.name}</p>
+                        <p className="hx-small">{t.artist}</p>
+                        <p className="hx-recent-time">
+                          <time dateTime={t.at}>{wib(t.at)}</time>
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+              </>
             )}
           </div>
         </section>
