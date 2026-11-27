@@ -27,6 +27,19 @@ export async function getApprovedNotes(): Promise<Note[]> {
   }
 }
 
+/**
+ * A tiny uncached read, run daily by Vercel Cron (/api/keepalive), so the free
+ * Supabase project never goes a week without activity and pauses.
+ */
+export async function pingGuestbook(): Promise<boolean> {
+  try {
+    const res = await fetch(`${URL}?select=id&approved=eq.true&limit=1`, { headers: { apikey: KEY }, cache: "no-store" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 /** Adds an unapproved note. "limited" means the same sender posted in the last two minutes (or the hourly cap is hit). */
 export async function addNote(note: { name: string; message: string; recommendation?: string; ipHash?: string }) {
   try {
