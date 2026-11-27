@@ -1641,6 +1641,50 @@
   text-transform: uppercase;
   color: var(--hx-grey);
 }
+/* Top remixes: the same strip with 16:9 video thumbnails and a rank in the corner. */
+.hx-remixes li {
+  padding: 0;
+}
+.hx-remixes a {
+  display: block;
+  padding: 10px 10px 12px;
+  color: inherit;
+}
+.hx-remixes .hx-recent-art {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+/* Long video titles: two lines at most; the channel on one. */
+.hx-remixes a > .hx-small-white {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.hx-remixes a > .hx-small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hx-remixes li:hover .hx-recent-art img {
+  transform: scale(1.04);
+}
+.hx-remixes .hx-recent-art .hx-remix-rank {
+  position: absolute;
+  left: 8px;
+  bottom: 4px;
+  font-family: var(--font-hx), ui-monospace, monospace;
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 300;
+  color: var(--bone);
+  opacity: 1;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.8);
+}
+.hx-remixes a:focus-visible {
+  outline: 1px solid var(--bone);
+  outline-offset: 2px;
+}
 @media (max-width: 899px) {
   .hx-recent ol {
     grid-template-columns: repeat(3, minmax(0, 1fr));

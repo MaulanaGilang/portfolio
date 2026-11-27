@@ -52,6 +52,18 @@ export const nowPlaying: { medium: Medium; verb: string; titles: { title: string
   },
 ];
 
+/**
+ * Top remixes, ranked, all on YouTube (most aren't on Spotify). Shown in the Ledger after
+ * Recently played. Add, remove or reorder lines here; up to five are shown. `id` is the
+ * part after youtu.be/ or watch?v= in the video link.
+ */
+export const remixes: { id: string; title: string; channel: string }[] = [
+  { id: "agneRtEe-t8", title: "Ariana Grande - bye [Altare Remix]", channel: "Altare" },
+  { id: "1VchsjYi5qY", title: "Into You X bye (altare remix) - Ariana Grande (mashup)", channel: "Rigaloony571//Mashups" },
+  { id: "JvGpsTwsoBU", title: "bye x Circus - Britney Spears & altare (mashup)", channel: "Rigaloony571//Mashups" },
+  { id: "5NviuLjIJDA", title: "brooklynbloodpop x vacation bible school (slowed)", channel: "alankklk" },
+];
+
 export type Favourite = {
   title: string;
   year: number;

@@ -7,9 +7,10 @@ import { PosterHover } from "@/components/offline/PosterHover";
 import { CentreTitle, StoryBlock } from "@/components/offline/SagaBlocks";
 import { SagaFooter } from "@/components/offline/SagaFooter";
 import { SAGA, SagaPage } from "@/components/offline/SagaPage";
-import { accounts, favourites, guestbook, house, nowPlaying, playHours, playlists } from "@/data/offline";
+import { accounts, favourites, guestbook, house, nowPlaying, playHours, playlists, remixes } from "@/data/offline";
 import { getListening } from "@/lib/listenbrainz";
 import { getSteamStats } from "@/lib/steam";
+import { bestThumbnail } from "@/lib/youtube";
 
 // Rebuilt at most once an hour for the listening data; Steam's own fetch stays cached for a day.
 export const revalidate = 3600;
@@ -52,7 +53,11 @@ function Feature({ id, image, title, text, href, cta }: { id: string; image: str
 }
 
 export default async function AfterHours() {
-  const [steam, music] = await Promise.all([getSteamStats(), getListening()]);
+  const [steam, music, remixPosters] = await Promise.all([
+    getSteamStats(),
+    getListening(),
+    Promise.all(remixes.slice(0, 5).map((r) => bestThumbnail(r.id))),
+  ]);
 
   const playing = nowPlaying.flatMap((n) =>
     n.titles.map((t) => ({
@@ -230,6 +235,33 @@ export default async function AfterHours() {
                 </div>
               )}
               </>
+            )}
+            {remixes.length > 0 && (
+              <div className="hx-recent hx-remixes">
+                <p className="hx-small">Top remixes, on YouTube</p>
+                <ol>
+                  {remixes.slice(0, 5).map((r, i) => (
+                    <li
+                      key={r.id}
+                      {...posterProps({ title: r.title, meta: `${r.channel}, #${i + 1} remix`, poster: remixPosters[i] })}
+                    >
+                      <a href={`https://www.youtube.com/watch?v=${r.id}`} target="_blank" rel="noopener noreferrer">
+                        <div className="hx-recent-art">
+                          {/* eslint-disable-next-line @next/next/no-img-element -- YouTube thumbnail */}
+                          <img src={`https://i.ytimg.com/vi/${r.id}/mqdefault.jpg`} alt="" loading="lazy" />
+                          <span className="hx-remix-rank" aria-hidden>
+                            {i + 1}
+                          </span>
+                        </div>
+                        <p className="hx-small-white" title={r.title}>
+                          {r.title}
+                        </p>
+                        <p className="hx-small">{r.channel}</p>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             )}
           </div>
         </section>
