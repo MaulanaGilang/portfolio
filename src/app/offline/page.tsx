@@ -8,6 +8,7 @@ import { CentreTitle, StoryBlock } from "@/components/offline/SagaBlocks";
 import { SagaFooter } from "@/components/offline/SagaFooter";
 import { SAGA, SagaPage } from "@/components/offline/SagaPage";
 import { accounts, favourites, guestbook, house, nowPlaying, playHours, playlists, remixes } from "@/data/offline";
+import { getApprovedNotes } from "@/lib/guestbook";
 import { getListening } from "@/lib/listenbrainz";
 import { getSteamStats } from "@/lib/steam";
 import { bestThumbnail } from "@/lib/youtube";
@@ -53,10 +54,12 @@ function Feature({ id, image, title, text, href, cta }: { id: string; image: str
 }
 
 export default async function AfterHours() {
-  const [steam, music, remixPosters] = await Promise.all([
+  const [steam, music, remixPosters, notes] = await Promise.all([
     getSteamStats(),
     getListening(),
     Promise.all(remixes.slice(0, 5).map((r) => bestThumbnail(r.id))),
+    // Approved guestbook notes; until there are any, the example note in data/offline.ts shows.
+    getApprovedNotes(),
   ]);
 
   const playing = nowPlaying.flatMap((n) =>
@@ -381,14 +384,14 @@ export default async function AfterHours() {
           </div>
           <div className="grid gap-14">
             <ul className="hx-list">
-              {guestbook.map((g) => (
+              {(notes.length ? notes : guestbook).map((g) => (
                 <li key={g.name + g.date} className="hx-list-note">
                   <span aria-hidden className="hx-list-dot" />
                   <span className="hx-list-key">
                     {g.name}
                     <span className="hx-small block">
                       <time dateTime={g.date}>{wib(g.date, false)}</time>
-                      {g.example && " · Example"}
+                      {"example" in g && g.example ? " · Example" : null}
                     </span>
                   </span>
                   <span className="hx-list-val normal-case">
