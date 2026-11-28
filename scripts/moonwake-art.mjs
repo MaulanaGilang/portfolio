@@ -34,6 +34,8 @@ const map = {
   "still-2": [`${C}/still-2.webp`, 1600],
   "ranks-1": [`${C}/ranks-1.webp`, 1600],
   "ranks-2": [`${C}/ranks-2.webp`, 1600],
+  "arms-steel": [`${C}/arms-steel.webp`, 1600],
+  "arms-stillstone": [`${C}/arms-stillstone.webp`, 1600],
   // concept art: tall tiles (3:4)
   "env-market": [`${C}/env-market.webp`, 900],
   "env-tower": [`${C}/env-tower.webp`, 900],

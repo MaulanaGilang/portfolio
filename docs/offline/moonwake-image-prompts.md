@@ -1,6 +1,37 @@
 # Moonwake image prompts (round 2)
 
-Everything you need to generate the remaining Moonwake art on your own and put it on the site. Images 1 to 14, the two Still sheets and the two rank sheets.
+Everything you need to generate the remaining Moonwake art on your own and put it on the site: the new Archmagus (0), images 1 to 14, the two armoury sheets (15, 16), the two Still sheets and the two rank sheets. Changing the Ledger (games, shows, remixes, favourites) is at the end.
+
+### Order to work in
+
+1. **0. life-archmagus** first: `codex-rule` (4) and `ranks-2` attach it.
+2. **1 to 14**, any order.
+3. **15 and 16**, the armoury sheets.
+4. **still-1, still-2, ranks-1, ranks-2**.
+
+Tick them off here as you go:
+
+| # | File | Shows in |
+|---|---|---|
+| 0 | life-archmagus | Archmagus character card, concept art |
+| 1 | moonwake-hall | Codex "The Keep", Hall of Names tile |
+| 2 | codex-magic | Codex "Magic" |
+| 3 | codex-people | Codex "People" |
+| 4 | codex-rule | Codex "Rule" |
+| 5 | codex-lore | Codex "Lore" |
+| 6 | codex-nature | Codex "Nature" |
+| 7 | codex-regalia | Codex "Regalia" |
+| 8 | wyrmwatch | Characters, concept art |
+| 9 | env-city | Concept art, Moonwake page footer |
+| 10 | env-market | Concept art |
+| 11 | env-tower | Concept art |
+| 12 | env-pool | Concept art |
+| 13 | life-townsfolk | Characters, concept art |
+| 14 | life-library | Characters, concept art |
+| 15 | arms-steel | Concept art: weapons sheet, the steel |
+| 16 | arms-stillstone | Concept art: weapons sheet, the glowing pieces |
+| | still-1, still-2 | Concept art, the Still card |
+| | ranks-1, ranks-2 | Concept art |
 
 ## Setup (same for every image)
 
@@ -35,9 +66,11 @@ Everything you need to generate the remaining Moonwake art on your own and put i
 2. In the project folder run `node scripts/moonwake-art.mjs`. It converts everything in `art-inbox` to the right size and WebP and overwrites the site's files.
 3. Check the pages locally (`npm run dev`, then `/offline` and `/offline/moonwake`), then commit and push.
 
-The rank sheets (`ranks-1`, `ranks-2`) are already wired into the concept gallery and appear automatically once their files exist. Everything else replaces an existing image.
+The rank sheets (`ranks-1`, `ranks-2`) and the armoury sheets (`arms-steel`, `arms-stillstone`) are already wired into the concept gallery and appear automatically once their files exist. Everything else replaces an existing image.
 
-Cost: 19 images at 2 credits = 38 credits without re-rolls. Budget about 48.
+After the new Archmagus is on the site, tell Claude (or edit it yourself): two captions still describe the old staff as "the black polearm with the red-violet orb" (the Archmagus card's Focus line in `src/data/offline.ts` and the concept-art caption in `src/data/codex.ts`).
+
+Cost: 21 images at 2 credits = 42 credits without re-rolls. Budget about 52.
 
 **Do the Archmagus (0) first.** It replaces the old design completely, and `codex-rule` (4) and `ranks-2` attach [archmagus], so they must use the new one: save it as `art-inbox/life-archmagus.png` before generating those.
 
@@ -45,14 +78,14 @@ Cost: 19 images at 2 credits = 38 credits without re-rolls. Budget about 48.
 
 ## 0. life-archmagus (new design, replaces the old one)
 
-Aspect **3:4**. Attach: **only** the staff reference (the dark twisted staff drawing), for the staff's shape. Do NOT attach the old Archmagus image. Shows in: the Archmagus character card and concept art.
+Aspect **3:4**. Attach: **nothing**. The staff is described in words. If the shape comes out wrong, attach a tight crop of **only the staff head** from the reference painting (no figure, no cloak, no watermark), because a full reference gets its pose and red cloak copied. Do NOT attach the old Archmagus image. Shows in: the Archmagus character card and concept art.
 
-The staff keeps the reference's shape but its glow is recoloured to Moonwake's red-violet. To keep the reference's own green and amber glow instead, replace the sentence starting "Its glow" with: `Glowing amber slits along the shaft and a green spirit-flame wisp curling around the head.`
+The staff follows the new reference: a long plain shaft whose upper part is wrapped in overlapping scale-plates that curl over into a hooked crook cradling a glowing orb. It is recoloured to Moonwake: black first, with silver edges and a red-violet orb.
 
 ```text
 STYLE: a frame from a high-budget animated fantasy series that blends 3D models with hand-painted textures. Full-bleed image, edge to edge: no border, no frame, no paper, no sketch or pencil lines, not an illustration on a page. Rich matte-painting environments with visible soft brushstrokes, clean graphic shapes, slightly stylised architecture with exaggerated tall verticals, crisp painted detail up close and soft atmospheric haze in the distance. Cinematic lighting with strong colour contrast: cool slate-blue shadows against warm cream candlelight and glowing red-violet magic, luminous painted skies with sculpted clouds, volumetric light shafts and floating glowing particles. Colour palette: deep wine red (#5A0F1E), near-black, silver, warm cream, moonlit slate blue, red-violet glow. Mood: quiet, deep, held. No text, no letters, no logos, no watermark, no modern objects.
 
-SUBJECT: Fantasy character design, fully clothed, full-length view of the Archmagus of the Coast, ruler of the city of Moonwake, standing in a moonlit stone courtyard beside a still pool at night. A calm young man with a warm Southeast Asian brown complexion, short neat black hair, and a composed, quiet expression; an ordinary, generic face. He wears long layered robes in wine red and black with fine silver embroidery, a high collar and a cream undershirt. In one hand he holds a tall staff standing on the ground, exactly as tall as he is, its top level with the top of his head. THE STAFF copies the shape of the reference image: a long crooked shaft made of dark blue-black obsidian-like plates and shards, layered and faceted like cracked volcanic glass, bending in a few sharp angular kinks along its length and tapering to a narrow point at the bottom; at the top it curls over into a hooked head of jagged, overlapping shard-like blades. Its glow is red-violet: thin glowing slits and cracks of red-violet light along the shaft, a few tiny glowing specks, and a soft red-violet spirit-flame wisp curling around the hooked head. Mist around his feet, wisteria hanging overhead, the moon reflected in the pool. No emblems or crests on the robes or staff. No text.
+SUBJECT: Fantasy character design, fully clothed, full-length view of the Archmagus of the Coast, ruler of the city of Moonwake, standing in a moonlit stone courtyard beside a still pool at night. A calm young man with a warm Southeast Asian brown complexion, short neat black hair, and a composed, quiet expression; an ordinary, generic face. He wears long layered robes in wine red and black with fine silver embroidery, a high collar and a cream undershirt. In one hand he holds a tall staff standing on the ground, almost as tall as he is, its top reaching just below the top of his head. THE STAFF: a long, straight, slender shaft of matte black wood with a few thin silver bands, plain on the lower half. Along the upper part, overlapping curved black scale-plates spiral around the shaft, each plate edged with a fine line of silver, growing larger as they climb; at the top the plated shaft curls forward and over into a hooked crook, like the curled head of a sea serpent, its scales flaring into short silver-tipped spines. Held inside the curl of the crook is a round glowing orb of red-violet light, glass-clear with a brighter core, casting red-violet light on the black scales around it and on his hand. The staff is mostly black, with silver only as thin edges and bands; the only glow is the red-violet orb. Mist around his feet, wisteria hanging overhead, the moon reflected in the pool. No emblems or crests on the robes or staff. No text.
 ```
 
 ---
@@ -94,7 +127,7 @@ Aspect **16:9**. Attach: [archmagus], [guard], [crest]. Shows in: Codex "Rule" c
 ```text
 STYLE: a frame from a high-budget animated fantasy series that blends 3D models with hand-painted textures. Full-bleed image, edge to edge: no border, no frame, no paper, no sketch or pencil lines, not an illustration on a page. Rich matte-painting environments with visible soft brushstrokes, clean graphic shapes, slightly stylised architecture with exaggerated tall verticals, crisp painted detail up close and soft atmospheric haze in the distance. Cinematic lighting with strong colour contrast: cool slate-blue shadows against warm cream candlelight and glowing red-violet magic, luminous painted skies with sculpted clouds, volumetric light shafts and floating glowing particles. Colour palette: deep wine red (#5A0F1E), near-black, silver, warm cream, moonlit slate blue, red-violet glow. Mood: quiet, deep, held. No text, no letters, no logos, no watermark, no modern objects.
 
-SUBJECT: The council chamber of the Keep at night. Around a round dark wooden table sit four people: the Archmagus from the first reference image (same face, hair and skin tone, wine-and-black robes, his tall crooked staff of dark obsidian-like shards with red-violet glowing cracks leaning against his chair); his wife, a calm woman with long black hair in cream and silver; the commander of the city guard in the armour from the second reference image, helmet on the table; and the Keeper of the Pool, an elder in grey robes. On the table: a sea chart, stacks of silver coins and candles. A tall window shows the moonlit sea. A wine-red banner on the wall bears the crest from the third reference image (horns-down silver crescent over a full silver moon in a wine-red circle). Fully clothed characters.
+SUBJECT: The council chamber of the Keep at night. Around a round dark wooden table sit four people: the Archmagus from the first reference image (same face, hair and skin tone, wine-and-black robes, his tall black staff leaning against his chair: a slender black shaft whose top is wrapped in silver-edged black scale-plates curling into a hooked crook that holds a glowing red-violet orb); his wife, a calm woman with long black hair in cream and silver; the commander of the city guard in the armour from the second reference image, helmet on the table; and the Keeper of the Pool, an elder in grey robes. On the table: a sea chart, stacks of silver coins and candles. A tall window shows the moonlit sea. A wine-red banner on the wall bears the crest from the third reference image (horns-down silver crescent over a full silver moon in a wine-red circle). Fully clothed characters.
 ```
 
 ## 5. codex-lore
@@ -197,6 +230,26 @@ STYLE: a frame from a high-budget animated fantasy series that blends 3D models 
 SUBJECT: The library of the Keep at night: tall dark wooden shelves full of books and scrolls, a deep stone window seat where a calico cat sleeps on the windowsill in the moonlight, two scribes reading by candlelight at a long desk, a wooden ladder, dust drifting in the light from the gothic window. Vertical composition, the cat in the upper part of the frame.
 ```
 
+## 15. arms-steel
+
+Aspect **16:9**. Attach: [guard] (for the style and the longsword). Shows in: concept art "The armoury: steel". Nothing on this sheet glows: in Moonwake the stone goes only in the weapons on sheet 16.
+
+```text
+STYLE: a frame from a high-budget animated fantasy series that blends 3D models with hand-painted textures. Clean, crisp painted detail, visible soft brushstrokes, clean graphic shapes. Colour palette: deep wine red (#5A0F1E), near-black, silver, warm cream, red-violet glow. No text, no letters, no logos, no watermark, no modern objects.
+
+SUBJECT: A weapon design sheet of the city guard's armoury on a plain warm-grey painted background, in the same painted style as the reference image (use it only for the art style and the longsword). Laid out flat in a neat row, side by side with clear empty space between them, nothing overlapping, each shown whole: a tall spear with a leaf-shaped head, a short arming sword in its scabbard, a round wooden shield with a plain steel rim and boss, a halberd, the longsword from the reference image, a heater shield painted plain wine red, and a huge two-handed greatsword. Blackened steel with plain silver fittings, wine-red leather grips and wrappings, dark wood hafts. Practical and plain: no gems, no glowing parts, no engravings, no emblems. Evenly lit. No people. No labels, no text.
+```
+
+## 16. arms-stillstone
+
+Aspect **16:9**. Attach: [guard] (for the rifle). Shows in: concept art "The armoury: stillstone". These are the glowing pieces: each has a core of stillstone, the pale stone from the Moonwell that soaks up magic and fires it back.
+
+```text
+STYLE: a frame from a high-budget animated fantasy series that blends 3D models with hand-painted textures. Clean, crisp painted detail, visible soft brushstrokes, clean graphic shapes. Colour palette: deep wine red (#5A0F1E), near-black, silver, warm cream, red-violet glow. No text, no letters, no logos, no watermark, no modern objects.
+
+SUBJECT: A weapon design sheet of the city's stillstone arms on a plain warm-grey painted background, in the same painted style as the reference image. Laid out in a neat row, side by side with clear empty space between them, nothing overlapping, each shown whole: the long rifle with the glowing crystal tube from the reference image; a heavy single-shot pistol with a short glowing tube under the barrel; a short black wand tipped with a small glowing stone; a glaive (a long pole with a broad curved blade) whose cutting edge glows faintly; a tall staff topped with a caged lantern holding a glowing stone; and a long ceremonial sword with a glowing line along the groove of its blade. In front of them, three raw uncut pieces of stillstone: pale, milky, almost white stone, one dull and empty, one half full, one glowing bright. Every glowing part is pale stone lit red-violet from inside, set behind blackened steel and silver housings with thin channels where the light runs. Evenly lit. No people. No labels, no text.
+```
+
 ---
 
 ## still-1 (The Still, I to VI)
@@ -236,5 +289,58 @@ Aspect **16:9**. Attach: [archmagus], [guard]. Shows in: concept art "Ranks: the
 ```text
 STYLE: a frame from a high-budget animated fantasy series that blends 3D models with hand-painted textures. Clean, crisp painted detail, visible soft brushstrokes, clean graphic shapes. Colour palette: deep wine red (#5A0F1E), near-black, silver, warm cream, red-violet glow. No text, no letters, no logos, no watermark, no modern objects.
 
-SUBJECT: A rank lineup design sheet of the mage path on a plain warm-grey painted background: FIVE figures standing in a row, full body, front view, from lowest rank on the left to highest on the right, with clear empty space between them, nothing overlapping. Robes grow richer from left to right, in wine red, black and silver. (8) Mistweaver: a hooded robe over mail, faint red-violet mist curling at the feet, a short wand in one hand and a dagger at the belt. (9) Moonwarden: an armoured robe with steel shoulder plates, a glaive (a long pole with a curved blade) with a faintly glowing edge. (10) Lampbearer: a ceremonial wine robe, holding a tall staff topped with a glowing red-violet lantern. (11) Warden of the Still Pool: high black-and-silver robes, a long ceremonial blade held point-down, faint glow along its fuller. (12) Archmagus of the Coast: the man from the first reference image, exactly as he is: same face, hair and skin tone, wine-and-black robes with silver thread, holding his tall crooked staff of dark obsidian-like shards with red-violet glowing cracks and a hooked shard head. The armour pieces follow the second reference image, plain with no gems. Fully clothed characters. No labels.
+SUBJECT: A rank lineup design sheet of the mage path on a plain warm-grey painted background: FIVE figures standing in a row, full body, front view, from lowest rank on the left to highest on the right, with clear empty space between them, nothing overlapping. Robes grow richer from left to right, in wine red, black and silver. (8) Mistweaver: a hooded robe over mail, faint red-violet mist curling at the feet, a short wand in one hand and a dagger at the belt. (9) Moonwarden: an armoured robe with steel shoulder plates, a glaive (a long pole with a curved blade) with a faintly glowing edge. (10) Lampbearer: a ceremonial wine robe, holding a tall staff topped with a glowing red-violet lantern. (11) Warden of the Still Pool: high black-and-silver robes, a long ceremonial blade held point-down, faint glow along its fuller. (12) Archmagus of the Coast: the man from the first reference image, exactly as he is: same face, hair and skin tone, wine-and-black robes with silver thread, holding his staff exactly as in that image: almost his own height, a slender black shaft whose upper part is wrapped in silver-edged black scale-plates curling into a hooked crook that holds a glowing red-violet orb. The armour pieces follow the second reference image, plain with no gems. Fully clothed characters. No labels.
 ```
+
+---
+
+# Changing the Ledger (no images needed)
+
+Everything in the Ledger on `/offline` lives in one file: `src/data/offline.ts`. Edit it, save, then commit and push; Vercel puts it live in about a minute. You can do this on github.com too, even from your phone: open the file, tap the pencil icon, edit, then "Commit changes".
+
+Keep the punctuation exactly as in the lines around it: each entry is wrapped in `{ }`, text goes in double quotes, and every entry ends with a comma.
+
+### Now playing: games (`nowPlaying`, the "Playing" block)
+
+- **A Steam game:** open its Steam store page. The number in the link is its ID (store.steampowered.com/app/**761890**/Albion_Online). The cover and your hours come from Steam on their own.
+  ```ts
+  { title: "Albion Online", steamAppId: 761890 },
+  ```
+- **A game not on Steam:** give it a poster, either a full image link or a file you put in `public/offline/posters/`.
+  ```ts
+  { title: "League of Legends", poster: "/offline/posters/league-of-legends.webp" },
+  ```
+
+### Now playing: shows (`nowPlaying`, the "Watching" block)
+
+Find the show on themoviedb.org, right-click the poster, choose "Copy image address", and change the size part right after `/t/p/` (for example `original` or `w600_and_h900_bestv2`) to `w500` so it loads faster.
+
+```ts
+{ title: "Arcane", poster: "https://image.tmdb.org/t/p/w500/87C0wecB8bHb1PsrKBI4kJiEkgV.jpg" },
+```
+
+To stop showing something, delete its line.
+
+### Top remixes (`remixes`)
+
+The order is the ranking: the first line is #1. Up to five are shown. `id` is the part of the YouTube link after `watch?v=` or `youtu.be/`; the thumbnail is fetched on its own. Copy the title and channel from the video page.
+
+```ts
+{ id: "agneRtEe-t8", title: "Ariana Grande - bye [Altare Remix]", channel: "Altare" },
+```
+
+### Favourites (`favourites`)
+
+Three lists (Games, Movies, Anime), unranked. Each entry has a title, a year and a poster link (TMDB, MyAnimeList or Wikipedia).
+
+```ts
+{ title: "Dune", year: 2021, poster: "https://image.tmdb.org/t/p/w500/v1tRXZ4JtD2Iv6fjkPvT4GiwslV.jpg" },
+```
+
+### What updates by itself
+
+- **Recently played and On repeat** come from ListenBrainz (keep its Spotify connection on).
+- **Steam hours** come from Steam.
+- **Guestbook notes** appear once you tick "approved" in Supabase (Table Editor > guestbook).
+
+None of these need code changes.
