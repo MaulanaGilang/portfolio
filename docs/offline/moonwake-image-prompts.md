@@ -64,11 +64,27 @@ Tick them off here as you go:
 
 1. Download each image and save it in `art-inbox/` with the exact name in its heading (for example `art-inbox/moonwake-hall.png`).
 2. In the project folder run `node scripts/moonwake-art.mjs`. It converts everything in `art-inbox` to the right size and WebP and overwrites the site's files.
-3. Check the pages locally (`npm run dev`, then `/offline` and `/offline/moonwake`), then commit and push.
-
+3. Check the pages locally: run `npm run dev`, then open `/offline` and `/offline/moonwake`.
+4. Commit and push. `art-inbox/` is ignored by git, so only the converted WebP files go up:
+   ```powershell
+   git add public/offline
+   git commit -m "Moonwake: new art"
+   git push origin makeover:main
+   ```
+5. About a minute later Vercel has deployed it. Open the live `/offline/moonwake` and hard-refresh (Ctrl+F5), because the browser may still show the old images.
 The rank sheets (`ranks-1`, `ranks-2`) and the armoury sheets (`arms-steel`, `arms-stillstone`) are already wired into the concept gallery and appear automatically once their files exist. Everything else replaces an existing image.
 
-After the new Archmagus is on the site, tell Claude (or edit it yourself): two captions still describe the old staff as "the black polearm with the red-violet orb" (the Archmagus card's Focus line in `src/data/offline.ts` and the concept-art caption in `src/data/codex.ts`).
+### After the new Archmagus is on the site: fix three captions
+
+Three lines still describe the old staff as a "black polearm". Do this in the same commit as the new Archmagus image. Open each file, find the text on the left with Ctrl+F, and replace it with the text on the right. Keep the quotes and the commas around it as they are.
+
+| File | Find | Replace with |
+|---|---|---|
+| `src/data/offline.ts` (Focus line) | `A black polearm with a red-violet orb set in its blade: the Lamp, carried into the world` | `A black staff that curls into a scaled crook around a red-violet orb: the Lamp, carried into the world` |
+| `src/data/codex.ts` (The Archmagus tile) | `and the black polearm with the red-violet orb.` | `and the black crook-staff with the red-violet orb.` |
+| `src/data/codex.ts` (Ranks: the mage path tile) | `ceremonial blade and the black polearm.` | `ceremonial blade and the black crook-staff.` |
+
+Then check that the site still builds before you push: run `npx tsc --noEmit` in the project folder. No output means it's fine. If it prints errors, a quote or comma was removed by mistake; undo the change and try again.
 
 Cost: 21 images at 2 credits = 42 credits without re-rolls. Budget about 52.
 
@@ -299,6 +315,8 @@ SUBJECT: A rank lineup design sheet of the mage path on a plain warm-grey painte
 Everything in the Ledger on `/offline` lives in one file: `src/data/offline.ts`. Edit it, save, then commit and push; Vercel puts it live in about a minute. You can do this on github.com too, even from your phone: open the file, tap the pencil icon, edit, then "Commit changes".
 
 Keep the punctuation exactly as in the lines around it: each entry is wrapped in `{ }`, text goes in double quotes, and every entry ends with a comma.
+
+If you break the punctuation, nothing bad happens to the live site: Vercel's build fails and the previous version stays up. You'll see a red "Error" on the deployment in the Vercel dashboard (and usually an email). Open the file again, fix the line, and commit again.
 
 ### Now playing: games (`nowPlaying`, the "Playing" block)
 
